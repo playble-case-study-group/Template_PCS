@@ -2,6 +2,7 @@
 
     <div id="left-menu">
         <div class="content">
+            <progress></progress>
             <h1>Progreso</h1>
             <ul>
                 <li>
@@ -15,10 +16,23 @@
 </template>
 
 <script>
+    import Progress from './Progress.vue';
+
     export default {
+        components: {
+            'left-menu-progress': Progress
+        },
+
+        data() {
+            tasks: []
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            axios.get('/tasks').then(response => this.tasks = response.data);
+
         }
+
+
     }
 </script>
 
