@@ -2,33 +2,31 @@
 
     <div id="left-menu">
         <div class="content">
-            <progress></progress>
-            <h1>Progreso</h1>
-            <ul>
-                <li>
-                    <input type="checkbox" checked="checked"/>
-                    <input type="checkbox" checked="checked"/>
-                    <input type="checkbox" checked="checked"/>
-                </li>
-            </ul>
+            <user-progress v-bind:tasks="tasks"></user-progress>
+            <user-tasks></user-tasks>
         </div>
     </div>
 </template>
 
 <script>
     import Progress from './Progress.vue';
+    import Tasks from './Tasks.vue';
 
     export default {
         components: {
-            'left-menu-progress': Progress
+            'user-progress': Progress,
+            'user-tasks': Tasks
         },
 
-        data() {
-            tasks: []
+        data: function () {
+            return {
+                tasks: []
+            }
         },
         mounted() {
             console.log('Component mounted.');
-            axios.get('/tasks').then(response => this.tasks = response.data);
+            // Notice: organizing tasks into groups by day
+            axios.get('/tasks').then(response => this.tasks = _.groupBy(response.data, 'day'));
 
         }
 

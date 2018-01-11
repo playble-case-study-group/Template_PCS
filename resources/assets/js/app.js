@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('left-menu', require('./components/LeftMenu/LeftMenu.vue'));
-// Vue.component('progress', require('./components/LeftMenu/Progress.vue'));
 
 const app = new Vue({
     el: '#app'
