@@ -19,5 +19,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('left-menu', require('./components/LeftMenu/LeftMenu.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: function () {
+        return {
+            user: {}
+        }
+    },
+    mounted() {
+        // Global user variable
+        axios.get('/auth').then(response => this.user = response.data);
+    }
+
 });

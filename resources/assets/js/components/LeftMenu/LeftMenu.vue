@@ -3,7 +3,7 @@
     <div id="left-menu">
         <div class="content">
             <user-progress v-bind:tasks="tasks"></user-progress>
-            <user-tasks></user-tasks>
+            <user-tasks v-bind:user="user" v-bind:tasks="tasks"></user-tasks>
         </div>
     </div>
 </template>
@@ -12,26 +12,33 @@
     import Progress from './Progress.vue';
     import Tasks from './Tasks.vue';
 
+    console.log('HEY!');
+
     export default {
         components: {
             'user-progress': Progress,
             'user-tasks': Tasks
         },
-
+        props: ['user'],
         data: function () {
             return {
                 tasks: []
             }
         },
         mounted() {
-            console.log('Component mounted.');
             // Notice: organizing tasks into groups by day
-            axios.get('/tasks').then(response => this.tasks = _.groupBy(response.data, 'day'));
+            axios.get('/tasks').then(response => {
+                this.tasks = _.groupBy(response.data, 'day');
+            });
+        },
+        methods: {
 
         }
 
 
+
     }
+
 </script>
 
 <style scoped>

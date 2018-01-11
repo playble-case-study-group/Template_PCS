@@ -69,7 +69,7 @@
             </div>
         </nav>
         <div class="wrapper">
-            <left-menu></left-menu>
+            <left-menu v-bind:user="user"></left-menu>
             @yield('content')
         </div>
 
