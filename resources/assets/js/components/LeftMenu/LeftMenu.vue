@@ -12,8 +12,6 @@
     import Progress from './Progress.vue';
     import Tasks from './Tasks.vue';
 
-    console.log('HEY!');
-
     export default {
         components: {
             'user-progress': Progress,

@@ -43468,8 +43468,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-console.log('HEY!');
-
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'user-progress': __WEBPACK_IMPORTED_MODULE_0__Progress_vue___default.a,
@@ -43560,9 +43558,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log(this.tasks);
-    },
+    mounted: function mounted() {},
 
     props: ['tasks']
 });
@@ -43667,10 +43663,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['tasks', 'user'],
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        this.tasks.forEach(function (day) {
+            console.log(day);
+        });
+        //            let currentTasks = tasks[this.user.current_day];
+        //            currentTasks.forEach(task => {
+        //                task.complete ? this.checkbox.push(task.id) : false;
+        //            })
+    },
 
     data: function data() {
         return {
@@ -43682,8 +43696,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return tasks[this.user.current_day];
         },
         checkedTask: function checkedTask(taskId) {
-            console.log(taskId);
-        }
+            console.log(taskId, complete);
+            var complete = 0;
+            console.log(task);
+            axios.post('/tasks/complete', {
+                id: taskId,
+                complete: complete
+            }).then(function (response) {
+                console.log(response);
+            });
+        },
+        test: function test() {}
     }
 });
 
@@ -43702,52 +43725,41 @@ var render = function() {
       "ul",
       _vm._l(_vm.getCurrentTasks(_vm.tasks), function(task) {
         return _c("li", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.checkbox,
-                expression: "checkbox"
-              }
-            ],
-            attrs: { type: "checkbox" },
-            domProps: {
-              value: task.id,
-              checked: Array.isArray(_vm.checkbox)
-                ? _vm._i(_vm.checkbox, task.id) > -1
-                : _vm.checkbox
-            },
-            on: {
-              click: function($event) {
-                _vm.checkedTask(task.id)
-              },
-              change: function($event) {
-                var $$a = _vm.checkbox,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = task.id,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.checkbox = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.checkbox = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+          task.complete
+            ? _c("input", {
+                attrs: { type: "checkbox", checked: "" },
+                domProps: { value: task.id },
+                on: {
+                  click: function($event) {
+                    _vm.checkedTask(task.id)
                   }
-                } else {
-                  _vm.checkbox = $$c
                 }
-              }
-            }
-          }),
+              })
+            : _c("input", {
+                attrs: { type: "checkbox" },
+                domProps: { value: task.id },
+                on: {
+                  click: function($event) {
+                    _vm.checkedTask(task.id)
+                  }
+                }
+              }),
           _vm._v("\n            " + _vm._s(task.title) + "\n        ")
         ])
       })
     ),
-    _vm._v("\n    " + _vm._s(_vm.checkbox) + "\n")
+    _vm._v("\n\n    " + _vm._s(_vm.checkbox) + "\n    "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            _vm.test()
+          }
+        }
+      },
+      [_vm._v("Check")]
+    )
   ])
 }
 var staticRenderFns = []

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
@@ -72,6 +72,14 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function complete(Request $request) {
+        DB::table('Tasks')
+            ->where('id', $request->id)
+            ->update(['complete' => $request->complete]);
+
+        return ('Good');
     }
 
     /**

@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth', 'HomeController@auth')->name('auth');
 
 Route::resource('/tasks', 'TasksController');
+Route::post('/tasks/complete', 'TasksController@complete');
