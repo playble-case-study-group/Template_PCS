@@ -2,8 +2,11 @@
 
     <div id="left-menu">
         <div class="content">
-            <user-progress v-bind:tasks="tasks"></user-progress>
-            <user-tasks v-bind:user="user" v-bind:tasks="tasks"></user-tasks>
+            <user-progress v-bind:tasks="tasks">
+            </user-progress>
+
+            <user-tasks v-bind:user="user" v-bind:tasks="tasks[user.current_day]">
+            </user-tasks>
         </div>
     </div>
 </template>

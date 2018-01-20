@@ -19,6 +19,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "node-sass": "^4.7.2"
+        "ioredis": "^3.2.2",
+        "node-sass": "^4.7.2",
+        "socket.io": "^2.0.4"
     }
 }
