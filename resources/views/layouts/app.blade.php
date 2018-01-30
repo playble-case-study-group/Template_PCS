@@ -69,7 +69,8 @@
             </div>
         </nav>
         <div class="wrapper">
-            <left-menu v-bind:user="user"></left-menu>
+            <left-menu></left-menu>
+            <right-menu></right-menu>
             @yield('content')
         </div>
 

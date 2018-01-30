@@ -6,7 +6,14 @@
                     <div class="panel-heading">Example Component</div>
 
                     <div class="panel-body">
-                        I'm an example component!
+                        <ul>
+                            <li v-for="task in $store.state.tasks">
+                                {{ task.id }}
+                                <button @click="toggleTask(task.id)">Toggle</button>
+                            </li>
+                        </ul>
+                        {{ $store.state.tasks }}
+                        <div class="btn">Done</div>
                     </div>
                 </div>
             </div>
@@ -15,9 +22,15 @@
 </template>
 
 <script>
+    import { mapGetter, mapActions } from 'vuex'
+
     export default {
+
         mounted() {
             console.log('Component mounted.')
-        }
+        },
+        methods: mapActions([
+            'toggleTask'
+        ])
     }
 </script>

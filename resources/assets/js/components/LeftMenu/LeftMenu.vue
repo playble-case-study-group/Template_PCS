@@ -7,6 +7,9 @@
 
             <user-tasks v-bind:user="user" v-bind:tasks="tasks[user.current_day]">
             </user-tasks>
+            <div id="next-day">
+                <button v-on:click="NEXT_DAY()">NEXT DAY</button>
+            </div>
         </div>
     </div>
 </template>
@@ -14,11 +17,14 @@
 <script>
     import Progress from './Progress.vue';
     import Tasks from './Tasks.vue';
+    import Counter from '../Counter.vue';
+    import {mapActions} from 'vuex';
 
     export default {
         components: {
             'user-progress': Progress,
-            'user-tasks': Tasks
+            'user-tasks': Tasks,
+            'counter': Counter
         },
         props: ['user'],
         data: function () {
@@ -27,16 +33,11 @@
             }
         },
         mounted() {
-            // Notice: organizing tasks into groups by day
-            axios.get('/tasks').then(response => {
-                this.tasks = _.groupBy(response.data, 'day');
-            });
+
         },
         methods: {
-
+            ...mapActions(['NEXT_DAY'])
         }
-
-
 
     }
 

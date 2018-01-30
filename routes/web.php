@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +21,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth', 'HomeController@auth')->name('auth');
+Route::post('/nextday', 'SimulationController@nextDay');
+Route::get('/sim', function () {
+    return DB::table('simulation')->get();
+});
 
 Route::resource('/tasks', 'TasksController');
 Route::post('/tasks/complete', 'TasksController@complete');
+
+
