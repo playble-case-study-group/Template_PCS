@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GalleryController extends Controller
 {
@@ -16,6 +17,12 @@ class GalleryController extends Controller
         //
         return view('gallery');
 
+    }
+
+    public function getArtifacts()
+    {
+        $artifacts = DB::table('artifacts')->get();
+        return $artifacts;
     }
 
     /**
