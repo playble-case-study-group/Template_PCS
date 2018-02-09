@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/auth', 'HomeController@auth')->name('auth');
+Route::get('/user', 'HomeController@user');
 Route::post('/nextday', 'SimulationController@nextDay');
 Route::get('/sim', function () {
     return DB::table('simulation')->get();
@@ -29,7 +29,12 @@ Route::get('/sim', function () {
 Route::resource('/tasks', 'TasksController');
 Route::post('/tasks/complete', 'TasksController@complete');
 
+
+Route::resource('/email', 'EmailController');
+Route::post('/returnemails', 'EmailController@emailData');
+
 Route::resource('/gallery', 'GalleryController');
 Route::resource('/library', 'LibraryController');
+
 
 
