@@ -18,6 +18,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('left-menu', require('./components/LeftMenu/LeftMenu.vue'));
 Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
+Vue.component('email', require('./components/Email/Email.vue'));
 
 import store from './vuex/store';
 import { mapActions } from 'vuex';

@@ -41,7 +41,7 @@ const mutations = {
     // Retrieves user from database when appliction loads.
     // See app.js mounted for call
     GET_USER: (state) => {
-        axios.get('/auth').then(response => state.user = response.data);
+        axios.get('/user').then(response => state.user = response.data);
     },
 
     // Increments day in user object while it is less than the amount of days
