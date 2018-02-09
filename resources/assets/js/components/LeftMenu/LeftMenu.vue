@@ -5,7 +5,8 @@
             <user-progress v-bind:tasks="tasks">
             </user-progress>
 
-            <user-tasks v-bind:user="user">
+
+            <user-tasks>
             </user-tasks>
             <div id="next-day">
                 <button v-on:click="NEXT_DAY()">NEXT DAY</button>

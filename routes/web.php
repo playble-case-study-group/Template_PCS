@@ -29,6 +29,11 @@ Route::get('/sim', function () {
 Route::resource('/tasks', 'TasksController');
 Route::post('/tasks/complete', 'TasksController@complete');
 
+
 Route::resource('/email', 'EmailController');
 Route::post('/returnemails', 'EmailController@emailData');
+
+Route::resource('/gallery', 'GalleryController');
+
+
 
