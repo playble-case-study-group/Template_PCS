@@ -13270,7 +13270,11 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
+<<<<<<< HEAD
   var VERSION = '4.17.5';
+=======
+  var VERSION = '4.17.4';
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -13401,6 +13405,10 @@ if (token) {
   /** Used to match property names within property paths. */
   var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
       reIsPlainProp = /^\w*$/,
+<<<<<<< HEAD
+=======
+      reLeadingDot = /^\./,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
   /**
@@ -13500,8 +13508,13 @@ if (token) {
       reOptMod = rsModifier + '?',
       rsOptVar = '[' + rsVarRange + ']?',
       rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+<<<<<<< HEAD
       rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
       rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
+=======
+      rsOrdLower = '\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)',
+      rsOrdUpper = '\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)',
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       rsSeq = rsOptVar + reOptMod + rsOptJoin,
       rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
       rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
@@ -13709,6 +13722,37 @@ if (token) {
   /*--------------------------------------------------------------------------*/
 
   /**
+<<<<<<< HEAD
+=======
+   * Adds the key-value `pair` to `map`.
+   *
+   * @private
+   * @param {Object} map The map to modify.
+   * @param {Array} pair The key-value pair to add.
+   * @returns {Object} Returns `map`.
+   */
+  function addMapEntry(map, pair) {
+    // Don't return `map.set` because it's not chainable in IE 11.
+    map.set(pair[0], pair[1]);
+    return map;
+  }
+
+  /**
+   * Adds `value` to `set`.
+   *
+   * @private
+   * @param {Object} set The set to modify.
+   * @param {*} value The value to add.
+   * @returns {Object} Returns `set`.
+   */
+  function addSetEntry(set, value) {
+    // Don't return `set.add` because it's not chainable in IE 11.
+    set.add(value);
+    return set;
+  }
+
+  /**
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
    * A faster alternative to `Function#apply`, this function invokes `func`
    * with the `this` binding of `thisArg` and the arguments of `args`.
    *
@@ -14475,6 +14519,7 @@ if (token) {
   }
 
   /**
+<<<<<<< HEAD
    * Gets the value at `key`, unless `key` is "__proto__".
    *
    * @private
@@ -14489,6 +14534,8 @@ if (token) {
   }
 
   /**
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
    * Converts `set` to an array of its values.
    *
    * @private
@@ -15920,7 +15967,11 @@ if (token) {
           if (!cloneableTags[tag]) {
             return object ? value : {};
           }
+<<<<<<< HEAD
           result = initCloneByTag(value, tag, isDeep);
+=======
+          result = initCloneByTag(value, tag, baseClone, isDeep);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
         }
       }
       // Check for circular references and return its corresponding clone.
@@ -15931,6 +15982,7 @@ if (token) {
       }
       stack.set(value, result);
 
+<<<<<<< HEAD
       if (isSet(value)) {
         value.forEach(function(subValue) {
           result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
@@ -15947,6 +15999,8 @@ if (token) {
         return result;
       }
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       var keysFunc = isFull
         ? (isFlat ? getAllKeysIn : getAllKeys)
         : (isFlat ? keysIn : keys);
@@ -16874,7 +16928,11 @@ if (token) {
         }
         else {
           var newValue = customizer
+<<<<<<< HEAD
             ? customizer(safeGet(object, key), srcValue, (key + ''), object, source, stack)
+=======
+            ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
             : undefined;
 
           if (newValue === undefined) {
@@ -16901,8 +16959,13 @@ if (token) {
      *  counterparts.
      */
     function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
+<<<<<<< HEAD
       var objValue = safeGet(object, key),
           srcValue = safeGet(source, key),
+=======
+      var objValue = object[key],
+          srcValue = source[key],
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
           stacked = stack.get(srcValue);
 
       if (stacked) {
@@ -17811,6 +17874,23 @@ if (token) {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Creates a clone of `map`.
+     *
+     * @private
+     * @param {Object} map The map to clone.
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned map.
+     */
+    function cloneMap(map, isDeep, cloneFunc) {
+      var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
+      return arrayReduce(array, addMapEntry, new map.constructor);
+    }
+
+    /**
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
      * Creates a clone of `regexp`.
      *
      * @private
@@ -17824,6 +17904,23 @@ if (token) {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Creates a clone of `set`.
+     *
+     * @private
+     * @param {Object} set The set to clone.
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned set.
+     */
+    function cloneSet(set, isDeep, cloneFunc) {
+      var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
+      return arrayReduce(array, addSetEntry, new set.constructor);
+    }
+
+    /**
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
      * Creates a clone of the `symbol` object.
      *
      * @private
@@ -19417,7 +19514,11 @@ if (token) {
      */
     function initCloneArray(array) {
       var length = array.length,
+<<<<<<< HEAD
           result = new array.constructor(length);
+=======
+          result = array.constructor(length);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
       // Add properties assigned by `RegExp#exec`.
       if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
@@ -19444,15 +19545,27 @@ if (token) {
      * Initializes an object clone based on its `toStringTag`.
      *
      * **Note:** This function only supports cloning values with tags of
+<<<<<<< HEAD
      * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
+=======
+     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
      *
      * @private
      * @param {Object} object The object to clone.
      * @param {string} tag The `toStringTag` of the object to clone.
+<<<<<<< HEAD
      * @param {boolean} [isDeep] Specify a deep clone.
      * @returns {Object} Returns the initialized clone.
      */
     function initCloneByTag(object, tag, isDeep) {
+=======
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the initialized clone.
+     */
+    function initCloneByTag(object, tag, cloneFunc, isDeep) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       var Ctor = object.constructor;
       switch (tag) {
         case arrayBufferTag:
@@ -19471,7 +19584,11 @@ if (token) {
           return cloneTypedArray(object, isDeep);
 
         case mapTag:
+<<<<<<< HEAD
           return new Ctor;
+=======
+          return cloneMap(object, isDeep, cloneFunc);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
         case numberTag:
         case stringTag:
@@ -19481,7 +19598,11 @@ if (token) {
           return cloneRegExp(object);
 
         case setTag:
+<<<<<<< HEAD
           return new Ctor;
+=======
+          return cloneSet(object, isDeep, cloneFunc);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
         case symbolTag:
           return cloneSymbol(object);
@@ -19528,6 +19649,7 @@ if (token) {
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
+<<<<<<< HEAD
       var type = typeof value;
       length = length == null ? MAX_SAFE_INTEGER : length;
 
@@ -19535,6 +19657,12 @@ if (token) {
         (type == 'number' ||
           (type != 'symbol' && reIsUint.test(value))) &&
             (value > -1 && value % 1 == 0 && value < length);
+=======
+      length = length == null ? MAX_SAFE_INTEGER : length;
+      return !!length &&
+        (typeof value == 'number' || reIsUint.test(value)) &&
+        (value > -1 && value % 1 == 0 && value < length);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
     }
 
     /**
@@ -19984,11 +20112,19 @@ if (token) {
      */
     var stringToPath = memoizeCapped(function(string) {
       var result = [];
+<<<<<<< HEAD
       if (string.charCodeAt(0) === 46 /* . */) {
         result.push('');
       }
       string.replace(rePropName, function(match, number, quote, subString) {
         result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
+=======
+      if (reLeadingDot.test(string)) {
+        result.push('');
+      }
+      string.replace(rePropName, function(match, number, quote, string) {
+        result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       });
       return result;
     });
@@ -23596,11 +23732,17 @@ if (token) {
       function remainingWait(time) {
         var timeSinceLastCall = time - lastCallTime,
             timeSinceLastInvoke = time - lastInvokeTime,
+<<<<<<< HEAD
             timeWaiting = wait - timeSinceLastCall;
 
         return maxing
           ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
           : timeWaiting;
+=======
+            result = wait - timeSinceLastCall;
+
+        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       }
 
       function shouldInvoke(time) {
@@ -26032,6 +26174,7 @@ if (token) {
      * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
      * // => { 'a': 1, 'b': 2 }
      */
+<<<<<<< HEAD
     var defaults = baseRest(function(object, sources) {
       object = Object(object);
 
@@ -26061,6 +26204,11 @@ if (token) {
       }
 
       return object;
+=======
+    var defaults = baseRest(function(args) {
+      args.push(undefined, customDefaultsAssignIn);
+      return apply(assignInWith, undefined, args);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
     });
 
     /**
@@ -26457,11 +26605,14 @@ if (token) {
      * // => { '1': 'c', '2': 'b' }
      */
     var invert = createInverter(function(result, value, key) {
+<<<<<<< HEAD
       if (value != null &&
           typeof value.toString != 'function') {
         value = nativeObjectToString.call(value);
       }
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       result[value] = key;
     }, constant(identity));
 
@@ -26492,11 +26643,14 @@ if (token) {
      * // => { 'group1': ['a', 'c'], 'group2': ['b'] }
      */
     var invertBy = createInverter(function(result, value, key) {
+<<<<<<< HEAD
       if (value != null &&
           typeof value.toString != 'function') {
         value = nativeObjectToString.call(value);
       }
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
       if (hasOwnProperty.call(result, value)) {
         result[value].push(key);
       } else {
@@ -30390,7 +30544,11 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+<<<<<<< HEAD
  * jQuery JavaScript Library v3.3.1
+=======
+ * jQuery JavaScript Library v3.2.1
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -30400,7 +30558,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
+<<<<<<< HEAD
  * Date: 2018-01-20T17:24Z
+=======
+ * Date: 2017-03-20T18:59Z
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
  */
 ( function( global, factory ) {
 
@@ -30462,6 +30624,7 @@ var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
 
+<<<<<<< HEAD
 var isFunction = function isFunction( obj ) {
 
       // Support: Chrome <=57, Firefox <=52
@@ -30513,6 +30676,18 @@ function toType( obj ) {
 		class2type[ toString.call( obj ) ] || "object" :
 		typeof obj;
 }
+=======
+
+
+	function DOMEval( code, doc ) {
+		doc = doc || document;
+
+		var script = doc.createElement( "script" );
+
+		script.text = code;
+		doc.head.appendChild( script ).parentNode.removeChild( script );
+	}
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 /* global Symbol */
 // Defining this global in .eslintrc.json would create a danger of using the global
 // unguarded in another place, it seems safer to define global only for this module
@@ -30520,7 +30695,11 @@ function toType( obj ) {
 
 
 var
+<<<<<<< HEAD
 	version = "3.3.1",
+=======
+	version = "3.2.1",
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -30532,7 +30711,20 @@ var
 
 	// Support: Android <=4.0 only
 	// Make sure we trim BOM and NBSP
+<<<<<<< HEAD
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+=======
+	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
+
+	// Matches dashed string for camelizing
+	rmsPrefix = /^-ms-/,
+	rdashAlpha = /-([a-z])/g,
+
+	// Used by jQuery.camelCase as callback to replace()
+	fcamelCase = function( all, letter ) {
+		return letter.toUpperCase();
+	};
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 jQuery.fn = jQuery.prototype = {
 
@@ -30632,7 +30824,11 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
+<<<<<<< HEAD
 	if ( typeof target !== "object" && !isFunction( target ) ) {
+=======
+	if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		target = {};
 	}
 
@@ -30698,6 +30894,31 @@ jQuery.extend( {
 
 	noop: function() {},
 
+<<<<<<< HEAD
+=======
+	isFunction: function( obj ) {
+		return jQuery.type( obj ) === "function";
+	},
+
+	isWindow: function( obj ) {
+		return obj != null && obj === obj.window;
+	},
+
+	isNumeric: function( obj ) {
+
+		// As of jQuery 3.0, isNumeric is limited to
+		// strings and numbers (primitives or objects)
+		// that can be coerced to finite numbers (gh-2662)
+		var type = jQuery.type( obj );
+		return ( type === "number" || type === "string" ) &&
+
+			// parseFloat NaNs numeric-cast false positives ("")
+			// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+			// subtraction forces infinities to NaN
+			!isNaN( obj - parseFloat( obj ) );
+	},
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	isPlainObject: function( obj ) {
 		var proto, Ctor;
 
@@ -30731,11 +30952,35 @@ jQuery.extend( {
 		return true;
 	},
 
+<<<<<<< HEAD
+=======
+	type: function( obj ) {
+		if ( obj == null ) {
+			return obj + "";
+		}
+
+		// Support: Android <=2.3 only (functionish RegExp)
+		return typeof obj === "object" || typeof obj === "function" ?
+			class2type[ toString.call( obj ) ] || "object" :
+			typeof obj;
+	},
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	// Evaluates a script in a global context
 	globalEval: function( code ) {
 		DOMEval( code );
 	},
 
+<<<<<<< HEAD
+=======
+	// Convert dashed to camelCase; used by the css and data modules
+	// Support: IE <=9 - 11, Edge 12 - 13
+	// Microsoft forgot to hump their vendor prefix (#9572)
+	camelCase: function( string ) {
+		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
+	},
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	each: function( obj, callback ) {
 		var length, i = 0;
 
@@ -30856,6 +31101,40 @@ jQuery.extend( {
 	// A global GUID counter for objects
 	guid: 1,
 
+<<<<<<< HEAD
+=======
+	// Bind a function to a context, optionally partially applying any
+	// arguments.
+	proxy: function( fn, context ) {
+		var tmp, args, proxy;
+
+		if ( typeof context === "string" ) {
+			tmp = fn[ context ];
+			context = fn;
+			fn = tmp;
+		}
+
+		// Quick check to determine if target is callable, in the spec
+		// this throws a TypeError, but we will just return undefined.
+		if ( !jQuery.isFunction( fn ) ) {
+			return undefined;
+		}
+
+		// Simulated bind
+		args = slice.call( arguments, 2 );
+		proxy = function() {
+			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
+		};
+
+		// Set the guid of unique handler to the same of original handler, so it can be removed
+		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
+
+		return proxy;
+	},
+
+	now: Date.now,
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	// jQuery.support is not used in Core but other projects attach their
 	// properties to it so it needs to exist.
 	support: support
@@ -30878,9 +31157,15 @@ function isArrayLike( obj ) {
 	// hasOwn isn't used here due to false negatives
 	// regarding Nodelist length in IE
 	var length = !!obj && "length" in obj && obj.length,
+<<<<<<< HEAD
 		type = toType( obj );
 
 	if ( isFunction( obj ) || isWindow( obj ) ) {
+=======
+		type = jQuery.type( obj );
+
+	if ( type === "function" || jQuery.isWindow( obj ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		return false;
 	}
 
@@ -33200,9 +33485,17 @@ var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|
 
 
 
+<<<<<<< HEAD
 // Implement the identical functionality for filter and not
 function winnow( elements, qualifier, not ) {
 	if ( isFunction( qualifier ) ) {
+=======
+var risSimple = /^.[^:#\[\.,]*$/;
+
+// Implement the identical functionality for filter and not
+function winnow( elements, qualifier, not ) {
+	if ( jQuery.isFunction( qualifier ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		return jQuery.grep( elements, function( elem, i ) {
 			return !!qualifier.call( elem, i, elem ) !== not;
 		} );
@@ -33222,8 +33515,21 @@ function winnow( elements, qualifier, not ) {
 		} );
 	}
 
+<<<<<<< HEAD
 	// Filtered directly for both simple and complex selectors
 	return jQuery.filter( qualifier, elements, not );
+=======
+	// Simple selector that can be filtered directly, removing non-Elements
+	if ( risSimple.test( qualifier ) ) {
+		return jQuery.filter( qualifier, elements, not );
+	}
+
+	// Complex selector, compare the two sets, removing non-Elements
+	qualifier = jQuery.filter( qualifier, elements );
+	return jQuery.grep( elements, function( elem ) {
+		return ( indexOf.call( qualifier, elem ) > -1 ) !== not && elem.nodeType === 1;
+	} );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 }
 
 jQuery.filter = function( expr, elems, not ) {
@@ -33344,7 +33650,11 @@ var rootjQuery,
 						for ( match in context ) {
 
 							// Properties of context are called as methods if possible
+<<<<<<< HEAD
 							if ( isFunction( this[ match ] ) ) {
+=======
+							if ( jQuery.isFunction( this[ match ] ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 								this[ match ]( context[ match ] );
 
 							// ...and otherwise set as attributes
@@ -33387,7 +33697,11 @@ var rootjQuery,
 
 		// HANDLE: $(function)
 		// Shortcut for document ready
+<<<<<<< HEAD
 		} else if ( isFunction( selector ) ) {
+=======
+		} else if ( jQuery.isFunction( selector ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			return root.ready !== undefined ?
 				root.ready( selector ) :
 
@@ -33702,11 +34016,19 @@ jQuery.Callbacks = function( options ) {
 
 					( function add( args ) {
 						jQuery.each( args, function( _, arg ) {
+<<<<<<< HEAD
 							if ( isFunction( arg ) ) {
 								if ( !options.unique || !self.has( arg ) ) {
 									list.push( arg );
 								}
 							} else if ( arg && arg.length && toType( arg ) !== "string" ) {
+=======
+							if ( jQuery.isFunction( arg ) ) {
+								if ( !options.unique || !self.has( arg ) ) {
+									list.push( arg );
+								}
+							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 								// Inspect recursively
 								add( arg );
@@ -33821,11 +34143,19 @@ function adoptValue( value, resolve, reject, noValue ) {
 	try {
 
 		// Check for promise aspect first to privilege synchronous behavior
+<<<<<<< HEAD
 		if ( value && isFunction( ( method = value.promise ) ) ) {
 			method.call( value ).done( resolve ).fail( reject );
 
 		// Other thenables
 		} else if ( value && isFunction( ( method = value.then ) ) ) {
+=======
+		if ( value && jQuery.isFunction( ( method = value.promise ) ) ) {
+			method.call( value ).done( resolve ).fail( reject );
+
+		// Other thenables
+		} else if ( value && jQuery.isFunction( ( method = value.then ) ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			method.call( value, resolve, reject );
 
 		// Other non-thenables
@@ -33883,14 +34213,22 @@ jQuery.extend( {
 						jQuery.each( tuples, function( i, tuple ) {
 
 							// Map tuples (progress, done, fail) to arguments (done, fail, progress)
+<<<<<<< HEAD
 							var fn = isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
+=======
+							var fn = jQuery.isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 							// deferred.progress(function() { bind to newDefer or newDefer.notify })
 							// deferred.done(function() { bind to newDefer or newDefer.resolve })
 							// deferred.fail(function() { bind to newDefer or newDefer.reject })
 							deferred[ tuple[ 1 ] ]( function() {
 								var returned = fn && fn.apply( this, arguments );
+<<<<<<< HEAD
 								if ( returned && isFunction( returned.promise ) ) {
+=======
+								if ( returned && jQuery.isFunction( returned.promise ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 									returned.promise()
 										.progress( newDefer.notify )
 										.done( newDefer.resolve )
@@ -33944,7 +34282,11 @@ jQuery.extend( {
 										returned.then;
 
 									// Handle a returned thenable
+<<<<<<< HEAD
 									if ( isFunction( then ) ) {
+=======
+									if ( jQuery.isFunction( then ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 										// Special processors (notify) just wait for resolution
 										if ( special ) {
@@ -34040,7 +34382,11 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
+<<<<<<< HEAD
 								isFunction( onProgress ) ?
+=======
+								jQuery.isFunction( onProgress ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 									onProgress :
 									Identity,
 								newDefer.notifyWith
@@ -34052,7 +34398,11 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
+<<<<<<< HEAD
 								isFunction( onFulfilled ) ?
+=======
+								jQuery.isFunction( onFulfilled ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 									onFulfilled :
 									Identity
 							)
@@ -34063,7 +34413,11 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
+<<<<<<< HEAD
 								isFunction( onRejected ) ?
+=======
+								jQuery.isFunction( onRejected ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 									onRejected :
 									Thrower
 							)
@@ -34103,6 +34457,7 @@ jQuery.extend( {
 					// fulfilled_callbacks.disable
 					tuples[ 3 - i ][ 2 ].disable,
 
+<<<<<<< HEAD
 					// rejected_handlers.disable
 					// fulfilled_handlers.disable
 					tuples[ 3 - i ][ 3 ].disable,
@@ -34112,6 +34467,10 @@ jQuery.extend( {
 
 					// progress_handlers.lock
 					tuples[ 0 ][ 3 ].lock
+=======
+					// progress_callbacks.lock
+					tuples[ 0 ][ 2 ].lock
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				);
 			}
 
@@ -34181,7 +34540,11 @@ jQuery.extend( {
 
 			// Use .then() to unwrap secondary thenables (cf. gh-3000)
 			if ( master.state() === "pending" ||
+<<<<<<< HEAD
 				isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
+=======
+				jQuery.isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				return master.then();
 			}
@@ -34309,7 +34672,11 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		bulk = key == null;
 
 	// Sets many values
+<<<<<<< HEAD
 	if ( toType( key ) === "object" ) {
+=======
+	if ( jQuery.type( key ) === "object" ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		chainable = true;
 		for ( i in key ) {
 			access( elems, fn, i, key[ i ], true, emptyGet, raw );
@@ -34319,7 +34686,11 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 	} else if ( value !== undefined ) {
 		chainable = true;
 
+<<<<<<< HEAD
 		if ( !isFunction( value ) ) {
+=======
+		if ( !jQuery.isFunction( value ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			raw = true;
 		}
 
@@ -34361,6 +34732,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 
 	return len ? fn( elems[ 0 ], key ) : emptyGet;
 };
+<<<<<<< HEAD
 
 
 // Matches dashed string for camelizing
@@ -34378,6 +34750,8 @@ function fcamelCase( all, letter ) {
 function camelCase( string ) {
 	return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 }
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 var acceptData = function( owner ) {
 
 	// Accepts only:
@@ -34440,14 +34814,22 @@ Data.prototype = {
 		// Handle: [ owner, key, value ] args
 		// Always use camelCase key (gh-2257)
 		if ( typeof data === "string" ) {
+<<<<<<< HEAD
 			cache[ camelCase( data ) ] = value;
+=======
+			cache[ jQuery.camelCase( data ) ] = value;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		// Handle: [ owner, { properties } ] args
 		} else {
 
 			// Copy the properties one-by-one to the cache object
 			for ( prop in data ) {
+<<<<<<< HEAD
 				cache[ camelCase( prop ) ] = data[ prop ];
+=======
+				cache[ jQuery.camelCase( prop ) ] = data[ prop ];
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			}
 		}
 		return cache;
@@ -34457,7 +34839,11 @@ Data.prototype = {
 			this.cache( owner ) :
 
 			// Always use camelCase key (gh-2257)
+<<<<<<< HEAD
 			owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
+=======
+			owner[ this.expando ] && owner[ this.expando ][ jQuery.camelCase( key ) ];
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	},
 	access: function( owner, key, value ) {
 
@@ -34505,9 +34891,15 @@ Data.prototype = {
 
 				// If key is an array of keys...
 				// We always set camelCase keys, so remove that.
+<<<<<<< HEAD
 				key = key.map( camelCase );
 			} else {
 				key = camelCase( key );
+=======
+				key = key.map( jQuery.camelCase );
+			} else {
+				key = jQuery.camelCase( key );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				// If a key with the spaces exists, use it.
 				// Otherwise, create an array by matching non-whitespace
@@ -34653,7 +35045,11 @@ jQuery.fn.extend( {
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
+<<<<<<< HEAD
 								name = camelCase( name.slice( 5 ) );
+=======
+								name = jQuery.camelCase( name.slice( 5 ) );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 								dataAttr( elem, name, data[ name ] );
 							}
 						}
@@ -34900,7 +35296,12 @@ var swap = function( elem, options, callback, args ) {
 
 
 function adjustCSS( elem, prop, valueParts, tween ) {
+<<<<<<< HEAD
 	var adjusted, scale,
+=======
+	var adjusted,
+		scale = 1,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		maxIterations = 20,
 		currentValue = tween ?
 			function() {
@@ -34918,6 +35319,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
 
+<<<<<<< HEAD
 		// Support: Firefox <=54
 		// Halve the iteration target value to prevent interference from CSS upper bounds (gh-2144)
 		initial = initial / 2;
@@ -34945,6 +35347,32 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 
 		// Make sure we update the tween properties later on
 		valueParts = valueParts || [];
+=======
+		// Trust units reported by jQuery.css
+		unit = unit || initialInUnit[ 3 ];
+
+		// Make sure we update the tween properties later on
+		valueParts = valueParts || [];
+
+		// Iteratively approximate from a nonzero starting point
+		initialInUnit = +initial || 1;
+
+		do {
+
+			// If previous iteration zeroed out, double until we get *something*.
+			// Use string for doubling so we don't accidentally see scale as unchanged below
+			scale = scale || ".5";
+
+			// Adjust and apply
+			initialInUnit = initialInUnit / scale;
+			jQuery.style( elem, prop, initialInUnit + unit );
+
+		// Update scale, tolerating zero or NaN from tween.cur()
+		// Break the loop if scale is unchanged or perfect, or if we've just had enough.
+		} while (
+			scale !== ( scale = currentValue() / initial ) && scale !== 1 && --maxIterations
+		);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	}
 
 	if ( valueParts ) {
@@ -35062,7 +35490,11 @@ var rcheckableType = ( /^(?:checkbox|radio)$/i );
 
 var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]+)/i );
 
+<<<<<<< HEAD
 var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
+=======
+var rscriptType = ( /^$|\/(?:java|ecma)script/i );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 
 
@@ -35144,7 +35576,11 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 		if ( elem || elem === 0 ) {
 
 			// Add nodes directly
+<<<<<<< HEAD
 			if ( toType( elem ) === "object" ) {
+=======
+			if ( jQuery.type( elem ) === "object" ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				// Support: Android <=4.0 only, PhantomJS 1 only
 				// push.apply(_, arraylike) throws on ancient WebKit
@@ -35654,7 +36090,11 @@ jQuery.event = {
 			enumerable: true,
 			configurable: true,
 
+<<<<<<< HEAD
 			get: isFunction( hook ) ?
+=======
+			get: jQuery.isFunction( hook ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				function() {
 					if ( this.originalEvent ) {
 							return hook( this.originalEvent );
@@ -35789,7 +36229,11 @@ jQuery.Event = function( src, props ) {
 	}
 
 	// Create a timestamp if incoming event doesn't have one
+<<<<<<< HEAD
 	this.timeStamp = src && src.timeStamp || Date.now();
+=======
+	this.timeStamp = src && src.timeStamp || jQuery.now();
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
@@ -35988,13 +36432,21 @@ var
 
 	/* eslint-enable */
 
+<<<<<<< HEAD
 	// Support: IE <=10 - 11, Edge 12 - 13 only
+=======
+	// Support: IE <=10 - 11, Edge 12 - 13
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	// In IE/Edge using regex groups here causes severe slowdowns.
 	// See https://connect.microsoft.com/IE/feedback/details/1736512/
 	rnoInnerhtml = /<script|<style|<link/i,
 
 	// checked="checked" or checked
 	rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
+<<<<<<< HEAD
+=======
+	rscriptTypeMasked = /^true\/(.*)/,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
 // Prefer a tbody over its parent table for containing new rows
@@ -36002,7 +36454,11 @@ function manipulationTarget( elem, content ) {
 	if ( nodeName( elem, "table" ) &&
 		nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
 
+<<<<<<< HEAD
 		return jQuery( elem ).children( "tbody" )[ 0 ] || elem;
+=======
+		return jQuery( ">tbody", elem )[ 0 ] || elem;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	}
 
 	return elem;
@@ -36014,8 +36470,15 @@ function disableScript( elem ) {
 	return elem;
 }
 function restoreScript( elem ) {
+<<<<<<< HEAD
 	if ( ( elem.type || "" ).slice( 0, 5 ) === "true/" ) {
 		elem.type = elem.type.slice( 5 );
+=======
+	var match = rscriptTypeMasked.exec( elem.type );
+
+	if ( match ) {
+		elem.type = match[ 1 ];
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	} else {
 		elem.removeAttribute( "type" );
 	}
@@ -36081,15 +36544,26 @@ function domManip( collection, args, callback, ignored ) {
 		l = collection.length,
 		iNoClone = l - 1,
 		value = args[ 0 ],
+<<<<<<< HEAD
 		valueIsFunction = isFunction( value );
 
 	// We can't cloneNode fragments that contain checked, in WebKit
 	if ( valueIsFunction ||
+=======
+		isFunction = jQuery.isFunction( value );
+
+	// We can't cloneNode fragments that contain checked, in WebKit
+	if ( isFunction ||
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			( l > 1 && typeof value === "string" &&
 				!support.checkClone && rchecked.test( value ) ) ) {
 		return collection.each( function( index ) {
 			var self = collection.eq( index );
+<<<<<<< HEAD
 			if ( valueIsFunction ) {
+=======
+			if ( isFunction ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
 			domManip( self, args, callback, ignored );
@@ -36143,14 +36617,22 @@ function domManip( collection, args, callback, ignored ) {
 						!dataPriv.access( node, "globalEval" ) &&
 						jQuery.contains( doc, node ) ) {
 
+<<<<<<< HEAD
 						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
+=======
+						if ( node.src ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 							// Optional AJAX dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl ) {
 								jQuery._evalUrl( node.src );
 							}
 						} else {
+<<<<<<< HEAD
 							DOMEval( node.textContent.replace( rcleanScript, "" ), doc, node );
+=======
+							DOMEval( node.textContent.replace( rcleanScript, "" ), doc );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 						}
 					}
 				}
@@ -36430,6 +36912,11 @@ jQuery.each( {
 		return this.pushStack( ret );
 	};
 } );
+<<<<<<< HEAD
+=======
+var rmargin = ( /^margin/ );
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 var rnumnonpx = new RegExp( "^(" + pnum + ")(?!px)[a-z%]+$", "i" );
 
 var getStyles = function( elem ) {
@@ -36446,8 +36933,11 @@ var getStyles = function( elem ) {
 		return view.getComputedStyle( elem );
 	};
 
+<<<<<<< HEAD
 var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 
 ( function() {
@@ -36461,6 +36951,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 			return;
 		}
 
+<<<<<<< HEAD
 		container.style.cssText = "position:absolute;left:-11111px;width:60px;" +
 			"margin-top:1px;padding:0;border:0";
 		div.style.cssText =
@@ -36468,11 +36959,21 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 			"margin:auto;border:1px;padding:1px;" +
 			"width:60%;top:1%";
 		documentElement.appendChild( container ).appendChild( div );
+=======
+		div.style.cssText =
+			"box-sizing:border-box;" +
+			"position:relative;display:block;" +
+			"margin:auto;border:1px;padding:1px;" +
+			"top:1%;width:50%";
+		div.innerHTML = "";
+		documentElement.appendChild( container );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		var divStyle = window.getComputedStyle( div );
 		pixelPositionVal = divStyle.top !== "1%";
 
 		// Support: Android 4.0 - 4.3 only, Firefox <=3 - 44
+<<<<<<< HEAD
 		reliableMarginLeftVal = roundPixelMeasures( divStyle.marginLeft ) === 12;
 
 		// Support: Android 4.0 - 4.3 only, Safari <=9.1 - 10.1, iOS <=7.0 - 9.3
@@ -36488,6 +36989,15 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		// Detect overflow:scroll screwiness (gh-3699)
 		div.style.position = "absolute";
 		scrollboxSizeVal = div.offsetWidth === 36 || "absolute";
+=======
+		reliableMarginLeftVal = divStyle.marginLeft === "2px";
+		boxSizingReliableVal = divStyle.width === "4px";
+
+		// Support: Android 4.0 - 4.3 only
+		// Some styles come back with percentage values, even though they shouldn't
+		div.style.marginRight = "50%";
+		pixelMarginRightVal = divStyle.marginRight === "4px";
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		documentElement.removeChild( container );
 
@@ -36496,12 +37006,16 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		div = null;
 	}
 
+<<<<<<< HEAD
 	function roundPixelMeasures( measure ) {
 		return Math.round( parseFloat( measure ) );
 	}
 
 	var pixelPositionVal, boxSizingReliableVal, scrollboxSizeVal, pixelBoxStylesVal,
 		reliableMarginLeftVal,
+=======
+	var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		container = document.createElement( "div" ),
 		div = document.createElement( "div" );
 
@@ -36516,6 +37030,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 	div.cloneNode( true ).style.backgroundClip = "";
 	support.clearCloneStyle = div.style.backgroundClip === "content-box";
 
+<<<<<<< HEAD
 	jQuery.extend( support, {
 		boxSizingReliable: function() {
 			computeStyleTests();
@@ -36528,14 +37043,35 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		pixelPosition: function() {
 			computeStyleTests();
 			return pixelPositionVal;
+=======
+	container.style.cssText = "border:0;width:8px;height:0;top:0;left:-9999px;" +
+		"padding:0;margin-top:1px;position:absolute";
+	container.appendChild( div );
+
+	jQuery.extend( support, {
+		pixelPosition: function() {
+			computeStyleTests();
+			return pixelPositionVal;
+		},
+		boxSizingReliable: function() {
+			computeStyleTests();
+			return boxSizingReliableVal;
+		},
+		pixelMarginRight: function() {
+			computeStyleTests();
+			return pixelMarginRightVal;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		},
 		reliableMarginLeft: function() {
 			computeStyleTests();
 			return reliableMarginLeftVal;
+<<<<<<< HEAD
 		},
 		scrollboxSize: function() {
 			computeStyleTests();
 			return scrollboxSizeVal;
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		}
 	} );
 } )();
@@ -36567,7 +37103,11 @@ function curCSS( elem, name, computed ) {
 		// but width seems to be reliably pixels.
 		// This is against the CSSOM draft spec:
 		// https://drafts.csswg.org/cssom/#resolved-values
+<<<<<<< HEAD
 		if ( !support.pixelBoxStyles() && rnumnonpx.test( ret ) && rboxStyle.test( name ) ) {
+=======
+		if ( !support.pixelMarginRight() && rnumnonpx.test( ret ) && rmargin.test( name ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 			// Remember the original values
 			width = style.width;
@@ -36672,6 +37212,7 @@ function setPositiveNumber( elem, value, subtract ) {
 		value;
 }
 
+<<<<<<< HEAD
 function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computedVal ) {
 	var i = dimension === "width" ? 1 : 0,
 		extra = 0,
@@ -36680,10 +37221,24 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 	// Adjustment may not be necessary
 	if ( box === ( isBorderBox ? "border" : "content" ) ) {
 		return 0;
+=======
+function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
+	var i,
+		val = 0;
+
+	// If we already have the right measurement, avoid augmentation
+	if ( extra === ( isBorderBox ? "border" : "content" ) ) {
+		i = 4;
+
+	// Otherwise initialize for horizontal or vertical properties
+	} else {
+		i = name === "width" ? 1 : 0;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	}
 
 	for ( ; i < 4; i += 2 ) {
 
+<<<<<<< HEAD
 		// Both box models exclude margin
 		if ( box === "margin" ) {
 			delta += jQuery.css( elem, box + cssExpand[ i ], true, styles );
@@ -36716,10 +37271,37 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 			// For "content" or "padding", subtract border
 			if ( box !== "margin" ) {
 				delta -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+=======
+		// Both box models exclude margin, so add it if we want it
+		if ( extra === "margin" ) {
+			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
+		}
+
+		if ( isBorderBox ) {
+
+			// border-box includes padding, so remove it if we want content
+			if ( extra === "content" ) {
+				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+			}
+
+			// At this point, extra isn't border nor margin, so remove border
+			if ( extra !== "margin" ) {
+				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+			}
+		} else {
+
+			// At this point, extra isn't content, so add padding
+			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+
+			// At this point, extra isn't content nor padding, so add border
+			if ( extra !== "padding" ) {
+				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	// Account for positive content-box scroll gutter when requested by providing computedVal
 	if ( !isBorderBox && computedVal >= 0 ) {
 
@@ -36752,10 +37334,27 @@ function getWidthOrHeight( elem, dimension, extra ) {
 			return val;
 		}
 		val = "auto";
+=======
+	return val;
+}
+
+function getWidthOrHeight( elem, name, extra ) {
+
+	// Start with computed style
+	var valueIsBorderBox,
+		styles = getStyles( elem ),
+		val = curCSS( elem, name, styles ),
+		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
+
+	// Computed unit is not pixels. Stop here and return.
+	if ( rnumnonpx.test( val ) ) {
+		return val;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	}
 
 	// Check for style in case a browser which returns unreliable values
 	// for getComputedStyle silently falls back to the reliable elem.style
+<<<<<<< HEAD
 	valueIsBorderBox = valueIsBorderBox &&
 		( support.boxSizingReliable() || val === elem.style[ dimension ] );
 
@@ -36786,6 +37385,28 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 			// Provide the current computed size to request scroll gutter calculation (gh-3589)
 			val
+=======
+	valueIsBorderBox = isBorderBox &&
+		( support.boxSizingReliable() || val === elem.style[ name ] );
+
+	// Fall back to offsetWidth/Height when value is "auto"
+	// This happens for inline elements with no explicit setting (gh-3571)
+	if ( val === "auto" ) {
+		val = elem[ "offset" + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
+	}
+
+	// Normalize "", auto, and prepare for extra
+	val = parseFloat( val ) || 0;
+
+	// Use the active box-sizing model to add/subtract irrelevant styles
+	return ( val +
+		augmentWidthOrHeight(
+			elem,
+			name,
+			extra || ( isBorderBox ? "border" : "content" ),
+			valueIsBorderBox,
+			styles
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		)
 	) + "px";
 }
@@ -36826,7 +37447,13 @@ jQuery.extend( {
 
 	// Add in properties whose names you wish to fix before
 	// setting or getting the value
+<<<<<<< HEAD
 	cssProps: {},
+=======
+	cssProps: {
+		"float": "cssFloat"
+	},
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 	// Get and set the style property on a DOM Node
 	style: function( elem, name, value, extra ) {
@@ -36838,7 +37465,11 @@ jQuery.extend( {
 
 		// Make sure that we're working with the right name
 		var ret, type, hooks,
+<<<<<<< HEAD
 			origName = camelCase( name ),
+=======
+			origName = jQuery.camelCase( name ),
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			isCustomProp = rcustomProp.test( name ),
 			style = elem.style;
 
@@ -36906,7 +37537,11 @@ jQuery.extend( {
 
 	css: function( elem, name, extra, styles ) {
 		var val, num, hooks,
+<<<<<<< HEAD
 			origName = camelCase( name ),
+=======
+			origName = jQuery.camelCase( name ),
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			isCustomProp = rcustomProp.test( name );
 
 		// Make sure that we're working with the right name. We don't
@@ -36944,8 +37579,13 @@ jQuery.extend( {
 	}
 } );
 
+<<<<<<< HEAD
 jQuery.each( [ "height", "width" ], function( i, dimension ) {
 	jQuery.cssHooks[ dimension ] = {
+=======
+jQuery.each( [ "height", "width" ], function( i, name ) {
+	jQuery.cssHooks[ name ] = {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
@@ -36961,14 +37601,21 @@ jQuery.each( [ "height", "width" ], function( i, dimension ) {
 					// in IE throws an error.
 					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
 						swap( elem, cssShow, function() {
+<<<<<<< HEAD
 							return getWidthOrHeight( elem, dimension, extra );
 						} ) :
 						getWidthOrHeight( elem, dimension, extra );
+=======
+							return getWidthOrHeight( elem, name, extra );
+						} ) :
+						getWidthOrHeight( elem, name, extra );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			}
 		},
 
 		set: function( elem, value, extra ) {
 			var matches,
+<<<<<<< HEAD
 				styles = getStyles( elem ),
 				isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
 				subtract = extra && boxModelAdjustment(
@@ -36990,12 +37637,28 @@ jQuery.each( [ "height", "width" ], function( i, dimension ) {
 				);
 			}
 
+=======
+				styles = extra && getStyles( elem ),
+				subtract = extra && augmentWidthOrHeight(
+					elem,
+					name,
+					extra,
+					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+					styles
+				);
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			// Convert to pixels if value adjustment is needed
 			if ( subtract && ( matches = rcssNum.exec( value ) ) &&
 				( matches[ 3 ] || "px" ) !== "px" ) {
 
+<<<<<<< HEAD
 				elem.style[ dimension ] = value;
 				value = jQuery.css( elem, dimension );
+=======
+				elem.style[ name ] = value;
+				value = jQuery.css( elem, name );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			}
 
 			return setPositiveNumber( elem, value, subtract );
@@ -37039,7 +37702,11 @@ jQuery.each( {
 		}
 	};
 
+<<<<<<< HEAD
 	if ( prefix !== "margin" ) {
+=======
+	if ( !rmargin.test( prefix ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		jQuery.cssHooks[ prefix + suffix ].set = setPositiveNumber;
 	}
 } );
@@ -37210,7 +37877,11 @@ function createFxNow() {
 	window.setTimeout( function() {
 		fxNow = undefined;
 	} );
+<<<<<<< HEAD
 	return ( fxNow = Date.now() );
+=======
+	return ( fxNow = jQuery.now() );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 }
 
 // Generate parameters to create a standard animation
@@ -37314,10 +37985,16 @@ function defaultPrefilter( elem, props, opts ) {
 	// Restrict "overflow" and "display" styles during box animations
 	if ( isBox && elem.nodeType === 1 ) {
 
+<<<<<<< HEAD
 		// Support: IE <=9 - 11, Edge 12 - 15
 		// Record all 3 overflow attributes because IE does not infer the shorthand
 		// from identically-valued overflowX and overflowY and Edge just mirrors
 		// the overflowX value there.
+=======
+		// Support: IE <=9 - 11, Edge 12 - 13
+		// Record all 3 overflow attributes because IE does not infer the shorthand
+		// from identically-valued overflowX and overflowY
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
 
 		// Identify a display type, preferring old show/hide data over the CSS cascade
@@ -37425,7 +38102,11 @@ function propFilter( props, specialEasing ) {
 
 	// camelCase, specialEasing and expand cssHook pass
 	for ( index in props ) {
+<<<<<<< HEAD
 		name = camelCase( index );
+=======
+		name = jQuery.camelCase( index );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		easing = specialEasing[ name ];
 		value = props[ index ];
 		if ( Array.isArray( value ) ) {
@@ -37550,9 +38231,15 @@ function Animation( elem, properties, options ) {
 	for ( ; index < length; index++ ) {
 		result = Animation.prefilters[ index ].call( animation, elem, props, animation.opts );
 		if ( result ) {
+<<<<<<< HEAD
 			if ( isFunction( result.stop ) ) {
 				jQuery._queueHooks( animation.elem, animation.opts.queue ).stop =
 					result.stop.bind( result );
+=======
+			if ( jQuery.isFunction( result.stop ) ) {
+				jQuery._queueHooks( animation.elem, animation.opts.queue ).stop =
+					jQuery.proxy( result.stop, result );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			}
 			return result;
 		}
@@ -37560,7 +38247,11 @@ function Animation( elem, properties, options ) {
 
 	jQuery.map( props, createTween, animation );
 
+<<<<<<< HEAD
 	if ( isFunction( animation.opts.start ) ) {
+=======
+	if ( jQuery.isFunction( animation.opts.start ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		animation.opts.start.call( elem, animation );
 	}
 
@@ -37593,7 +38284,11 @@ jQuery.Animation = jQuery.extend( Animation, {
 	},
 
 	tweener: function( props, callback ) {
+<<<<<<< HEAD
 		if ( isFunction( props ) ) {
+=======
+		if ( jQuery.isFunction( props ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			callback = props;
 			props = [ "*" ];
 		} else {
@@ -37625,9 +38320,15 @@ jQuery.Animation = jQuery.extend( Animation, {
 jQuery.speed = function( speed, easing, fn ) {
 	var opt = speed && typeof speed === "object" ? jQuery.extend( {}, speed ) : {
 		complete: fn || !fn && easing ||
+<<<<<<< HEAD
 			isFunction( speed ) && speed,
 		duration: speed,
 		easing: fn && easing || easing && !isFunction( easing ) && easing
+=======
+			jQuery.isFunction( speed ) && speed,
+		duration: speed,
+		easing: fn && easing || easing && !jQuery.isFunction( easing ) && easing
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	};
 
 	// Go to the end state if fx are off
@@ -37654,7 +38355,11 @@ jQuery.speed = function( speed, easing, fn ) {
 	opt.old = opt.complete;
 
 	opt.complete = function() {
+<<<<<<< HEAD
 		if ( isFunction( opt.old ) ) {
+=======
+		if ( jQuery.isFunction( opt.old ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			opt.old.call( this );
 		}
 
@@ -37818,7 +38523,11 @@ jQuery.fx.tick = function() {
 		i = 0,
 		timers = jQuery.timers;
 
+<<<<<<< HEAD
 	fxNow = Date.now();
+=======
+	fxNow = jQuery.now();
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 	for ( ; i < timers.length; i++ ) {
 		timer = timers[ i ];
@@ -38171,7 +38880,11 @@ jQuery.each( [
 
 
 	// Strip and collapse whitespace according to HTML spec
+<<<<<<< HEAD
 	// https://infra.spec.whatwg.org/#strip-and-collapse-ascii-whitespace
+=======
+	// https://html.spec.whatwg.org/multipage/infrastructure.html#strip-and-collapse-whitespace
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	function stripAndCollapse( value ) {
 		var tokens = value.match( rnothtmlwhite ) || [];
 		return tokens.join( " " );
@@ -38182,6 +38895,7 @@ function getClass( elem ) {
 	return elem.getAttribute && elem.getAttribute( "class" ) || "";
 }
 
+<<<<<<< HEAD
 function classesToArray( value ) {
 	if ( Array.isArray( value ) ) {
 		return value;
@@ -38192,20 +38906,32 @@ function classesToArray( value ) {
 	return [];
 }
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 jQuery.fn.extend( {
 	addClass: function( value ) {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
 
+<<<<<<< HEAD
 		if ( isFunction( value ) ) {
+=======
+		if ( jQuery.isFunction( value ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			return this.each( function( j ) {
 				jQuery( this ).addClass( value.call( this, j, getClass( this ) ) );
 			} );
 		}
 
+<<<<<<< HEAD
 		classes = classesToArray( value );
 
 		if ( classes.length ) {
+=======
+		if ( typeof value === "string" && value ) {
+			classes = value.match( rnothtmlwhite ) || [];
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			while ( ( elem = this[ i++ ] ) ) {
 				curValue = getClass( elem );
 				cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
@@ -38234,7 +38960,11 @@ jQuery.fn.extend( {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
 
+<<<<<<< HEAD
 		if ( isFunction( value ) ) {
+=======
+		if ( jQuery.isFunction( value ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			return this.each( function( j ) {
 				jQuery( this ).removeClass( value.call( this, j, getClass( this ) ) );
 			} );
@@ -38244,9 +38974,15 @@ jQuery.fn.extend( {
 			return this.attr( "class", "" );
 		}
 
+<<<<<<< HEAD
 		classes = classesToArray( value );
 
 		if ( classes.length ) {
+=======
+		if ( typeof value === "string" && value ) {
+			classes = value.match( rnothtmlwhite ) || [];
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			while ( ( elem = this[ i++ ] ) ) {
 				curValue = getClass( elem );
 
@@ -38276,6 +39012,7 @@ jQuery.fn.extend( {
 	},
 
 	toggleClass: function( value, stateVal ) {
+<<<<<<< HEAD
 		var type = typeof value,
 			isValidValue = type === "string" || Array.isArray( value );
 
@@ -38284,6 +39021,15 @@ jQuery.fn.extend( {
 		}
 
 		if ( isFunction( value ) ) {
+=======
+		var type = typeof value;
+
+		if ( typeof stateVal === "boolean" && type === "string" ) {
+			return stateVal ? this.addClass( value ) : this.removeClass( value );
+		}
+
+		if ( jQuery.isFunction( value ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			return this.each( function( i ) {
 				jQuery( this ).toggleClass(
 					value.call( this, i, getClass( this ), stateVal ),
@@ -38295,12 +39041,20 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			var className, i, self, classNames;
 
+<<<<<<< HEAD
 			if ( isValidValue ) {
+=======
+			if ( type === "string" ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				// Toggle individual class names
 				i = 0;
 				self = jQuery( this );
+<<<<<<< HEAD
 				classNames = classesToArray( value );
+=======
+				classNames = value.match( rnothtmlwhite ) || [];
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				while ( ( className = classNames[ i++ ] ) ) {
 
@@ -38359,7 +39113,11 @@ var rreturn = /\r/g;
 
 jQuery.fn.extend( {
 	val: function( value ) {
+<<<<<<< HEAD
 		var hooks, ret, valueIsFunction,
+=======
+		var hooks, ret, isFunction,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			elem = this[ 0 ];
 
 		if ( !arguments.length ) {
@@ -38388,7 +39146,11 @@ jQuery.fn.extend( {
 			return;
 		}
 
+<<<<<<< HEAD
 		valueIsFunction = isFunction( value );
+=======
+		isFunction = jQuery.isFunction( value );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		return this.each( function( i ) {
 			var val;
@@ -38397,7 +39159,11 @@ jQuery.fn.extend( {
 				return;
 			}
 
+<<<<<<< HEAD
 			if ( valueIsFunction ) {
+=======
+			if ( isFunction ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				val = value.call( this, i, jQuery( this ).val() );
 			} else {
 				val = value;
@@ -38539,6 +39305,7 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 // Return jQuery for attributes-only inclusion
 
 
+<<<<<<< HEAD
 support.focusin = "onfocusin" in window;
 
 
@@ -38546,17 +39313,28 @@ var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 	stopPropagationCallback = function( e ) {
 		e.stopPropagation();
 	};
+=======
+var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 jQuery.extend( jQuery.event, {
 
 	trigger: function( event, data, elem, onlyHandlers ) {
 
+<<<<<<< HEAD
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
+=======
+		var i, cur, tmp, bubbleType, ontype, handle, special,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			eventPath = [ elem || document ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
 			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
 
+<<<<<<< HEAD
 		cur = lastElement = tmp = elem = elem || document;
+=======
+		cur = tmp = elem = elem || document;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		// Don't do events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
@@ -38608,7 +39386,11 @@ jQuery.extend( jQuery.event, {
 
 		// Determine event propagation path in advance, per W3C events spec (#9951)
 		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
+<<<<<<< HEAD
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
+=======
+		if ( !onlyHandlers && !special.noBubble && !jQuery.isWindow( elem ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 			bubbleType = special.delegateType || type;
 			if ( !rfocusMorph.test( bubbleType + type ) ) {
@@ -38628,7 +39410,11 @@ jQuery.extend( jQuery.event, {
 		// Fire handlers on the event path
 		i = 0;
 		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
+<<<<<<< HEAD
 			lastElement = cur;
+=======
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			event.type = i > 1 ?
 				bubbleType :
 				special.bindType || type;
@@ -38660,7 +39446,11 @@ jQuery.extend( jQuery.event, {
 
 				// Call a native DOM method on the target with the same name as the event.
 				// Don't do default actions on window, that's where global variables be (#6170)
+<<<<<<< HEAD
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
+=======
+				if ( ontype && jQuery.isFunction( elem[ type ] ) && !jQuery.isWindow( elem ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
 					tmp = elem[ ontype ];
@@ -38671,6 +39461,7 @@ jQuery.extend( jQuery.event, {
 
 					// Prevent re-triggering of the same event, since we already bubbled it above
 					jQuery.event.triggered = type;
+<<<<<<< HEAD
 
 					if ( event.isPropagationStopped() ) {
 						lastElement.addEventListener( type, stopPropagationCallback );
@@ -38682,6 +39473,9 @@ jQuery.extend( jQuery.event, {
 						lastElement.removeEventListener( type, stopPropagationCallback );
 					}
 
+=======
+					elem[ type ]();
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 					jQuery.event.triggered = undefined;
 
 					if ( tmp ) {
@@ -38727,6 +39521,34 @@ jQuery.fn.extend( {
 } );
 
 
+<<<<<<< HEAD
+=======
+jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
+	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
+	function( i, name ) {
+
+	// Handle event binding
+	jQuery.fn[ name ] = function( data, fn ) {
+		return arguments.length > 0 ?
+			this.on( name, null, data, fn ) :
+			this.trigger( name );
+	};
+} );
+
+jQuery.fn.extend( {
+	hover: function( fnOver, fnOut ) {
+		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
+	}
+} );
+
+
+
+
+support.focusin = "onfocusin" in window;
+
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 // Support: Firefox <=44
 // Firefox doesn't have focus(in | out) events
 // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
@@ -38770,7 +39592,11 @@ if ( !support.focusin ) {
 }
 var location = window.location;
 
+<<<<<<< HEAD
 var nonce = Date.now();
+=======
+var nonce = jQuery.now();
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 var rquery = ( /\?/ );
 
@@ -38828,7 +39654,11 @@ function buildParams( prefix, obj, traditional, add ) {
 			}
 		} );
 
+<<<<<<< HEAD
 	} else if ( !traditional && toType( obj ) === "object" ) {
+=======
+	} else if ( !traditional && jQuery.type( obj ) === "object" ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		// Serialize object item.
 		for ( name in obj ) {
@@ -38850,7 +39680,11 @@ jQuery.param = function( a, traditional ) {
 		add = function( key, valueOrFunction ) {
 
 			// If value is a function, invoke it and use its return value
+<<<<<<< HEAD
 			var value = isFunction( valueOrFunction ) ?
+=======
+			var value = jQuery.isFunction( valueOrFunction ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				valueOrFunction() :
 				valueOrFunction;
 
@@ -38968,7 +39802,11 @@ function addToPrefiltersOrTransports( structure ) {
 			i = 0,
 			dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
 
+<<<<<<< HEAD
 		if ( isFunction( func ) ) {
+=======
+		if ( jQuery.isFunction( func ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 			// For each dataType in the dataTypeExpression
 			while ( ( dataType = dataTypes[ i++ ] ) ) {
@@ -39440,7 +40278,11 @@ jQuery.extend( {
 		if ( s.crossDomain == null ) {
 			urlAnchor = document.createElement( "a" );
 
+<<<<<<< HEAD
 			// Support: IE <=8 - 11, Edge 12 - 15
+=======
+			// Support: IE <=8 - 11, Edge 12 - 13
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			// IE throws exception on accessing the href property if url is malformed,
 			// e.g. http://example.com:80x/
 			try {
@@ -39498,8 +40340,13 @@ jQuery.extend( {
 			// Remember the hash so we can put it back
 			uncached = s.url.slice( cacheURL.length );
 
+<<<<<<< HEAD
 			// If data is available and should be processed, append data to url
 			if ( s.data && ( s.processData || typeof s.data === "string" ) ) {
+=======
+			// If data is available, append data to url
+			if ( s.data ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
 				// #9682: remove data so that it's not used in an eventual retry
@@ -39736,7 +40583,11 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 	jQuery[ method ] = function( url, data, callback, type ) {
 
 		// Shift arguments if data argument was omitted
+<<<<<<< HEAD
 		if ( isFunction( data ) ) {
+=======
+		if ( jQuery.isFunction( data ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			type = type || callback;
 			callback = data;
 			data = undefined;
@@ -39774,7 +40625,11 @@ jQuery.fn.extend( {
 		var wrap;
 
 		if ( this[ 0 ] ) {
+<<<<<<< HEAD
 			if ( isFunction( html ) ) {
+=======
+			if ( jQuery.isFunction( html ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				html = html.call( this[ 0 ] );
 			}
 
@@ -39800,7 +40655,11 @@ jQuery.fn.extend( {
 	},
 
 	wrapInner: function( html ) {
+<<<<<<< HEAD
 		if ( isFunction( html ) ) {
+=======
+		if ( jQuery.isFunction( html ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			return this.each( function( i ) {
 				jQuery( this ).wrapInner( html.call( this, i ) );
 			} );
@@ -39820,10 +40679,17 @@ jQuery.fn.extend( {
 	},
 
 	wrap: function( html ) {
+<<<<<<< HEAD
 		var htmlIsFunction = isFunction( html );
 
 		return this.each( function( i ) {
 			jQuery( this ).wrapAll( htmlIsFunction ? html.call( this, i ) : html );
+=======
+		var isFunction = jQuery.isFunction( html );
+
+		return this.each( function( i ) {
+			jQuery( this ).wrapAll( isFunction ? html.call( this, i ) : html );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		} );
 	},
 
@@ -39915,8 +40781,12 @@ jQuery.ajaxTransport( function( options ) {
 					return function() {
 						if ( callback ) {
 							callback = errorCallback = xhr.onload =
+<<<<<<< HEAD
 								xhr.onerror = xhr.onabort = xhr.ontimeout =
 									xhr.onreadystatechange = null;
+=======
+								xhr.onerror = xhr.onabort = xhr.onreadystatechange = null;
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 							if ( type === "abort" ) {
 								xhr.abort();
@@ -39956,7 +40826,11 @@ jQuery.ajaxTransport( function( options ) {
 
 				// Listen to events
 				xhr.onload = callback();
+<<<<<<< HEAD
 				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
+=======
+				errorCallback = xhr.onerror = callback( "error" );
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 				// Support: IE 9 only
 				// Use onreadystatechange to replace onabort
@@ -40110,7 +40984,11 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
 		// Get callback name, remembering preexisting value associated with it
+<<<<<<< HEAD
 		callbackName = s.jsonpCallback = isFunction( s.jsonpCallback ) ?
+=======
+		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			s.jsonpCallback() :
 			s.jsonpCallback;
 
@@ -40161,7 +41039,11 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			}
 
 			// Call if it was a function and we have a response
+<<<<<<< HEAD
 			if ( responseContainer && isFunction( overwritten ) ) {
+=======
+			if ( responseContainer && jQuery.isFunction( overwritten ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				overwritten( responseContainer[ 0 ] );
 			}
 
@@ -40253,7 +41135,11 @@ jQuery.fn.load = function( url, params, callback ) {
 	}
 
 	// If it's a function
+<<<<<<< HEAD
 	if ( isFunction( params ) ) {
+=======
+	if ( jQuery.isFunction( params ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 		// We assume that it's the callback
 		callback = params;
@@ -40361,7 +41247,11 @@ jQuery.offset = {
 			curLeft = parseFloat( curCSSLeft ) || 0;
 		}
 
+<<<<<<< HEAD
 		if ( isFunction( options ) ) {
+=======
+		if ( jQuery.isFunction( options ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 			// Use jQuery.extend here to allow modification of coordinates argument (gh-1848)
 			options = options.call( elem, i, jQuery.extend( {}, curOffset ) );
@@ -40384,8 +41274,11 @@ jQuery.offset = {
 };
 
 jQuery.fn.extend( {
+<<<<<<< HEAD
 
 	// offset() relates an element's border box to the document origin
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	offset: function( options ) {
 
 		// Preserve chaining for setter
@@ -40397,7 +41290,11 @@ jQuery.fn.extend( {
 				} );
 		}
 
+<<<<<<< HEAD
 		var rect, win,
+=======
+		var doc, docElem, rect, win,
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 			elem = this[ 0 ];
 
 		if ( !elem ) {
@@ -40412,6 +41309,7 @@ jQuery.fn.extend( {
 			return { top: 0, left: 0 };
 		}
 
+<<<<<<< HEAD
 		// Get document-relative position by adding viewport scroll to viewport-relative gBCR
 		rect = elem.getBoundingClientRect();
 		win = elem.ownerDocument.defaultView;
@@ -40423,11 +41321,26 @@ jQuery.fn.extend( {
 
 	// position() relates an element's margin box to its offset parent's padding box
 	// This corresponds to the behavior of CSS absolute positioning
+=======
+		rect = elem.getBoundingClientRect();
+
+		doc = elem.ownerDocument;
+		docElem = doc.documentElement;
+		win = doc.defaultView;
+
+		return {
+			top: rect.top + win.pageYOffset - docElem.clientTop,
+			left: rect.left + win.pageXOffset - docElem.clientLeft
+		};
+	},
+
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 	position: function() {
 		if ( !this[ 0 ] ) {
 			return;
 		}
 
+<<<<<<< HEAD
 		var offsetParent, offset, doc,
 			elem = this[ 0 ],
 			parentOffset = { top: 0, left: 0 };
@@ -40458,6 +41371,35 @@ jQuery.fn.extend( {
 				parentOffset.top += jQuery.css( offsetParent, "borderTopWidth", true );
 				parentOffset.left += jQuery.css( offsetParent, "borderLeftWidth", true );
 			}
+=======
+		var offsetParent, offset,
+			elem = this[ 0 ],
+			parentOffset = { top: 0, left: 0 };
+
+		// Fixed elements are offset from window (parentOffset = {top:0, left: 0},
+		// because it is its only offset parent
+		if ( jQuery.css( elem, "position" ) === "fixed" ) {
+
+			// Assume getBoundingClientRect is there when computed position is fixed
+			offset = elem.getBoundingClientRect();
+
+		} else {
+
+			// Get *real* offsetParent
+			offsetParent = this.offsetParent();
+
+			// Get correct offsets
+			offset = this.offset();
+			if ( !nodeName( offsetParent[ 0 ], "html" ) ) {
+				parentOffset = offsetParent.offset();
+			}
+
+			// Add offsetParent borders
+			parentOffset = {
+				top: parentOffset.top + jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ),
+				left: parentOffset.left + jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true )
+			};
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 		}
 
 		// Subtract parent offsets and element margins
@@ -40499,7 +41441,11 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 
 			// Coalesce documents and windows
 			var win;
+<<<<<<< HEAD
 			if ( isWindow( elem ) ) {
+=======
+			if ( jQuery.isWindow( elem ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 				win = elem;
 			} else if ( elem.nodeType === 9 ) {
 				win = elem.defaultView;
@@ -40557,7 +41503,11 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 			return access( this, function( elem, type, value ) {
 				var doc;
 
+<<<<<<< HEAD
 				if ( isWindow( elem ) ) {
+=======
+				if ( jQuery.isWindow( elem ) ) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 					// $( window ).outerWidth/Height return w/h including scrollbars (gh-1729)
 					return funcName.indexOf( "outer" ) === 0 ?
@@ -40591,6 +41541,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 } );
 
 
+<<<<<<< HEAD
 jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
@@ -40613,6 +41564,8 @@ jQuery.fn.extend( {
 
 
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 jQuery.fn.extend( {
 
 	bind: function( types, data, fn ) {
@@ -40634,6 +41587,7 @@ jQuery.fn.extend( {
 	}
 } );
 
+<<<<<<< HEAD
 // Bind a function to a context, optionally partially applying any
 // arguments.
 // jQuery.proxy is deprecated to promote standards (specifically Function#bind)
@@ -40665,6 +41619,8 @@ jQuery.proxy = function( fn, context ) {
 	return proxy;
 };
 
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 jQuery.holdReady = function( hold ) {
 	if ( hold ) {
 		jQuery.readyWait++;
@@ -40675,6 +41631,7 @@ jQuery.holdReady = function( hold ) {
 jQuery.isArray = Array.isArray;
 jQuery.parseJSON = JSON.parse;
 jQuery.nodeName = nodeName;
+<<<<<<< HEAD
 jQuery.isFunction = isFunction;
 jQuery.isWindow = isWindow;
 jQuery.camelCase = camelCase;
@@ -40695,6 +41652,8 @@ jQuery.isNumeric = function( obj ) {
 		// subtraction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );
 };
+=======
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 
 
@@ -45909,6 +46868,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
 
 
 
@@ -45920,6 +46886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             wiki: [{
+<<<<<<< HEAD
                 id: 1,
                 title: "Civil War",
                 content: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae porttitor justo, sed ultricies sapien. Suspendisse imperdiet leo volutpat maximus finibus. Proin aliquet lectus nec neque consequat, in sagittis nunc congue. Aenean viverra tellus odio, sed sodales ante mattis sed. Phasellus vestibulum enim quis nunc scelerisque auctor. Duis est libero, rhoncus ac dui id, pretium aliquet eros. Nam ut posuere turpis, a rutrum ipsum.\n" + "\n" + "Integer pretium, lacus nec posuere suscipit, ipsum enim ullamcorper leo, id blandit erat magna ac magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque et quam ac erat hendrerit laoreet eu at ex. Nam et varius dolor. Pellentesque consectetur aliquet mi. Morbi congue sem nec orci tempus, a scelerisque elit fringilla. Suspendisse auctor tortor vitae diam porttitor pharetra. Praesent eu velit varius mi fermentum vulputate. Sed nec risus sit amet eros mollis volutpat ut fringilla orci. Duis laoreet erat eu erat volutpat venenatis. Nulla faucibus, nibh in sollicitudin tempor, sem sem malesuada odio, sed mattis elit diam nec lorem. Integer eu elit sit amet dui volutpat pretium eget vulputate purus. "
@@ -45930,6 +46897,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }],
             currentTitle: "",
             currentContent: ""
+=======
+
+                id: 1,
+                english: {
+                    title: "Civil War",
+                    content: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae porttitor justo, sed ultricies sapien. Suspendisse imperdiet leo volutpat maximus finibus. Proin aliquet lectus nec neque consequat, in sagittis nunc congue. Aenean viverra tellus odio, sed sodales ante mattis sed. Phasellus vestibulum enim quis nunc scelerisque auctor. Duis est libero, rhoncus ac dui id, pretium aliquet eros. Nam ut posuere turpis, a rutrum ipsum.\n" + "\n" + "Integer pretium, lacus nec posuere suscipit, ipsum enim ullamcorper leo, id blandit erat magna ac magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque et quam ac erat hendrerit laoreet eu at ex. Nam et varius dolor. Pellentesque consectetur aliquet mi. Morbi congue sem nec orci tempus, a scelerisque elit fringilla. Suspendisse auctor tortor vitae diam porttitor pharetra. Praesent eu velit varius mi fermentum vulputate. Sed nec risus sit amet eros mollis volutpat ut fringilla orci. Duis laoreet erat eu erat volutpat venenatis. Nulla faucibus, nibh in sollicitudin tempor, sem sem malesuada odio, sed mattis elit diam nec lorem. Integer eu elit sit amet dui volutpat pretium eget vulputate purus. ",
+                    subtitles: ['one', 'two']
+                },
+                spanish: {
+                    title: "Guerra Civil",
+                    content: "hola taco burrito",
+                    subtitles: ['uno', 'dos']
+
+                }
+            }, {
+
+                id: 2,
+                english: {
+                    title: "Spain",
+                    content: "Etiam dignissim interdum ultrices. Donec sagittis vestibulum eros vel vulputate. Aliquam at ante viverra massa feugiat mollis id vitae velit. Maecenas ultricies ligula dignissim eros cursus aliquam. Sed ante dui, hendrerit lacinia purus non, vulputate placerat erat. Praesent eleifend gravida sem. Pellentesque imperdiet, tellus vitae gravida venenatis, arcu est facilisis orci, nec volutpat est enim vitae odio. Curabitur sit amet quam fermentum, pulvinar elit sit amet, efficitur erat. Cras gravida iaculis massa auctor volutpat. ",
+                    subtitles: ['one', 'two', 'three']
+                },
+                spanish: {
+                    title: "España",
+                    content: "More tacos and burrtios please.",
+                    subtitles: [{
+                        id: 3,
+                        title: "Again",
+                        content: "This is some content in a subtitle."
+                    }, {
+                        id: 4,
+                        title: "here",
+                        content: "more subtitle content here."
+                    }]
+                }
+
+            }],
+            currentTitle: "",
+            currentContent: "",
+            currentLang: "spanish",
+            currentArticle: 1
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
         };
     },
     methods: {
@@ -45937,8 +46946,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var content = this.wiki.find(function (title) {
                 return title.id == id;
             });
+<<<<<<< HEAD
             this.currentContent = content.content;
             this.currentTitle = content.title;
+=======
+
+            this.currentTitle = content[this.currentLang].title;
+            this.currentContent = content[this.currentLang].content;
+            this.currentArticle = id;
+        },
+        changeLang: function changeLang(lang) {
+            this.currentLang = lang;
+            this.showContent(this.currentArticle);
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
         }
     }
 });
@@ -45955,24 +46975,82 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
+<<<<<<< HEAD
         { staticClass: "col-sm-2" },
         [
           _c("h1", [_vm._v("menu")]),
           _vm._v(" "),
           _vm._l(_vm.wiki, function(title) {
+=======
+        { staticClass: "col-sm-3" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "btn-group",
+              attrs: { role: "group", "aria-label": "..." }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.changeLang("english")
+                    }
+                  }
+                },
+                [_vm._v("English")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.changeLang("spanish")
+                    }
+                  }
+                },
+                [_vm._v("Spanish")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("h1", [_vm._v("menu")]),
+          _vm._v(" "),
+          _vm._l(_vm.wiki, function(article) {
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
             return _c(
               "div",
               {
                 staticClass: "menubtn",
+<<<<<<< HEAD
                 on: {
                   click: function($event) {
                     _vm.showContent(title.id)
+=======
+                attrs: { id: "title-" + article.id },
+                on: {
+                  click: function($event) {
+                    _vm.showContent(article.id)
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
                   }
                 }
               },
               [
                 _vm._v(
+<<<<<<< HEAD
                   "\n                " + _vm._s(title.title) + "\n            "
+=======
+                  "\n                " +
+                    _vm._s(article[_vm.currentLang].title) +
+                    "\n            "
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
                 )
               ]
             )
@@ -45981,6 +47059,7 @@ var render = function() {
         2
       ),
       _vm._v(" "),
+<<<<<<< HEAD
       _c("div", { staticClass: "col-sm-10" }, [
         _c("h1", [_vm._v(_vm._s(_vm.currentTitle))]),
         _vm._v(" "),
@@ -45992,6 +47071,23 @@ var render = function() {
           )
         ])
       ])
+=======
+      _c(
+        "div",
+        { staticClass: "col-sm-9", attrs: { id: "content-container" } },
+        [
+          _c("h1", [_vm._v(_vm._s(_vm.currentTitle))]),
+          _vm._v(" "),
+          _c("p", { attrs: { id: "content" } }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.currentContent) +
+                "\n                "
+            )
+          ])
+        ]
+      )
+>>>>>>> f4b31d7b47658543583fb685f55921da2b3f1182
     ])
   ])
 }
