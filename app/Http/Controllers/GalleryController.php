@@ -15,13 +15,22 @@ class GalleryController extends Controller
     public function index()
     {
         //
+        //$base = DB::table('artifacts')->get();
         return view('gallery');
 
     }
 
-    public function getArtifacts()
+    public function getArtifacts(Request $request)
     {
-        $artifacts = DB::table('artifacts')->get();
+        $baseArtifacts = DB::table('artifacts')
+            ->where('created_by', 0)
+            ->get();
+        $userArtifacts = DB::table('artifacts')
+            ->where('created_by', $request->id)
+            ->get();
+        foreach ($baseArtifacts as $artifact) {
+
+        }
         return $artifacts;
     }
 
