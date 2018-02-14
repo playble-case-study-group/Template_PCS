@@ -26,6 +26,7 @@
 
         <!-- The Gallery View -->
         <h1>Welcome to the Gallery</h1>
+        <h1>{{ user.id }}</h1>
         <hr>
         <div class="row">
             <div class="item" v-for="(artifact, index) in artifacts">
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-    //import { mapGetter, mapActions } from 'vuex'
+    //import mapState from 'vuex'
     import Artifact from './Artifact.vue'
 
 
@@ -89,6 +90,11 @@
             closeModal: function() {
                 this.showModal = false;
             },
+        },
+        computed: {
+            user: function() {
+                return this.$store.state.user;
+            }
         }
 
     }

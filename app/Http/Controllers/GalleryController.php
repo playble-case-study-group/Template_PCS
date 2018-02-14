@@ -20,18 +20,23 @@ class GalleryController extends Controller
 
     }
 
-    public function getArtifacts(Request $request)
+    public function getArtifacts()
     {
         $baseArtifacts = DB::table('artifacts')
-            ->where('created_by', 0)
+            //->where('created_by', 0)
             ->get();
-        $userArtifacts = DB::table('artifacts')
-            ->where('created_by', $request->id)
-            ->get();
-        foreach ($baseArtifacts as $artifact) {
-
-        }
-        return $artifacts;
+        //$userArtifacts = DB::table('artifacts')
+          //  ->where('created_by', $id)
+           // ->get();
+//        foreach ($baseArtifacts as $artifact) {
+//            foreach ($userArtifacts as $editedArtifact) {
+//                if($artifact->id == $editedArtifact->edit_id) {
+//                    $artifact = $editedArtifact;
+//                    break;
+//                }
+//            }
+//        }
+        return $baseArtifacts;
     }
 
     /**

@@ -45500,8 +45500,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
-//import { mapGetter, mapActions } from 'vuex'
+//import mapState from 'vuex'
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45538,6 +45539,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeModal: function closeModal() {
             this.showModal = false;
+        }
+    },
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
         }
     }
 
@@ -45733,6 +45739,8 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("h1", [_vm._v("Welcome to the Gallery")]),
+      _vm._v(" "),
+      _c("h1", [_vm._v(_vm._s(_vm.user.id))]),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
