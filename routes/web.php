@@ -30,4 +30,9 @@ Route::resource('/tasks', 'TasksController');
 Route::post('/tasks/complete', 'TasksController@complete');
 
 Route::resource('/gallery', 'GalleryController');
+<<<<<<< HEAD
 Route::get ( '/getartifacts', 'GalleryController@getArtifacts' );
+=======
+
+
+>>>>>>> master

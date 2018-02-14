@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--<template>
     <div id="gallery" class="row list-group">
         <h1>Welcome to the Gallery</h1>
@@ -49,11 +50,19 @@
                 <button type="button" class="btn btn-outline-info" @click="closeModal()"> Close </button>
             </div>
         </Artifact>
+=======
+<template>
+    <div id="gallery">
+
+        <h1>Welcome to the Gallery</h1>
+        <artifact></artifact>
+>>>>>>> master
 
     </div>
 </template>
 
 <script>
+<<<<<<< HEAD
     //import mapState from 'vuex'
     import Artifact from './Artifact.vue'
 
@@ -121,3 +130,20 @@
     }
 
 </style>
+=======
+    import { mapActions } from 'vuex'
+    import artifact from './Artifact.vue'
+
+    export default {
+
+        mounted() {
+            console.log('Component mounted.')
+        },
+        components: {
+            'artifact': artifact
+        },
+        methods: mapActions([
+        ])
+    }
+</script>
+>>>>>>> master

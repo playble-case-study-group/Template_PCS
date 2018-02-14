@@ -4,4 +4,8 @@
     <div class="container">
         <gallery></gallery>
     </div>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> master
