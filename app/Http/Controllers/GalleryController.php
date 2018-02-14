@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
-=======
->>>>>>> master
+
 
 class GalleryController extends Controller
 {
@@ -18,7 +16,6 @@ class GalleryController extends Controller
     public function index()
     {
         //
-<<<<<<< HEAD
         //$base = DB::table('artifacts')->get();
         return view('gallery');
 
@@ -41,9 +38,6 @@ class GalleryController extends Controller
 //            }
 //        }
         return $baseArtifacts;
-=======
-        return view('gallery');
->>>>>>> master
     }
 
     /**
