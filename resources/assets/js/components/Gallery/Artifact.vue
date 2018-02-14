@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!-- use vue-js-modal -->
 <template>
     <transition name="modal">
@@ -26,26 +25,13 @@
 </template>
 
 <script>
-    //import { mapGetter, mapActions } from 'vuex'
-=======
-<template>
-    <div id="artifact">
-
-        <h1>This is an Artifact</h1>
-
-    </div>
-</template>
-
-<script>
     import { mapActions } from 'vuex'
->>>>>>> master
 
     export default {
 
         mounted() {
             console.log('Component mounted.')
-        },
-<<<<<<< HEAD
+        }
         /*methods: mapActions([
 
         ]),*/
@@ -65,10 +51,8 @@
         transition: opacity .3s ease;
     }
 </style>
-=======
 
         methods: mapActions([
         ])
     }
 </script>
->>>>>>> master
