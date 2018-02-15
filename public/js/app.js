@@ -13170,6 +13170,7 @@ Vue.component('left-menu', __webpack_require__(45));
 Vue.component('right-menu', __webpack_require__(69));
 Vue.component('email', __webpack_require__(74));
 Vue.component('gallery', __webpack_require__(77));
+Vue.component('library', __webpack_require__(83));
 
 
 
@@ -44392,7 +44393,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n#left-menu[data-v-cc350930] {\n    min-width: 240px;\n    max-width: 240px;\n    min-height: 100vh;\n    background-color: white;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n.content[data-v-cc350930] {\n    padding: 20px;\n}\nul[data-v-cc350930] {\n    list-style: none;\n    padding-left: 0 !important;\n}\n", ""]);
+exports.push([module.i, "\n#left-menu[data-v-cc350930] {\n    min-width: 240px;\n    max-width: 240px;\n    min-height: 100vh;\n    background-color: white;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n.content[data-v-cc350930] {\n    padding: 20px;\n}\nul[data-v-cc350930] {\n    list-style: none;\n    padding-left: 0 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -44462,6 +44463,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -44482,7 +44484,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mounted: function mounted() {},
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])(['NEXT_DAY']))
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])(['NEXT_DAY', 'PREVIOUS_DAY']))
 
 });
 
@@ -45158,13 +45160,38 @@ var render = function() {
           _c(
             "button",
             {
+              staticClass: "btn btn-invert",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.PREVIOUS_DAY()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_arrow_left")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-invert",
+              attrs: { type: "button" },
               on: {
                 click: function($event) {
                   _vm.NEXT_DAY()
                 }
               }
             },
-            [_vm._v("NEXT DAY")]
+            [
+              _vm._v("NEXT DAY "),
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_arrow_right")
+              ])
+            ]
           )
         ])
       ],
@@ -45668,11 +45695,297 @@ if (false) {
 }
 
 /***/ }),
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(84)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(86)
+/* template */
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1c179b00"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Library/library.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1c179b00", Component.options)
+  } else {
+    hotAPI.reload("data-v-1c179b00", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(85);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("5427bd14", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c179b00\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./library.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c179b00\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./library.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.menubtn[data-v-1c179b00] {\n    cursor:pointer;\n}\n#library[data-v-1c179b00] {\n    background-color: white;\n    margin-left: 40px;\n    padding: 20px;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n#libraryMenu[data-v-1c179b00] {\n    height: 100vh;\n    border-right: solid 1px #4A4A4A;\n}\n#content-container[data-v-1c179b00] {\n    padding-left: 40px;\n    padding-right: 40px;\n}\n#content-container h1[data-v-1c179b00] {\n    margin-top: 0px;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(0);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+
+    data: function data() {
+        return {
+            wiki: [{
+
+                id: 1,
+                english: {
+                    title: "Civil War",
+                    content: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae porttitor justo, sed ultricies sapien. Suspendisse imperdiet leo volutpat maximus finibus. Proin aliquet lectus nec neque consequat, in sagittis nunc congue. Aenean viverra tellus odio, sed sodales ante mattis sed. Phasellus vestibulum enim quis nunc scelerisque auctor. Duis est libero, rhoncus ac dui id, pretium aliquet eros. Nam ut posuere turpis, a rutrum ipsum.\n" + "\n" + "Integer pretium, lacus nec posuere suscipit, ipsum enim ullamcorper leo, id blandit erat magna ac magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque et quam ac erat hendrerit laoreet eu at ex. Nam et varius dolor. Pellentesque consectetur aliquet mi. Morbi congue sem nec orci tempus, a scelerisque elit fringilla. Suspendisse auctor tortor vitae diam porttitor pharetra. Praesent eu velit varius mi fermentum vulputate. Sed nec risus sit amet eros mollis volutpat ut fringilla orci. Duis laoreet erat eu erat volutpat venenatis. Nulla faucibus, nibh in sollicitudin tempor, sem sem malesuada odio, sed mattis elit diam nec lorem. Integer eu elit sit amet dui volutpat pretium eget vulputate purus. ",
+                    subtitles: ['one', 'two']
+                },
+                spanish: {
+                    title: "Guerra Civil",
+                    content: "hola taco burrito",
+                    subtitles: ['uno', 'dos']
+
+                }
+            }, {
+
+                id: 2,
+                english: {
+                    title: "Spain",
+                    content: "Etiam dignissim interdum ultrices. Donec sagittis vestibulum eros vel vulputate. Aliquam at ante viverra massa feugiat mollis id vitae velit. Maecenas ultricies ligula dignissim eros cursus aliquam. Sed ante dui, hendrerit lacinia purus non, vulputate placerat erat. Praesent eleifend gravida sem. Pellentesque imperdiet, tellus vitae gravida venenatis, arcu est facilisis orci, nec volutpat est enim vitae odio. Curabitur sit amet quam fermentum, pulvinar elit sit amet, efficitur erat. Cras gravida iaculis massa auctor volutpat. ",
+                    subtitles: ['one', 'two', 'three']
+                },
+                spanish: {
+                    title: "España",
+                    content: "More tacos and burrtios please.",
+                    subtitles: [{
+                        id: 3,
+                        title: "Again",
+                        content: "This is some content in a subtitle."
+                    }, {
+                        id: 4,
+                        title: "here",
+                        content: "more subtitle content here."
+                    }]
+                }
+
+            }],
+            currentTitle: "",
+            currentContent: "",
+            currentLang: "spanish",
+            currentArticle: 1,
+            languages: ['english', 'spanish']
+        };
+    },
+    methods: {
+        showContent: function showContent(id) {
+            var content = this.wiki.find(function (title) {
+                return title.id == id;
+            });
+
+            this.currentTitle = content[this.currentLang].title;
+            this.currentContent = content[this.currentLang].content;
+            this.currentArticle = id;
+        },
+        changeLang: function changeLang(lang) {
+            this.currentLang = lang;
+            this.showContent(this.currentArticle);
+        }
+    }
+});
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { id: "library" } }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm-4 col-md-3", attrs: { id: "libraryMenu" } },
+        [
+          _vm._l(_vm.languages, function(lang) {
+            return _c(
+              "div",
+              {
+                class: ["btn-group", "d-none", "d-sm-block", "d-md-none"],
+                attrs: { role: "group", "aria-label": "..." }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    class: [
+                      "btn",
+                      _vm.currentLang == lang ? "btn-invert" : "btn-default"
+                    ],
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.changeLang(lang)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(lang.charAt(0).toUpperCase() + lang.slice(1)))]
+                )
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c("h1", [_vm._v("menu")]),
+          _vm._v(" "),
+          _vm._l(_vm.wiki, function(article) {
+            return _c(
+              "div",
+              {
+                staticClass: "menubtn",
+                attrs: { id: "title-" + article.id },
+                on: {
+                  click: function($event) {
+                    _vm.showContent(article.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(article[_vm.currentLang].title) +
+                    "\n            "
+                )
+              ]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-sm-8 col-md-9",
+          attrs: { id: "content-container" }
+        },
+        [
+          _c("h1", [_vm._v(_vm._s(_vm.currentTitle))]),
+          _vm._v(" "),
+          _c("p", { attrs: { id: "content" } }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.currentContent) +
+                "\n                "
+            )
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1c179b00", module.exports)
+  }
+}
+
+/***/ }),
 /* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -45734,12 +46047,22 @@ var mutations = {
     // Consider making a simulation table with basic data like how many days there are in the simulation...
     NEXT_DAY: function NEXT_DAY(state) {
         if (state.user.current_day < state.simulation.days) {
-            axios.post('/nextday', { id: state.user.id }).then(function (response) {
+            state.user.current_day++;
+            axios.post('/nextday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
                 console.log(response);
             }).catch(function (error) {
                 console.log(error.response.data);
             });
-            state.user.current_day++;
+        }
+    },
+    PREVIOUS_DAY: function PREVIOUS_DAY(state) {
+        if (state.user.current_day > 1) {
+            state.user.current_day--;
+            axios.post('/previousday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
         }
     },
     toggleTask: function toggleTask(state, payload) {
@@ -45772,6 +46095,10 @@ var actions = {
     NEXT_DAY: function NEXT_DAY(_ref4) {
         var commit = _ref4.commit;
         return commit('NEXT_DAY');
+    },
+    PREVIOUS_DAY: function PREVIOUS_DAY(_ref5) {
+        var commit = _ref5.commit;
+        return commit('PREVIOUS_DAY');
     },
     toggleTask: function toggleTask(context, payload) {
         context.commit('toggleTask', payload);

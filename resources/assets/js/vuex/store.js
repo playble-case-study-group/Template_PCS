@@ -48,13 +48,27 @@ const mutations = {
     // Consider making a simulation table with basic data like how many days there are in the simulation...
     NEXT_DAY: (state) => {
         if (state.user.current_day < state.simulation.days) {
-            axios.post('/nextday', {id: state.user.id})
+            state.user.current_day++;
+            axios.post('/nextday', {id: state.user.id, day: state.user.current_day})
                 .then((response) => {
                     console.log(response)
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.log(error.response.data)
-            })
-            state.user.current_day++;
+                })
+        }
+    },
+    PREVIOUS_DAY: (state) => {
+        if(state.user.current_day > 1) {
+            state.user.current_day--;
+            axios.post('/previousday', {id: state.user.id, day: state.user.current_day})
+                .then(response => {
+                    console.log(response)
+                })
+                .catch( error => {
+                    console.log(error.response.data)
+                })
+
         }
     },
     toggleTask: (state, payload) => {
@@ -75,6 +89,7 @@ const actions = {
     GET_TASKS: ({commit}) => commit('GET_TASKS'),
     GET_USER: ({commit}) => commit('GET_USER'),
     NEXT_DAY: ({commit}) => commit('NEXT_DAY'),
+    PREVIOUS_DAY: ({commit}) => commit('PREVIOUS_DAY'),
     toggleTask(context, payload) {
         context.commit('toggleTask', payload)
     }
