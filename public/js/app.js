@@ -44393,7 +44393,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n#left-menu[data-v-cc350930] {\n    min-width: 240px;\n    max-width: 240px;\n    min-height: 100vh;\n    background-color: white;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n.content[data-v-cc350930] {\n    padding: 20px;\n}\nul[data-v-cc350930] {\n    list-style: none;\n    padding-left: 0 !important;\n}\n", ""]);
+exports.push([module.i, "\n#left-menu[data-v-cc350930] {\n    min-width: 240px;\n    max-width: 240px;\n    min-height: 100vh;\n    background-color: white;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n.content[data-v-cc350930] {\n    padding: 20px;\n}\nul[data-v-cc350930] {\n    list-style: none;\n    padding-left: 0 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -44463,6 +44463,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -44483,7 +44484,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mounted: function mounted() {},
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])(['NEXT_DAY']))
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])(['NEXT_DAY', 'PREVIOUS_DAY']))
 
 });
 
@@ -45159,13 +45160,38 @@ var render = function() {
           _c(
             "button",
             {
+              staticClass: "btn btn-invert",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.PREVIOUS_DAY()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_arrow_left")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-invert",
+              attrs: { type: "button" },
               on: {
                 click: function($event) {
                   _vm.NEXT_DAY()
                 }
               }
             },
-            [_vm._v("NEXT DAY")]
+            [
+              _vm._v("NEXT DAY "),
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_arrow_right")
+              ])
+            ]
           )
         ])
       ],
@@ -45754,7 +45780,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.menubtn[data-v-1c179b00] {\n    cursor:pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.menubtn[data-v-1c179b00] {\n    cursor:pointer;\n}\n#library[data-v-1c179b00] {\n    background-color: white;\n    margin-left: 40px;\n    padding: 20px;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n#libraryMenu[data-v-1c179b00] {\n    height: 100vh;\n    border-right: solid 1px #4A4A4A;\n}\n#content-container[data-v-1c179b00] {\n    padding-left: 40px;\n    padding-right: 40px;\n}\n#content-container h1[data-v-1c179b00] {\n    margin-top: 0px;\n}\n\n", ""]);
 
 // exports
 
@@ -45766,7 +45792,6 @@ exports.push([module.i, "\n.menubtn[data-v-1c179b00] {\n    cursor:pointer;\n}\n
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(0);
-//
 //
 //
 //
@@ -45839,7 +45864,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentTitle: "",
             currentContent: "",
             currentLang: "spanish",
-            currentArticle: 1
+            currentArticle: 1,
+            languages: ['english', 'spanish']
         };
     },
     methods: {
@@ -45867,48 +45893,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container", attrs: { id: "library" } }, [
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-sm-3" },
+        { staticClass: "col-sm-4 col-md-3", attrs: { id: "libraryMenu" } },
         [
-          _c(
-            "div",
-            {
-              staticClass: "btn-group",
-              attrs: { role: "group", "aria-label": "..." }
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.changeLang("english")
+          _vm._l(_vm.languages, function(lang) {
+            return _c(
+              "div",
+              {
+                class: ["btn-group", "d-none", "d-sm-block", "d-md-none"],
+                attrs: { role: "group", "aria-label": "..." }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    class: [
+                      "btn",
+                      _vm.currentLang == lang ? "btn-invert" : "btn-default"
+                    ],
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.changeLang(lang)
+                      }
                     }
-                  }
-                },
-                [_vm._v("English")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.changeLang("spanish")
-                    }
-                  }
-                },
-                [_vm._v("Spanish")]
-              )
-            ]
-          ),
+                  },
+                  [_vm._v(_vm._s(lang.charAt(0).toUpperCase() + lang.slice(1)))]
+                )
+              ]
+            )
+          }),
           _vm._v(" "),
           _c("h1", [_vm._v("menu")]),
           _vm._v(" "),
@@ -45939,7 +45956,10 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-sm-9", attrs: { id: "content-container" } },
+        {
+          staticClass: "col-sm-8 col-md-9",
+          attrs: { id: "content-container" }
+        },
         [
           _c("h1", [_vm._v(_vm._s(_vm.currentTitle))]),
           _vm._v(" "),
@@ -46027,12 +46047,22 @@ var mutations = {
     // Consider making a simulation table with basic data like how many days there are in the simulation...
     NEXT_DAY: function NEXT_DAY(state) {
         if (state.user.current_day < state.simulation.days) {
-            axios.post('/nextday', { id: state.user.id }).then(function (response) {
+            state.user.current_day++;
+            axios.post('/nextday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
                 console.log(response);
             }).catch(function (error) {
                 console.log(error.response.data);
             });
-            state.user.current_day++;
+        }
+    },
+    PREVIOUS_DAY: function PREVIOUS_DAY(state) {
+        if (state.user.current_day > 1) {
+            state.user.current_day--;
+            axios.post('/previousday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
         }
     },
     toggleTask: function toggleTask(state, payload) {
@@ -46065,6 +46095,10 @@ var actions = {
     NEXT_DAY: function NEXT_DAY(_ref4) {
         var commit = _ref4.commit;
         return commit('NEXT_DAY');
+    },
+    PREVIOUS_DAY: function PREVIOUS_DAY(_ref5) {
+        var commit = _ref5.commit;
+        return commit('PREVIOUS_DAY');
     },
     toggleTask: function toggleTask(context, payload) {
         context.commit('toggleTask', payload);

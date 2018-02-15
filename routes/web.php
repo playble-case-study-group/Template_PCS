@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user', 'HomeController@user');
 Route::post('/nextday', 'SimulationController@nextDay');
+Route::post('/previousday', 'SimulationController@previousDay');
 Route::get('/sim', function () {
     return DB::table('simulation')->get();
 });
