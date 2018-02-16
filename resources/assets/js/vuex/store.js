@@ -13,7 +13,7 @@ const state = {
 
 const getters = {
     CURRENT_TASKS: (state) => {
-        console.log("TASKS: ", state.tasks.filter(task => task.day === state.user.current_day));
+        // console.log("TASKS: ", state.tasks.filter(task => task.day === state.user.current_day));
         return state.tasks.filter(task => task.day === state.user.current_day);
     },
     TASKS_BY_DAY: (state) => {
@@ -49,9 +49,9 @@ const mutations = {
     NEXT_DAY: (state) => {
         if (state.user.current_day < state.simulation.days) {
             state.user.current_day++;
-            axios.post('/nextday', {id: state.user.id, day: state.user.current_day})
+            axios.post('/updateday', {id: state.user.id, day: state.user.current_day})
                 .then((response) => {
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch(error => {
                     console.log(error.response.data)
@@ -61,9 +61,9 @@ const mutations = {
     PREVIOUS_DAY: (state) => {
         if(state.user.current_day > 1) {
             state.user.current_day--;
-            axios.post('/previousday', {id: state.user.id, day: state.user.current_day})
+            axios.post('/updateday', {id: state.user.id, day: state.user.current_day})
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch( error => {
                     console.log(error.response.data)
@@ -72,7 +72,6 @@ const mutations = {
         }
     },
     toggleTask: (state, payload) => {
-        console.log(payload)
         let task = state.tasks.find(task => task.id === payload);
         task.complete = !task.complete;
         axios.post('/tasks/complete', {id: payload, complete: task.complete})
