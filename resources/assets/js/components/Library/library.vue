@@ -45,9 +45,8 @@
         methods: {
             showContent: function (id) {
                 let content = this.wiki.find( title => title.id == id);
-
                 this.currentTitle = content[this.currentLang].title;
-                this.currentContent = content[this.currentLang].content;
+                this.currentContent = JSON.parse(content[this.currentLang].content).content;
                 this.currentArticle = id;
 
             },
@@ -55,7 +54,14 @@
                 this.currentLang = lang;
                 this.showContent(this.currentArticle);
 
-            }
+            },
+
+        },
+        computed: {
+            // parsedContent: function (){
+            //     return JSON.parse(this.currentContent);
+            //
+            // }
         }
     }
 </script>

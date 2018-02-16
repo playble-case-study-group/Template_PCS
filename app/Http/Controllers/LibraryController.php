@@ -17,7 +17,7 @@ class LibraryController extends Controller
         $wiki = DB::table('wiki')->get();
 
         foreach ($wiki as $article) {
-            $article->enlgish = DB::table('article')
+            $article->english = DB::table('article')
                 ->where('id', $article->lang_1_ar)
                 ->first();
 

@@ -45962,15 +45962,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var content = this.wiki.find(function (title) {
                 return title.id == id;
             });
-
             this.currentTitle = content[this.currentLang].title;
-            this.currentContent = content[this.currentLang].content;
+            this.currentContent = JSON.parse(content[this.currentLang].content).content;
             this.currentArticle = id;
         },
         changeLang: function changeLang(lang) {
             this.currentLang = lang;
             this.showContent(this.currentArticle);
         }
+
+    },
+    computed: {
+        // parsedContent: function (){
+        //     return JSON.parse(this.currentContent);
+        //
+        // }
     }
 });
 
