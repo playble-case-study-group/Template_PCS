@@ -17,18 +17,11 @@ class SimulationController extends Controller
         $this->middleware('auth');
     }
 
-    public function nextDay (Request $request) {
+    public function updateDay (Request $request) {
         DB::table('users')
             ->where('id', $request->id)
             ->update(['current_day' => $request->day]);
 
-
-
     }
 
-    public function previousDay (Request $request) {
-        DB::table('users')
-            ->where('id', $request->id)
-            ->update(['current_day' => $request->day]);
-    }
 }

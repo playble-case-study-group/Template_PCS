@@ -46130,9 +46130,7 @@ var state = {
 
 var getters = {
     CURRENT_TASKS: function CURRENT_TASKS(state) {
-        console.log("TASKS: ", state.tasks.filter(function (task) {
-            return task.day === state.user.current_day;
-        }));
+        // console.log("TASKS: ", state.tasks.filter(task => task.day === state.user.current_day));
         return state.tasks.filter(function (task) {
             return task.day === state.user.current_day;
         });
@@ -46172,8 +46170,8 @@ var mutations = {
     NEXT_DAY: function NEXT_DAY(state) {
         if (state.user.current_day < state.simulation.days) {
             state.user.current_day++;
-            axios.post('/nextday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
-                console.log(response);
+            axios.post('/updateday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
+                // console.log(response)
             }).catch(function (error) {
                 console.log(error.response.data);
             });
@@ -46182,15 +46180,14 @@ var mutations = {
     PREVIOUS_DAY: function PREVIOUS_DAY(state) {
         if (state.user.current_day > 1) {
             state.user.current_day--;
-            axios.post('/previousday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
-                console.log(response);
+            axios.post('/updateday', { id: state.user.id, day: state.user.current_day }).then(function (response) {
+                // console.log(response)
             }).catch(function (error) {
                 console.log(error.response.data);
             });
         }
     },
     toggleTask: function toggleTask(state, payload) {
-        console.log(payload);
         var task = state.tasks.find(function (task) {
             return task.id === payload;
         });
