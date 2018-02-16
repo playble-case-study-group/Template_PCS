@@ -45946,45 +45946,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('Component mounted.');
     },
 
+    props: ['wiki'],
     data: function data() {
         return {
-            wiki: [{
 
-                id: 1,
-                english: {
-                    title: "Civil War",
-                    content: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae porttitor justo, sed ultricies sapien. Suspendisse imperdiet leo volutpat maximus finibus. Proin aliquet lectus nec neque consequat, in sagittis nunc congue. Aenean viverra tellus odio, sed sodales ante mattis sed. Phasellus vestibulum enim quis nunc scelerisque auctor. Duis est libero, rhoncus ac dui id, pretium aliquet eros. Nam ut posuere turpis, a rutrum ipsum.\n" + "\n" + "Integer pretium, lacus nec posuere suscipit, ipsum enim ullamcorper leo, id blandit erat magna ac magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque et quam ac erat hendrerit laoreet eu at ex. Nam et varius dolor. Pellentesque consectetur aliquet mi. Morbi congue sem nec orci tempus, a scelerisque elit fringilla. Suspendisse auctor tortor vitae diam porttitor pharetra. Praesent eu velit varius mi fermentum vulputate. Sed nec risus sit amet eros mollis volutpat ut fringilla orci. Duis laoreet erat eu erat volutpat venenatis. Nulla faucibus, nibh in sollicitudin tempor, sem sem malesuada odio, sed mattis elit diam nec lorem. Integer eu elit sit amet dui volutpat pretium eget vulputate purus. ",
-                    subtitles: ['one', 'two']
-                },
-                spanish: {
-                    title: "Guerra Civil",
-                    content: "hola taco burrito",
-                    subtitles: ['uno', 'dos']
-
-                }
-            }, {
-
-                id: 2,
-                english: {
-                    title: "Spain",
-                    content: "Etiam dignissim interdum ultrices. Donec sagittis vestibulum eros vel vulputate. Aliquam at ante viverra massa feugiat mollis id vitae velit. Maecenas ultricies ligula dignissim eros cursus aliquam. Sed ante dui, hendrerit lacinia purus non, vulputate placerat erat. Praesent eleifend gravida sem. Pellentesque imperdiet, tellus vitae gravida venenatis, arcu est facilisis orci, nec volutpat est enim vitae odio. Curabitur sit amet quam fermentum, pulvinar elit sit amet, efficitur erat. Cras gravida iaculis massa auctor volutpat. ",
-                    subtitles: ['one', 'two', 'three']
-                },
-                spanish: {
-                    title: "España",
-                    content: "More tacos and burrtios please.",
-                    subtitles: [{
-                        id: 3,
-                        title: "Again",
-                        content: "This is some content in a subtitle."
-                    }, {
-                        id: 4,
-                        title: "here",
-                        content: "more subtitle content here."
-                    }]
-                }
-
-            }],
             currentTitle: "",
             currentContent: "",
             currentLang: "spanish",
