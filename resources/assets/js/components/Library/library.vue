@@ -1,17 +1,16 @@
 <template>
-    <div class="container">
+    <div class="container" id="library">
         <div class="row">
-            <div class="col-sm-3">
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-default" @click="changeLang('english')">English</button>
-                    <button type="button" class="btn btn-default" @click="changeLang('spanish')">Spanish</button>
+            <div class="col-sm-4 col-md-3" id="libraryMenu">
+                <div :class="['btn-group', 'd-none', 'd-sm-block', 'd-md-none']" role="group" aria-label="..." v-for="lang in languages">
+                    <button type="button" :class="['btn', currentLang == lang ? 'btn-invert' : 'btn-default']" @click="changeLang(lang)">{{ lang.charAt(0).toUpperCase() + lang.slice(1) }}</button>
                 </div>
                 <h1>menu</h1>
                 <div v-for="article in wiki" @click="showContent(article.id)" class="menubtn" :id="'title-' + article.id">
                     {{article[currentLang].title}}
                 </div>
             </div>
-            <div class="col-sm-9" id="content-container">
+            <div class="col-sm-8 col-md-9" id="content-container">
                 <h1>{{currentTitle}}</h1>
                     <p id="content">
                         {{currentContent}}
@@ -81,7 +80,8 @@
                 currentTitle:"",
                 currentContent:"",
                 currentLang:"spanish",
-                currentArticle: 1
+                currentArticle: 1,
+                languages: ['english', 'spanish']
             }
         },
         methods: {
@@ -106,6 +106,27 @@
     .menubtn {
         cursor:pointer;
 
+    }
+
+    #library {
+        background-color: white;
+        margin-left: 40px;
+        padding: 20px;
+        box-shadow: 2px 1px 2px;
+    }
+
+    #libraryMenu {
+        height: 100vh;
+        border-right: solid 1px #4A4A4A;
+    }
+
+    #content-container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    #content-container h1 {
+        margin-top: 0px;
     }
 
 </style>
