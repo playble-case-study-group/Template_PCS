@@ -1,26 +1,3 @@
-<!--<template>
-    <div id="gallery" class="row list-group">
-        <h1>Welcome to the Gallery</h1>
-        <div class="item col-xs-6 col-md-4" v-for="artifact in artifacts">
-            <div class="thumbnail" @click="$modal.show('foo')">
-                <img class="group list-group-image" :src="artifact.image" :alt="artifact.title"/>
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">{{ artifact.title }}</h4>
-                    <p class="group inner list-group-item-text">{{ artifact.description }}</p>
-                </div>
-            </div>
-        </div>
-
-        <modal name="foo" height="auto" @before-open="beforeOpen">
-
-            <img src="http://via.placeholder.com/250x350" alt="This image">
-            <h1>Title</h1>
-            <p>aslcknsdlnsdnos dofnsfnlsk dpaskfnaslfno fsdlkfnsd dslffknsdlns sldkfnlkfn alfnaknf lanflaknfa lakfnalfn</p>
-
-        </modal>
-    </div>
-
-</template>-->
 <<template>
     <div class="container">
 
@@ -41,12 +18,19 @@
         <!-- Modal View -->
         <Artifact v-if="showModal">
             <img slot="image" :src="modalImage" :alt="modalTitle" class="img-responsive">
-            <h3 slot="header" class="modal-title">
-                {{ modalTitle }}
-            </h3>
-            <p slot="body">{{ modalDescription }}</p>
+            <form slot="body" action="" method="post">
+                <div class="form-group">
+                    <h4>Title</h4>
+                    <input id="formTitle" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Please enter a title..." :value="modalTitle">
+                </div>
+                <div>
+                    <h4>Description</h4>
+                    <textarea id="formDescription" placeholder="Please add artifact description..." class="form-control" rows="4" :value="modalDescription"></textarea>
+                </div>
+            </form>
             <div slot="footer">
                 <button type="button" class="btn btn-outline-info" @click="closeModal()"> Close </button>
+                <button type="button" class="btn btn-primary" @click="saveChanges()">Save changes</button>
             </div>
         </Artifact>
     </div>
@@ -55,7 +39,7 @@
 <script>
     //import mapState from 'vuex'
     import Artifact from './Artifact.vue'
-
+    import axios from 'axios';
 
     export default {
 
@@ -78,6 +62,8 @@
                 }).catch((error) => {
                 console.log(error.config);
             });
+
+
         },
         methods: {
             openModal: function(modalArtifact) {
@@ -89,6 +75,18 @@
             closeModal: function() {
                 this.showModal = false;
             },
+            saveChanges: function() {
+                axios.post('/gallery', {
+                    user: this.user.id,
+                    artifactTitle: 'hello',
+                    artifactDescription: 'hello',
+                    artifactImage: 'https://google.com'
+                }).then(function(){
+                    console.log('SUCCESS!!');
+                }).catch(function(){
+                    console.log('FAILURE!!');
+                });
+            }
         },
         computed: {
             user: function() {
