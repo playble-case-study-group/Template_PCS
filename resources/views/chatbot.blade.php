@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-
-<email>
-</email>
+    <chatbot></chatbot>
 @endsection

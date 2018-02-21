@@ -36,5 +36,7 @@ Route::post('/returnemails', 'EmailController@emailData');
 Route::resource('/gallery', 'GalleryController');
 Route::resource('/library', 'LibraryController');
 
-
+Route::get('/chatbot', function () {
+    return view('chatbot');
+});
 
