@@ -46,6 +46,7 @@
                     console.log(response);
                     this.bot_response.push(response.result.fulfillment.speech);
                 });
+
             }
         }
     }

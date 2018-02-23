@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <chatbot></chatbot>
+    <slackbot :messages="{{ $chats }}" :channels="{{ $channels }}"></slackbot>
+
+    {{--<chatbot></chatbot>--}}
 @endsection

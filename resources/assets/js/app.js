@@ -22,6 +22,7 @@ Vue.component('email', require('./components/Email/Email.vue'));
 Vue.component('gallery', require('./components/Gallery/Gallery.vue'));
 Vue.component('library', require('./components/Library/library.vue'));
 Vue.component('chatbot', require('./components/Chatbot/Chatbot.vue'));
+Vue.component('slackbot', require('./components/Chatbot/Slackbot.vue'));
 
 
 import store from './vuex/store';
