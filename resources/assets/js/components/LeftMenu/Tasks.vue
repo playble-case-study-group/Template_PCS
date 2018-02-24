@@ -3,7 +3,7 @@
         <h1>Tasks</h1>
         <ul>
             <li v-for="task in getCurrentTasks(tasks)">
-                <input type="checkbox" v-bind:value="task.id" v-model="checkbox" v-on:click="checkedTask(task.id)">
+                <input type="checkbox" v-bind:value="task.id" v-model="checkbox" v-on:click="checkedTask(task.id)" >
                 {{ task.title }}
             </li>
         </ul>
@@ -28,6 +28,13 @@
             },
             checkedTask: function (taskId) {
                 console.log(taskId)
+            },
+            isComplete: function (complete) {
+                if(complete) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
     }
