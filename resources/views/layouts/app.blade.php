@@ -69,7 +69,10 @@
             </div>
         </nav>
         <div class="wrapper">
-            <left-menu v-bind:user="user"></left-menu>
+            @auth
+            <left-menu></left-menu>
+            <right-menu></right-menu>
+            @endauth
             @yield('content')
         </div>
 

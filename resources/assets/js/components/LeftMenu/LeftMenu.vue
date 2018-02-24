@@ -2,8 +2,16 @@
 
     <div id="left-menu">
         <div class="content">
-            <user-progress v-bind:tasks="tasks"></user-progress>
-            <user-tasks v-bind:user="user" v-bind:tasks="tasks"></user-tasks>
+            <user-progress v-bind:tasks="tasks">
+            </user-progress>
+
+
+            <user-tasks>
+            </user-tasks>
+            <div id="next-day">
+                <button type="button" class="btn btn-invert" v-on:click="PREVIOUS_DAY()"><i class="material-icons">keyboard_arrow_left</i></button>
+                <button type="button" class="btn btn-invert" v-on:click="NEXT_DAY()">NEXT DAY <i class="material-icons">keyboard_arrow_right</i></button>
+            </div>
         </div>
     </div>
 </template>
@@ -11,13 +19,14 @@
 <script>
     import Progress from './Progress.vue';
     import Tasks from './Tasks.vue';
-
-    console.log('HEY!');
+    import Counter from '../Counter.vue';
+    import {mapActions} from 'vuex';
 
     export default {
         components: {
             'user-progress': Progress,
-            'user-tasks': Tasks
+            'user-tasks': Tasks,
+            'counter': Counter
         },
         props: ['user'],
         data: function () {
@@ -26,16 +35,14 @@
             }
         },
         mounted() {
-            // Notice: organizing tasks into groups by day
-            axios.get('/tasks').then(response => {
-                this.tasks = _.groupBy(response.data, 'day');
-            });
+
         },
         methods: {
-
+            ...mapActions([
+                'NEXT_DAY',
+                'PREVIOUS_DAY'
+            ])
         }
-
-
 
     }
 
@@ -57,4 +64,5 @@
         list-style: none;
         padding-left: 0 !important;
     }
+
 </style>

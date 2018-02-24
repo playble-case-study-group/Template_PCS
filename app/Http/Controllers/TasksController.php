@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
+use App\Events\TaskToggle;
 
 class TasksController extends Controller
 {
@@ -72,6 +73,16 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function complete(Request $request) {
+        DB::table('Tasks')
+            ->where('id', $request->id)
+            ->update(['complete' => $request->complete]);
+
+        event(new TaskToggle($request->id));
+
+        return ('Good');
     }
 
     /**

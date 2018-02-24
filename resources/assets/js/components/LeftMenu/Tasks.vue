@@ -6,23 +6,38 @@
                 <input type="checkbox" v-bind:value="task.id" v-model="checkbox" v-on:click="checkedTask(task.id)" >
                 {{ task.title }}
             </li>
+
+            <user-task v-for="task in CURRENT_TASKS" v-bind:task="task" v-bind:complete="task.complete" v-bind:key="task.id"></user-task>
+
         </ul>
-        {{ checkbox }}
+        <hr>
     </div>
 </template>
 
 <script>
+    import Task from './Task.vue'
+    import { mapGetters } from 'vuex'
+
     export default {
+        components: {
+            'user-task': Task
+        },
         props: ['tasks', 'user'],
         mounted() {
 
         },
+        computed: {
+            ...mapGetters([
+                'CURRENT_TASKS'
+            ])
+        },
         data: function () {
             return {
-                checkbox: []
+
             }
         },
         methods: {
+<<<<<<< HEAD
             getCurrentTasks: function (tasks) {
                 return tasks[this.user.current_day];
             },
@@ -36,6 +51,17 @@
                     return false;
                 }
             }
+=======
+
+>>>>>>> f952291f89808c54ba37b27efc3ae811f4d9f8c3
         }
     }
 </script>
+
+<style scoped>
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+</style>
