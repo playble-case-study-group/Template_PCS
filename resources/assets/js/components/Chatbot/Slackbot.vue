@@ -83,18 +83,24 @@
         props: ['messages', 'channels'],
         mounted() {
 //            console.log('Component mounted.');
-            let clients = []
+            let clients = [];
             this.channels.forEach(function (channel) {
-                clients.push(new ApiAiClient({accessToken: channel.channel_key}))
+                let client = new ApiAiClient({accessToken: channel.channel_key});
+                client.channel_id = channel.id;
+                clients.push(client)
             });
 
             this.clients = clients;
+
+            // Defaults to the first channel
+            this.current_client = clients[0];
+
             this.scrollChat();
         },
         methods: {
             submitMessage: function () {
 
-                client_2.textRequest(this.sendMessage).then( response => {
+                this.current_client.textRequest(this.sendMessage).then( response => {
                     //  console.log(response);
                     this.messages.push({name: this.userName, time: Date.now(), msg: this.sendMessage, type: 0});
                     console.log(this.$store.getters.CURRENT_DAY);
@@ -141,6 +147,7 @@
         data: function () {
             return {
                 clients: [],
+                current_client: {},
                 sendMessage: "",
                 users: [
                     {
@@ -160,44 +167,6 @@
                     }
 
                 ],
-//                messages: [
-//                    {
-//                        name: "Dan Ebeling",
-//                        time: "now",
-//                        msg: "this is a message",
-//                        type: 0 // 0 is sent, 1 is received
-//                    },
-//                    {
-//                        name: "Sarah Olson",
-//                        time: "1102",
-//                        msg: "this is a message",
-//                        type: 1 // 0 is sent, 1 is received
-//                    },
-//                    {
-//                        name: "Dan Ebeling",
-//                        time: "now",
-//                        msg: "this is a message",
-//                        type: 0 // 0 is sent, 1 is received
-//                    },
-//                    {
-//                        name: "Sarah Olson",
-//                        time: "1102",
-//                        msg: "this is a message",
-//                        type: 1 // 0 is sent, 1 is received
-//                    },
-//                    {
-//                        name: "Sarah Olson",
-//                        time: "1102",
-//                        msg: "this is a message",
-//                        type: 1 // 0 is sent, 1 is received
-//                    },
-//                    {
-//                        name: "Dan Ebeling",
-//                        time: "now",
-//                        msg: "last message",
-//                        type: 0 // 0 is sent, 1 is received
-//                    }
-//                ],
                 userName: "Dan Ebeling"
             }
         },
