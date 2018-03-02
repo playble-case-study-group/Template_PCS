@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
-use App\artifacts;
 
 class GalleryController extends Controller
 {
@@ -17,7 +16,6 @@ class GalleryController extends Controller
     public function index()
     {
         //
-        //$base = DB::table('artifacts')->get();
         return view('gallery');
 
     }
@@ -31,15 +29,24 @@ class GalleryController extends Controller
         $userArtifacts = DB::table('artifacts')
             ->where('created_by', $id)
             ->get();
+        $finalArtifacts = array();
+
         foreach ($baseArtifacts as $artifact) {
+            $edited = false;
             foreach ($userArtifacts as $editedArtifact) {
                 if($artifact->id == $editedArtifact->edit_id) {
-                    $artifact = $editedArtifact;
+                    array_push($finalArtifacts, $editedArtifact);
+                    $edited = true;
                     break;
                 }
             }
+            if ($edited) {
+                $edited = false;
+            } else {
+                array_push($finalArtifacts, $artifact);
+            }
         }
-        return $userArtifacts;
+        return $finalArtifacts;
     }
 
 
@@ -61,30 +68,7 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        /*$title = $request['artifactTitle'];
-        $description = $request['artifactDescription'];
-        $image = $request['artifactImage'];
-        $created_by = $request['user'];
-        $edit_id = ['1'];
-
-        $result = DB.insert('insert into artifacts (title, description, image, created_by, edit_id )
-                                  values ' . $title, $description, $image, $created_by, $edit_id . '');
-
-        return $result;*/
-
-        /*$artifact = new artifacts();
-        $artifact->title = $request['artifactTitle'];
-        $artifact->description = $request['artifactDescription'];
-        $artifact->image = $request['artifactImage'];
-        $artifact->created_by = $request['user'];
-        $artifact->edit_id = ['1'];
-        $artifact->save();*/
-
-        //return redirect('/gallery');
-
-        //artifacts::create(Request::all());
-
-        return $request->all();
+        //
     }
 
     /**
@@ -119,6 +103,31 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $artifact = DB::table('artifacts')
+            -> where('id', $id)
+            -> first();
+        // artifact has been edited before
+        if ($artifact->edit_id){
+            DB::table('artifacts')
+                -> where('id', $id)
+                -> update([
+                    'title'=> $request->artifactTitle,
+                    'description' => $request->artifactDescription
+                ]);
+        }
+        // if the artifact has being edited for the first time
+        else {
+            DB::table('artifacts')
+                ->insert([
+                    'title' => $request->artifactTitle,
+                    'description' => $request->artifactDescription,
+                    'image' => $request->artifactImage,
+                    'created_by' => $request->user,
+                    'edit_ID' => $request->artifactID,
+                    'catagory' => $request->catagory
+                ]);
+        }
+        return 'Success';
     }
 
     /**

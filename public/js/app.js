@@ -45516,6 +45516,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 //import mapState from 'vuex'
 
@@ -45526,10 +45532,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             artifacts: [],
+            groupArt: [],
             showModal: false,
             modalImage: '',
             modalTitle: '',
-            modalDescription: ''
+            modalDescription: '',
+            modalID: 0,
+            modalEditID: 0,
+            modalCatagory: ''
         };
     },
     components: {
@@ -45539,29 +45549,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
+        console.log('Created()');
         __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/getartifacts').then(function (response) {
             _this.artifacts = response.data;
+            _this.filterArtifacts(false);
         }).catch(function (error) {
             console.log(error.config);
         });
     },
 
     methods: {
+        filterArtifacts: function filterArtifacts(filter) {
+            if (filter) {
+                var g = [];
+                this.artifacts.forEach(function (artifact) {
+                    if (artifact.catagory === filter) {
+                        //artifact.catagory.find(function(art) { art === filter}
+                        g.push(artifact);
+                    }
+                });
+                this.groupArt = g;
+            } else {
+                this.groupArt = this.artifacts;
+            }
+        },
         openModal: function openModal(modalArtifact) {
             this.showModal = true;
             this.modalImage = modalArtifact.image;
             this.modalTitle = modalArtifact.title;
             this.modalDescription = modalArtifact.description;
+            this.modalID = modalArtifact.id;
+            this.modalEditID = modalArtifact.edit_id;
+            this.modalCatagory = modalArtifact.catagory;
         },
         closeModal: function closeModal() {
             this.showModal = false;
         },
         saveChanges: function saveChanges() {
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/gallery', {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put('/gallery/' + this.modalID, {
                 user: this.user.id,
-                artifactTitle: 'hello',
-                artifactDescription: 'hello',
-                artifactImage: 'https://google.com'
+                artifactTitle: this.modalTitle,
+                artifactDescription: this.modalDescription,
+                artifactImage: this.modalImage,
+                artifactID: this.modalID,
+                editID: this.modalEditID,
+                catagory: this.modalCatagory
             }).then(function () {
                 console.log('SUCCESS!!');
             }).catch(function () {
@@ -45574,7 +45606,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$store.state.user;
         }
     }
-
 });
 
 /***/ }),
@@ -45772,14 +45803,76 @@ var render = function() {
     [
       _c("h1", [_vm._v("Welcome to the Gallery")]),
       _vm._v(" "),
-      _c("h1", [_vm._v(_vm._s(_vm.user.id))]),
+      _c("hr"),
+      _vm._v(" "),
+      _c("ul", { staticClass: "nav nav-pills" }, [
+        _c("li", { staticClass: "active" }, [
+          _c(
+            "a",
+            {
+              attrs: { "data-toggle": "pill", href: "#all" },
+              on: {
+                click: function($event) {
+                  _vm.filterArtifacts(false)
+                }
+              }
+            },
+            [_vm._v("All")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: { "data-toggle": "pill", href: "#group1" },
+              on: {
+                click: function($event) {
+                  _vm.filterArtifacts("group")
+                }
+              }
+            },
+            [_vm._v("Group 1")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: { "data-toggle": "pill", href: "#group2" },
+              on: {
+                click: function($event) {
+                  _vm.filterArtifacts("group2")
+                }
+              }
+            },
+            [_vm._v("Group 2")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: { "data-toggle": "pill", href: "#group3" },
+              on: {
+                click: function($event) {
+                  _vm.filterArtifacts("group3")
+                }
+              }
+            },
+            [_vm._v("Group 3")]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "row" },
-        _vm._l(_vm.artifacts, function(artifact, index) {
+        _vm._l(_vm.groupArt, function(artifact) {
           return _c("div", { staticClass: "item" }, [
             _c(
               "div",
@@ -45828,6 +45921,14 @@ var render = function() {
                   _c("h4", [_vm._v("Title")]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.modalTitle,
+                        expression: "modalTitle"
+                      }
+                    ],
                     staticClass: "form-control",
                     attrs: {
                       id: "formTitle",
@@ -45835,7 +45936,15 @@ var render = function() {
                       "aria-describedby": "emailHelp",
                       placeholder: "Please enter a title..."
                     },
-                    domProps: { value: _vm.modalTitle }
+                    domProps: { value: _vm.modalTitle },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.modalTitle = $event.target.value
+                      }
+                    }
                   })
                 ]),
                 _vm._v(" "),
@@ -45843,13 +45952,29 @@ var render = function() {
                   _c("h4", [_vm._v("Description")]),
                   _vm._v(" "),
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.modalDescription,
+                        expression: "modalDescription"
+                      }
+                    ],
                     staticClass: "form-control",
                     attrs: {
                       id: "formDescription",
                       placeholder: "Please add artifact description...",
                       rows: "4"
                     },
-                    domProps: { value: _vm.modalDescription }
+                    domProps: { value: _vm.modalDescription },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.modalDescription = $event.target.value
+                      }
+                    }
                   })
                 ])
               ]

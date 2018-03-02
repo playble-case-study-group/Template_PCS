@@ -3,10 +3,16 @@
 
         <!-- The Gallery View -->
         <h1>Welcome to the Gallery</h1>
-        <h1>{{ user.id }}</h1>
+        <hr>
+        <ul class="nav nav-pills">
+            <li class="active"><a data-toggle="pill" href="#all" @click="filterArtifacts(false)">All</a></li>
+            <li><a data-toggle="pill" href="#group1" @click="filterArtifacts('group')">Group 1</a></li>
+            <li><a data-toggle="pill" href="#group2" @click="filterArtifacts('group2')">Group 2</a></li>
+            <li><a data-toggle="pill" href="#group3" @click="filterArtifacts('group3')">Group 3</a></li>
+        </ul>
         <hr>
         <div class="row">
-            <div class="item" v-for="(artifact, index) in artifacts">
+            <div class="item" v-for="artifact in groupArt">
                 <div class="thumbnail" @click="openModal(artifact)">
                     <img :src="artifact.image" :alt="artifact.title">
                     <h4>{{ artifact.title }}</h4>
@@ -21,11 +27,11 @@
             <form slot="body" action="" method="post">
                 <div class="form-group">
                     <h4>Title</h4>
-                    <input id="formTitle" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Please enter a title..." :value="modalTitle">
+                    <input id="formTitle" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Please enter a title..." v-model="modalTitle">
                 </div>
                 <div>
                     <h4>Description</h4>
-                    <textarea id="formDescription" placeholder="Please add artifact description..." class="form-control" rows="4" :value="modalDescription"></textarea>
+                    <textarea id="formDescription" placeholder="Please add artifact description..." class="form-control" rows="4"  v-model="modalDescription"></textarea>
                 </div>
             </form>
             <div slot="footer">
@@ -46,10 +52,14 @@
         data: function(){
             return {
                 artifacts: [],
+                groupArt: [],
                 showModal: false,
                 modalImage: '',
                 modalTitle: '',
-                modalDescription: ''
+                modalDescription: '',
+                modalID: 0,
+                modalEditID: 0,
+                modalCatagory: ''
             }
         },
         components: {
@@ -57,30 +67,49 @@
         },
 
         mounted() {
+            console.log('Created()');
             axios.get('/getartifacts').then(response => {
             this.artifacts = response.data;
+            this.filterArtifacts(false);
                 }).catch((error) => {
                 console.log(error.config);
             });
-
-
         },
         methods: {
+            filterArtifacts: function(filter) {
+                if (filter) {
+                    let g = [];
+                    this.artifacts.forEach(function (artifact) {
+                        if (artifact.catagory === filter) {      //artifact.catagory.find(function(art) { art === filter}
+                            g.push(artifact);
+                        }
+                    });
+                    this.groupArt = g;
+                } else {
+                    this.groupArt = this.artifacts;
+                }
+            },
             openModal: function(modalArtifact) {
                 this.showModal = true;
                 this.modalImage = modalArtifact.image;
                 this.modalTitle = modalArtifact.title;
                 this.modalDescription = modalArtifact.description;
+                this.modalID = modalArtifact.id;
+                this.modalEditID = modalArtifact.edit_id;
+                this.modalCatagory = modalArtifact.catagory;
             },
             closeModal: function() {
                 this.showModal = false;
             },
             saveChanges: function() {
-                axios.post('/gallery', {
+                axios.put('/gallery/' + this.modalID, {
                     user: this.user.id,
-                    artifactTitle: 'hello',
-                    artifactDescription: 'hello',
-                    artifactImage: 'https://google.com'
+                    artifactTitle: this.modalTitle,
+                    artifactDescription: this.modalDescription,
+                    artifactImage: this.modalImage,
+                    artifactID: this.modalID,
+                    editID: this.modalEditID,
+                    catagory: this.modalCatagory
                 }).then(function(){
                     console.log('SUCCESS!!');
                 }).catch(function(){
@@ -93,7 +122,6 @@
                 return this.$store.state.user;
             }
         }
-
     }
 </script>
 
