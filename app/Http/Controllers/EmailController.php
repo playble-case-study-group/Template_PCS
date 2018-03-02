@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class EmailController extends Controller
 {
@@ -14,7 +15,8 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return view('email');
+        $emails = DB::table('emails')->get();
+        return view('email', compact('emails'));
     }
 
     /**
@@ -35,7 +37,13 @@ class EmailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('emails')->insert([
+            'from' => Auth::user()->name,
+           'to' => "Dan",
+           'subject'=> $request->subject,
+            'body' => $request->body
+        ]);
+        return $request->all();
     }
 
     /**

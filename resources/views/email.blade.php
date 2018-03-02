@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<email>
+<email :emails="{{$emails}}">
 
 </email>
 @endsection
