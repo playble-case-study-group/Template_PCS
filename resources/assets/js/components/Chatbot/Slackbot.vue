@@ -6,10 +6,11 @@
                 <!--<i class="fa fa-search"></i>-->
             <!--</div>-->
             <ul class="list">
-                <slack-user v-for="(user, key) in users"
-                            :user="user"
-                            @click="changeUser(user)"
-                            :key="key"></slack-user>
+                <slack-channel v-for="(channel, key) in channels"
+                            :channel="channel"
+                            v-on:click.native="changeChannel(key)"
+                            :key="key">
+                </slack-channel>
             </ul>
         </div>
 
@@ -18,24 +19,23 @@
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar"/>
 
                 <div class="chat-about">
-                    <div class="chat-with">Chat with Vincent Porter</div>
-                    <div class="chat-num-messages">already 1 902 messages</div>
+                    <div class="chat-with">{{ channels[current_client_index].name }}</div>
                 </div>
                 <i class="fa fa-star"></i>
             </div> <!-- end chat-header -->
 
-            <div class="chat-history">
+            <div id="chat-history">
                 <ul>
-                  <span v-for="(message, key) in messages">
+                  <span v-for="(message, key) in client_messages[current_client_index + 1]">
                     <slack-response v-if="!message.type"
                                     :message="message"
-                                    :isLast="key === (messages.length - 1)? true: false"
+                                    :isLast="key === (client_messages[current_client_index + 1].length - 1)? true: false"
                                     v-on:last_msg="scrollChat"
                                     :key="key">
                     </slack-response>
                     <slack-receive v-if="message.type"
                                    :message="message"
-                                   :isLast="key === (messages.length - 1)? true: false"
+                                   :isLast="key === (client_messages[current_client_index + 1].length - 1)? true: false"
                                    v-on:last_msg="scrollChat"
                                    :key="key">
                     </slack-receive>
@@ -70,109 +70,138 @@
     import SlackUser from './SlackUser.vue'
     import SlackResponse from './SlackResponse.vue'
     import SlackReceive from './SlackReceive.vue'
+    import SlackChannel from './SlackChannel.vue'
     import { ApiAiClient } from 'api-ai-javascript'
-
-    const client_2 = new ApiAiClient({accessToken: 'c31305b92c7443f1908e821264a193ae'}) // <- PCS_Test_2
+    import { mapGetters, mapActions } from 'vuex'
 
     export default {
-        components: {
-            "slack-user": SlackUser,
-            "slack-response": SlackResponse,
-            "slack-receive": SlackReceive
-        },
-        props: ['messages', 'channels'],
-        mounted() {
-//            console.log('Component mounted.');
-            let clients = [];
-            this.channels.forEach(function (channel) {
-                let client = new ApiAiClient({accessToken: channel.channel_key});
-                client.channel_id = channel.id;
-                clients.push(client)
+        created() {
+
+            // Variables created here are constants (const) this initialized the channels for the day.
+            this.channels.forEach(channel => {
+                this.clients.push(new ApiAiClient({accessToken: channel.channel_key}))
             });
 
-            this.clients = clients;
 
-            // Defaults to the first channel
-            this.current_client = clients[0];
-
-            this.scrollChat();
-        },
-        methods: {
-            submitMessage: function () {
-
-                this.current_client.textRequest(this.sendMessage).then( response => {
-                    //  console.log(response);
-                    this.messages.push({name: this.userName, time: Date.now(), msg: this.sendMessage, type: 0});
-                    console.log(this.$store.getters.CURRENT_DAY);
-                    axios.post('/chat', {msg: this.sendMessage, day: this.$store.getters.CURRENT_DAY, type: 0})
-                        .then(function (response) {
-                            console.log(response)
-                        });
-
-                    // empty the message each time it sends
-                    this.sendMessage = "";
-
-                    if(response.result.fulfillment.messages) {
-                        let payload = response.result.fulfillment.messages.filter(msg => msg.type === 4);
-//                        console.log(payload);
-                        if (payload.length) {
-                            payload[0].payload.msgs.forEach(msg => {
-                                let data = {
-                                    msg: msg.msg,
-                                    day: this.$store.getters.CURRENT_DAY,
-                                    character_name: msg.name,
-                                    type: msg.type
-                                };
-                                axios.post('/chat', data)
-                                    .then(function (response) {
-                                        console.log(response)
-                                    });
-                                this.messages.push(msg)
-                            });
-
-                        }
-
-                    }
-                });
-
-            },
-            scrollChat: function () {
-                let chatHist = $('.chat-history');
-                chatHist.scrollTop(chatHist[0].scrollHeight);
-            },
-            changeUser: function (user) {
-
-            }
-        },
-        data: function () {
-            return {
-                clients: [],
-                current_client: {},
-                sendMessage: "",
-                users: [
-                    {
-                        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg",
-                        name: "Dan Ebeling",
-                        status: "online"
-                    },
-                    {
-                        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg",
-                        name: "Ben Moren",
-                        status: "left 10 min ago"
-                    },
-                    {
-                        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg",
-                        name: "Sarah Olson",
-                        status: "online"
-                    }
-
-                ],
-                userName: "Dan Ebeling"
-            }
         },
         computed: {
             currentTime: function () {
                 return Date.now().toString()
+            },
+            ...mapGetters({
+                currentDay: 'CURRENT_DAY'
+            })
+        },
+        components: {
+            "slack-user": SlackUser,
+            "slack-response": SlackResponse,
+            "slack-receive": SlackReceive,
+            "slack-channel": SlackChannel
+        },
+        props: ['msgs', 'channels'],
+        mounted() {
+            // Creates emtpy array for each channel
+            this.channels.forEach ( channel => {
+                this.client_messages[channel.id] = [];
+            });
+
+            // Fills channel arrays with messages from msg prop
+            this.msgs.forEach ( msg => {
+                this.client_messages[msg.channel_id].push(msg);
+            });
+        },
+        data: function () {
+            return {
+                messages: [],
+                clients: [],
+                current_client_index: 0,
+                current_channel_id: 1,
+                sendMessage: "",
+                client_messages: {},
+                userName: "Dan Ebeling"
+            }
+        },
+        methods: {
+            dayContext: function () {
+                console.log("day: ", this.currentDay );
+                this.clients[this.current_client_index].eventRequest("day_1_context").then(response =>console.log('context: ', response));
+            },
+            submitMessage: function () {
+
+//                this.dayContext();
+
+                this.clients[this.current_client_index].eventRequest("day_" + this.currentDay + "_context").then(response1 => {
+                    console.log('context: ', response1)
+
+                    this.clients[this.current_client_index].textRequest(this.sendMessage).then( response => {
+
+                        console.log(response);
+
+
+                        // Disable text area to prevent double input
+                        document.getElementById('message-to-send').disabled = "true";
+
+                        let message = {
+                            name: this.userName,
+                            time: Date.now(),
+                            message: this.sendMessage,
+                            day: this.$store.getters.CURRENT_DAY,
+                            type: 0,
+                            channel_id: this.current_channel_id
+                        };
+
+                        this.client_messages[this.current_channel_id].push(message);
+
+                        axios.post('/chat', message).then( response => {/* console.log(response) */});
+
+                        // empty the message each time it sends
+                        this.sendMessage = "";
+
+                        if(response.result.fulfillment.messages) {
+                            let payload = response.result.fulfillment.messages.filter(msg => msg.type === 4);
+
+                            if (payload.length) {
+
+                                payload[0].payload.msgs.forEach(msg => {
+
+                                    let data = {
+                                        day: this.$store.getters.CURRENT_DAY,
+                                        channel_id: this.current_channel_id,
+                                        message: msg.msg,
+                                        character_name: msg.name,
+                                        type: msg.type
+                                    };
+
+                                    axios.post('/chat', data).then( response => { /* console.log(response) */ });
+                                    this.client_messages[this.current_channel_id].push(data)
+                                });
+
+                            }
+
+                        }
+
+                        // Disable text area to prevent double input
+                        document.getElementById('message-to-send').removeAttribute('disabled');
+                        document.getElementById('message-to-send').focus();
+
+
+                    });
+                });
+
+
+
+
+
+
+            },
+            scrollChat: function () {
+                let chatHist = document.getElementById('chat-history');
+                chatHist.scrollTop = chatHist.scrollHeight;
+            },
+            changeChannel: function (channel_index) {
+                this.scrollChat();
+                this.current_client_index = channel_index;
+                this.current_channel_id = this.channels[this.current_client_index].id;
             }
         }
     }
@@ -293,7 +322,7 @@
             }
         }
 
-        .chat-history {
+        #chat-history {
             padding: 30px 30px 20px;
             border-bottom: 2px solid white;
             overflow-y: scroll;

@@ -174,316 +174,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(7);
-var isBuffer = __webpack_require__(27);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- */
-function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-    return false;
-  }
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object') {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isBuffer: isBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1428,6 +1118,316 @@ var index_esm = {
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(7);
+var isBuffer = __webpack_require__(27);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -1764,7 +1764,7 @@ module.exports = g;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var normalizeHeaderName = __webpack_require__(29);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -2072,7 +2072,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var settle = __webpack_require__(30);
 var buildURL = __webpack_require__(32);
 var parseHeaders = __webpack_require__(33);
@@ -13137,7 +13137,7 @@ module.exports = Vue$3;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__es6_ApiAiClient__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__es6_ApiAiClient__ = __webpack_require__(94);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__es6_ApiAiClient__["a"]; });
 
 
@@ -13215,7 +13215,7 @@ class ApiAiRequestError extends ApiAiBaseError {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Errors__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__XhrRequest__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__XhrRequest__ = __webpack_require__(96);
 
 
 class Request {
@@ -13264,7 +13264,7 @@ class Request {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(110);
+module.exports = __webpack_require__(118);
 
 
 /***/ }),
@@ -13273,8 +13273,8 @@ module.exports = __webpack_require__(110);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vuex_store__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vuex_store__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13294,12 +13294,12 @@ window.Vue = __webpack_require__(13);
 
 Vue.component('example-component', __webpack_require__(46));
 Vue.component('left-menu', __webpack_require__(49));
-Vue.component('right-menu', __webpack_require__(68));
-Vue.component('email', __webpack_require__(73));
-Vue.component('gallery', __webpack_require__(76));
-Vue.component('library', __webpack_require__(82));
-Vue.component('chatbot', __webpack_require__(87));
-Vue.component('slackbot', __webpack_require__(95));
+Vue.component('right-menu', __webpack_require__(73));
+Vue.component('email', __webpack_require__(78));
+Vue.component('gallery', __webpack_require__(81));
+Vue.component('library', __webpack_require__(87));
+Vue.component('chatbot', __webpack_require__(92));
+Vue.component('slackbot', __webpack_require__(100));
 
 
 
@@ -43281,7 +43281,7 @@ module.exports = __webpack_require__(26);
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var bind = __webpack_require__(7);
 var Axios = __webpack_require__(28);
 var defaults = __webpack_require__(6);
@@ -43368,7 +43368,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(6);
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var InterceptorManager = __webpack_require__(37);
 var dispatchRequest = __webpack_require__(38);
 
@@ -43453,7 +43453,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -43533,7 +43533,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -43608,7 +43608,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -43668,7 +43668,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -43786,7 +43786,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -43846,7 +43846,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -43905,7 +43905,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var transformData = __webpack_require__(39);
 var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(6);
@@ -43998,7 +43998,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 
 /**
  * Transform the data for a request or a response
@@ -44463,7 +44463,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -44573,7 +44573,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
-var __vue_template__ = __webpack_require__(67)
+var __vue_template__ = __webpack_require__(72)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44694,9 +44694,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Progress_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Progress_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Tasks_vue__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Tasks_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Tasks_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Counter_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Counter_vue__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Counter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Counter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -44838,7 +44838,7 @@ exports.push([module.i, "\nul[data-v-635c040f] {\n    list-style: none;\n    pad
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -44945,7 +44945,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(62)
 /* template */
-var __vue_template__ = __webpack_require__(63)
+var __vue_template__ = __webpack_require__(68)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45029,9 +45029,9 @@ exports.push([module.i, "\nul[data-v-a895a4c8] {\n    list-style: none;\n    pad
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Task_vue__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Task_vue__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Task_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Task_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -45067,6 +45067,192 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(64)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-70c68067"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/LeftMenu/Task.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-70c68067", Component.options)
+  } else {
+    hotAPI.reload("data-v-70c68067", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("70bfa488", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-70c68067\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-70c68067\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nli[data-v-70c68067] {\n    margin-top: 10px;\n    margin-bottom: 12px;\n}\nlabel[data-v-70c68067] {\n    display: block;\n    position: relative;\n    padding-left: 28px;\n    margin-top: 11px;\n    margin-bottom: 12px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Hide the browser's default checkbox */\nlabel input[data-v-70c68067] {\n    position: absolute;\n    opacity: 0;\n    cursor: pointer;\n}\n\n/* Create a custom checkbox */\n.checkmark[data-v-70c68067] {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 16px;\n    width: 16px;\n    background-color: #eee;\n    border: 3px solid #4A4A4A;\n}\n\n/* On mouse-over, add a grey background color */\nlabel:hover input ~ .checkmark[data-v-70c68067] {\n    background-color: #ccc;\n}\n\n/* When the checkbox is checked, add a blue background */\nlabel input:checked ~ .checkmark[data-v-70c68067] {\n    background-color: #4A4A4A;\n}\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.checkmark[data-v-70c68067]:after {\n    content: \"\";\n    position: absolute;\n    display: none;\n}\n\n/* Show the checkmark when checked */\nlabel input:checked ~ .checkmark[data-v-70c68067]:after {\n    display: block;\n}\n\n/* Style the checkmark/indicator */\n/*label .checkmark:after {*/\n    /*left: 9px;*/\n    /*top: 5px;*/\n    /*width: 5px;*/\n    /*height: 10px;*/\n    /*border: solid white;*/\n    /*border-width: 0 3px 3px 0;*/\n    /*-webkit-transform: rotate(45deg);*/\n    /*-ms-transform: rotate(45deg);*/\n    /*transform: rotate(45deg);*/\n/*}*/\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['task', 'complete'],
+    mounted: function mounted() {},
+
+    data: function data() {
+        return {
+            taskComplete: this.complete
+        };
+    },
+    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleTask'])
+    //            {
+    //            check: function (id) {
+    //                this.taskComplete = !this.taskComplete;
+    ////                axios.post('/tasks/complete',{id: id, complete: this.taskComplete})
+    ////                    .then((response)=>{
+    //////                        console.log(response)
+    ////                    }).catch((error)=>{
+    //////                    console.log(error.response.data)
+    ////                })
+    //            }
+    //        }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", [
+    _c("label", [
+      _vm.complete
+        ? _c("input", {
+            attrs: { type: "checkbox", checked: "" },
+            on: {
+              click: function($event) {
+                _vm.toggleTask(_vm.task.id)
+              }
+            }
+          })
+        : _c("input", {
+            attrs: { type: "checkbox" },
+            on: {
+              click: function($event) {
+                _vm.toggleTask(_vm.task.id)
+              }
+            }
+          }),
+      _vm._v(" "),
+      _c("span", { staticClass: "checkmark" }),
+      _vm._v("\n        " + _vm._s(_vm.task.title) + "\n    ")
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-70c68067", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -45098,15 +45284,15 @@ if (false) {
 }
 
 /***/ }),
-/* 64 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(65)
+var __vue_script__ = __webpack_require__(70)
 /* template */
-var __vue_template__ = __webpack_require__(66)
+var __vue_template__ = __webpack_require__(71)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45145,12 +45331,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 65 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -45169,7 +45355,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 66 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45208,7 +45394,7 @@ if (false) {
 }
 
 /***/ }),
-/* 67 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45278,19 +45464,19 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(69)
+  __webpack_require__(74)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(71)
+var __vue_script__ = __webpack_require__(76)
 /* template */
-var __vue_template__ = __webpack_require__(72)
+var __vue_template__ = __webpack_require__(77)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45329,13 +45515,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 69 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -45355,7 +45541,7 @@ if(false) {
 }
 
 /***/ }),
-/* 70 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -45369,12 +45555,12 @@ exports.push([module.i, "\n#right-menu[data-v-b9f3bdc0] {\n    z-index: 1000;\n 
 
 
 /***/ }),
-/* 71 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -45396,7 +45582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 72 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45443,15 +45629,15 @@ if (false) {
 }
 
 /***/ }),
-/* 73 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(74)
+var __vue_script__ = __webpack_require__(79)
 /* template */
-var __vue_template__ = __webpack_require__(75)
+var __vue_template__ = __webpack_require__(80)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45490,12 +45676,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 74 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -45526,7 +45712,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 75 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45555,15 +45741,15 @@ if (false) {
 }
 
 /***/ }),
-/* 76 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(77)
+var __vue_script__ = __webpack_require__(82)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(86)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45602,13 +45788,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 77 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Artifact_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Artifact_vue__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Artifact_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Artifact_vue__);
 //
 //
@@ -45635,15 +45821,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 78 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(79)
+var __vue_script__ = __webpack_require__(84)
 /* template */
-var __vue_template__ = __webpack_require__(80)
+var __vue_template__ = __webpack_require__(85)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45682,12 +45868,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 79 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -45709,7 +45895,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 80 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45738,7 +45924,7 @@ if (false) {
 }
 
 /***/ }),
-/* 81 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45763,19 +45949,19 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(83)
+  __webpack_require__(88)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(85)
+var __vue_script__ = __webpack_require__(90)
 /* template */
-var __vue_template__ = __webpack_require__(86)
+var __vue_template__ = __webpack_require__(91)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45814,13 +46000,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 83 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(84);
+var content = __webpack_require__(89);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -45840,7 +46026,7 @@ if(false) {
 }
 
 /***/ }),
-/* 84 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -45854,12 +46040,12 @@ exports.push([module.i, "\n.menubtn[data-v-1c179b00] {\n    cursor:pointer;\n}\n
 
 
 /***/ }),
-/* 85 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 //
 //
 //
@@ -45925,7 +46111,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 86 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46025,15 +46211,15 @@ if (false) {
 }
 
 /***/ }),
-/* 87 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(88)
+var __vue_script__ = __webpack_require__(93)
 /* template */
-var __vue_template__ = __webpack_require__(94)
+var __vue_template__ = __webpack_require__(99)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46072,12 +46258,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_api_ai_javascript__ = __webpack_require__(14);
 //
 //
@@ -46137,15 +46323,15 @@ var client_2 = new __WEBPACK_IMPORTED_MODULE_1_api_ai_javascript__["a" /* ApiAiC
 });
 
 /***/ }),
-/* 89 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ApiAiConstants__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Errors__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Request_EventRequest__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Request_TextRequest__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Interfaces__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Request_EventRequest__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Request_TextRequest__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Interfaces__ = __webpack_require__(98);
 /* unused harmony namespace reexport */
 /* unused harmony reexport ApiAiConstants */
 
@@ -46222,7 +46408,7 @@ class ApiAiClient {
 
 
 /***/ }),
-/* 90 */
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46235,7 +46421,7 @@ class EventRequest extends __WEBPACK_IMPORTED_MODULE_0__Request__["a" /* default
 
 
 /***/ }),
-/* 91 */
+/* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46352,7 +46538,7 @@ XhrRequest.XMLHttpFactories = [
 
 
 /***/ }),
-/* 92 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46365,7 +46551,7 @@ class TextRequest extends __WEBPACK_IMPORTED_MODULE_0__Request__["a" /* default 
 
 
 /***/ }),
-/* 93 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46398,7 +46584,7 @@ var IStreamClient;
 
 
 /***/ }),
-/* 94 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46464,19 +46650,19 @@ if (false) {
 }
 
 /***/ }),
-/* 95 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(96)
+  __webpack_require__(101)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(98)
+var __vue_script__ = __webpack_require__(103)
 /* template */
-var __vue_template__ = __webpack_require__(108)
+var __vue_template__ = __webpack_require__(116)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46515,13 +46701,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 96 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(97);
+var content = __webpack_require__(102);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -46541,7 +46727,7 @@ if(false) {
 }
 
 /***/ }),
-/* 97 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -46549,24 +46735,29 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Lato:400,700);", ""]);
 
 // module
-exports.push([module.i, "\n*, *:before, *:after {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nli {\n  list-style: none;\n}\n.container {\n  /*margin: 0 auto;*/\n  /*width: 750px;*/\n  background: #444753;\n  /*border-radius: 5px;*/\n}\n.people-list {\n  width: 260px;\n  float: left;\n  color: white;\n}\n.people-list .search {\n    padding: 20px;\n}\n.people-list input {\n    border-radius: 3px;\n    border: none;\n    padding: 14px;\n    color: white;\n    background: #6A6C75;\n    width: 90%;\n    font-size: 14px;\n}\n.people-list .fa-search {\n    position: relative;\n    left: -25px;\n}\n.people-list ul {\n    padding: 20px;\n    height: 770px;\n}\n.people-list ul li {\n      padding-bottom: 20px;\n}\n.people-list img {\n    float: left;\n}\n.people-list .about {\n    float: left;\n    margin-top: 8px;\n}\n.people-list .about {\n    padding-left: 8px;\n}\n.people-list .status {\n    color: #92959E;\n}\n.chat {\n  width: 590px;\n  float: left;\n  background: #F2F5F8;\n  border-top-right-radius: 5px;\n  border-bottom-right-radius: 5px;\n  color: #434651;\n}\n.chat .chat-header {\n    padding: 20px;\n    border-bottom: 2px solid white;\n}\n.chat .chat-header img {\n      float: left;\n}\n.chat .chat-header .chat-about {\n      float: left;\n      padding-left: 10px;\n      margin-top: 6px;\n}\n.chat .chat-header .chat-with {\n      font-weight: bold;\n      font-size: 16px;\n}\n.chat .chat-header .chat-num-messages {\n      color: #92959E;\n}\n.chat .chat-header .fa-star {\n      float: right;\n      color: #D8DADF;\n      font-size: 20px;\n      margin-top: 12px;\n}\n.chat .chat-history {\n    padding: 30px 30px 20px;\n    border-bottom: 2px solid white;\n    overflow-y: scroll;\n    height: 575px;\n}\n.chat .chat-history .message-data {\n      margin-bottom: 10px;\n}\n.chat .chat-history .message-data-time {\n      color: #a8aab1;\n      padding-left: 6px;\n}\n.chat .chat-history .message {\n      color: white;\n      padding: 18px 20px;\n      line-height: 26px;\n      font-size: 16px;\n      border-radius: 1px;\n      margin-bottom: 30px;\n      width: 90%;\n      position: relative;\n}\n.chat .chat-history .message:after {\n        bottom: 100%;\n        left: 7%;\n        border: solid transparent;\n        content: \" \";\n        height: 0;\n        width: 0;\n        position: absolute;\n        pointer-events: none;\n        border-bottom-color: #86BB71;\n        border-width: 10px;\n        margin-left: -10px;\n}\n.chat .chat-history .my-message {\n      background: #86BB71;\n}\n.chat .chat-history .other-message {\n      background: #94C2ED;\n}\n.chat .chat-history .other-message:after {\n        border-bottom-color: #94C2ED;\n        left: 93%;\n}\n.chat .chat-message {\n    padding: 20px;\n}\n.chat .chat-message textarea {\n      width: 100%;\n      border: none;\n      padding: 10px 20px;\n      font: 14px/22px \"Lato\", Arial, sans-serif;\n      margin-bottom: 10px;\n      border-radius: 1px;\n      resize: none;\n}\n.chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {\n      font-size: 16px;\n      color: gray;\n      cursor: pointer;\n}\n.chat .chat-message button {\n      float: right;\n      color: #94C2ED;\n      font-size: 16px;\n      text-transform: uppercase;\n      border: none;\n      cursor: pointer;\n      font-weight: bold;\n      background: #F2F5F8;\n}\n.chat .chat-message button:hover {\n        color: #75b1e8;\n}\n.online, .offline, .me {\n  margin-right: 3px;\n  font-size: 10px;\n}\n.online {\n  color: #86BB71;\n}\n.offline {\n  color: #E38968;\n}\n.me {\n  color: #94C2ED;\n}\n.align-left {\n  text-align: left;\n}\n.align-right {\n  text-align: right;\n}\n.float-right {\n  float: right;\n}\n.clearfix:after {\n  visibility: hidden;\n  display: block;\n  font-size: 0;\n  content: \" \";\n  clear: both;\n  height: 0;\n}\n", ""]);
+exports.push([module.i, "\n*, *:before, *:after {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nli {\n  list-style: none;\n}\n.container {\n  /*margin: 0 auto;*/\n  /*width: 750px;*/\n  background: #444753;\n  /*border-radius: 5px;*/\n}\n.people-list {\n  width: 260px;\n  float: left;\n  color: white;\n}\n.people-list .search {\n    padding: 20px;\n}\n.people-list input {\n    border-radius: 3px;\n    border: none;\n    padding: 14px;\n    color: white;\n    background: #6A6C75;\n    width: 90%;\n    font-size: 14px;\n}\n.people-list .fa-search {\n    position: relative;\n    left: -25px;\n}\n.people-list ul {\n    padding: 20px;\n    height: 770px;\n}\n.people-list ul li {\n      padding-bottom: 20px;\n}\n.people-list img {\n    float: left;\n}\n.people-list .about {\n    float: left;\n    margin-top: 8px;\n}\n.people-list .about {\n    padding-left: 8px;\n}\n.people-list .status {\n    color: #92959E;\n}\n.chat {\n  width: 590px;\n  float: left;\n  background: #F2F5F8;\n  border-top-right-radius: 5px;\n  border-bottom-right-radius: 5px;\n  color: #434651;\n}\n.chat .chat-header {\n    padding: 20px;\n    border-bottom: 2px solid white;\n}\n.chat .chat-header img {\n      float: left;\n}\n.chat .chat-header .chat-about {\n      float: left;\n      padding-left: 10px;\n      margin-top: 6px;\n}\n.chat .chat-header .chat-with {\n      font-weight: bold;\n      font-size: 16px;\n}\n.chat .chat-header .chat-num-messages {\n      color: #92959E;\n}\n.chat .chat-header .fa-star {\n      float: right;\n      color: #D8DADF;\n      font-size: 20px;\n      margin-top: 12px;\n}\n.chat #chat-history {\n    padding: 30px 30px 20px;\n    border-bottom: 2px solid white;\n    overflow-y: scroll;\n    height: 575px;\n}\n.chat #chat-history .message-data {\n      margin-bottom: 10px;\n}\n.chat #chat-history .message-data-time {\n      color: #a8aab1;\n      padding-left: 6px;\n}\n.chat #chat-history .message {\n      color: white;\n      padding: 18px 20px;\n      line-height: 26px;\n      font-size: 16px;\n      border-radius: 1px;\n      margin-bottom: 30px;\n      width: 90%;\n      position: relative;\n}\n.chat #chat-history .message:after {\n        bottom: 100%;\n        left: 7%;\n        border: solid transparent;\n        content: \" \";\n        height: 0;\n        width: 0;\n        position: absolute;\n        pointer-events: none;\n        border-bottom-color: #86BB71;\n        border-width: 10px;\n        margin-left: -10px;\n}\n.chat #chat-history .my-message {\n      background: #86BB71;\n}\n.chat #chat-history .other-message {\n      background: #94C2ED;\n}\n.chat #chat-history .other-message:after {\n        border-bottom-color: #94C2ED;\n        left: 93%;\n}\n.chat .chat-message {\n    padding: 20px;\n}\n.chat .chat-message textarea {\n      width: 100%;\n      border: none;\n      padding: 10px 20px;\n      font: 14px/22px \"Lato\", Arial, sans-serif;\n      margin-bottom: 10px;\n      border-radius: 1px;\n      resize: none;\n}\n.chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {\n      font-size: 16px;\n      color: gray;\n      cursor: pointer;\n}\n.chat .chat-message button {\n      float: right;\n      color: #94C2ED;\n      font-size: 16px;\n      text-transform: uppercase;\n      border: none;\n      cursor: pointer;\n      font-weight: bold;\n      background: #F2F5F8;\n}\n.chat .chat-message button:hover {\n        color: #75b1e8;\n}\n.online, .offline, .me {\n  margin-right: 3px;\n  font-size: 10px;\n}\n.online {\n  color: #86BB71;\n}\n.offline {\n  color: #E38968;\n}\n.me {\n  color: #94C2ED;\n}\n.align-left {\n  text-align: left;\n}\n.align-right {\n  text-align: right;\n}\n.float-right {\n  float: right;\n}\n.clearfix:after {\n  visibility: hidden;\n  display: block;\n  font-size: 0;\n  content: \" \";\n  clear: both;\n  height: 0;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 98 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SlackUser_vue__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SlackUser_vue__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SlackUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__SlackUser_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SlackResponse_vue__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SlackResponse_vue__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SlackResponse_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__SlackResponse_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_api_ai_javascript__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SlackChannel_vue__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SlackChannel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SlackChannel_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_api_ai_javascript__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -46641,113 +46832,146 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var client_2 = new __WEBPACK_IMPORTED_MODULE_3_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: 'c31305b92c7443f1908e821264a193ae' }); // <- PCS_Test_2
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        var _this = this;
+
+        // Variables created here are constants (const) this initialized the channels for the day.
+        this.channels.forEach(function (channel) {
+            _this.clients.push(new __WEBPACK_IMPORTED_MODULE_4_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: channel.channel_key }));
+        });
+    },
+
+    computed: _extends({
+        currentTime: function currentTime() {
+            return Date.now().toString();
+        }
+    }, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["c" /* mapGetters */])({
+        currentDay: 'CURRENT_DAY'
+    })),
     components: {
         "slack-user": __WEBPACK_IMPORTED_MODULE_0__SlackUser_vue___default.a,
         "slack-response": __WEBPACK_IMPORTED_MODULE_1__SlackResponse_vue___default.a,
-        "slack-receive": __WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue___default.a
+        "slack-receive": __WEBPACK_IMPORTED_MODULE_2__SlackReceive_vue___default.a,
+        "slack-channel": __WEBPACK_IMPORTED_MODULE_3__SlackChannel_vue___default.a
     },
-    props: ['messages', 'channels'],
+    props: ['msgs', 'channels'],
     mounted: function mounted() {
-        //            console.log('Component mounted.');
-        var clients = [];
+        var _this2 = this;
+
+        // Creates emtpy array for each channel
         this.channels.forEach(function (channel) {
-            var client = new __WEBPACK_IMPORTED_MODULE_3_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: channel.channel_key });
-            client.channel_id = channel.id;
-            clients.push(client);
+            _this2.client_messages[channel.id] = [];
         });
 
-        this.clients = clients;
-
-        // Defaults to the first channel
-        this.current_client = clients[0];
-
-        this.scrollChat();
+        // Fills channel arrays with messages from msg prop
+        this.msgs.forEach(function (msg) {
+            _this2.client_messages[msg.channel_id].push(msg);
+        });
     },
 
-    methods: {
-        submitMessage: function submitMessage() {
-            var _this = this;
-
-            this.current_client.textRequest(this.sendMessage).then(function (response) {
-                //  console.log(response);
-                _this.messages.push({ name: _this.userName, time: Date.now(), msg: _this.sendMessage, type: 0 });
-                console.log(_this.$store.getters.CURRENT_DAY);
-                axios.post('/chat', { msg: _this.sendMessage, day: _this.$store.getters.CURRENT_DAY, type: 0 }).then(function (response) {
-                    console.log(response);
-                });
-
-                // empty the message each time it sends
-                _this.sendMessage = "";
-
-                if (response.result.fulfillment.messages) {
-                    var payload = response.result.fulfillment.messages.filter(function (msg) {
-                        return msg.type === 4;
-                    });
-                    //                        console.log(payload);
-                    if (payload.length) {
-                        payload[0].payload.msgs.forEach(function (msg) {
-                            var data = {
-                                msg: msg.msg,
-                                day: _this.$store.getters.CURRENT_DAY,
-                                character_name: msg.name,
-                                type: msg.type
-                            };
-                            axios.post('/chat', data).then(function (response) {
-                                console.log(response);
-                            });
-                            _this.messages.push(msg);
-                        });
-                    }
-                }
-            });
-        },
-        scrollChat: function scrollChat() {
-            var chatHist = $('.chat-history');
-            chatHist.scrollTop(chatHist[0].scrollHeight);
-        },
-        changeUser: function changeUser(user) {}
-    },
     data: function data() {
         return {
+            messages: [],
             clients: [],
-            current_client: {},
+            current_client_index: 0,
+            current_channel_id: 1,
             sendMessage: "",
-            users: [{
-                img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg",
-                name: "Dan Ebeling",
-                status: "online"
-            }, {
-                img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg",
-                name: "Ben Moren",
-                status: "left 10 min ago"
-            }, {
-                img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg",
-                name: "Sarah Olson",
-                status: "online"
-            }],
+            client_messages: {},
             userName: "Dan Ebeling"
         };
     },
-    computed: {
-        currentTime: function currentTime() {
-            return Date.now().toString();
+    methods: {
+        dayContext: function dayContext() {
+            console.log("day: ", this.currentDay);
+            this.clients[this.current_client_index].eventRequest("day_1_context").then(function (response) {
+                return console.log('context: ', response);
+            });
+        },
+        submitMessage: function submitMessage() {
+            var _this3 = this;
+
+            //                this.dayContext();
+
+            this.clients[this.current_client_index].eventRequest("day_" + this.currentDay + "_context").then(function (response1) {
+                console.log('context: ', response1);
+
+                _this3.clients[_this3.current_client_index].textRequest(_this3.sendMessage).then(function (response) {
+
+                    console.log(response);
+
+                    // Disable text area to prevent double input
+                    document.getElementById('message-to-send').disabled = "true";
+
+                    var message = {
+                        name: _this3.userName,
+                        time: Date.now(),
+                        message: _this3.sendMessage,
+                        day: _this3.$store.getters.CURRENT_DAY,
+                        type: 0,
+                        channel_id: _this3.current_channel_id
+                    };
+
+                    _this3.client_messages[_this3.current_channel_id].push(message);
+
+                    axios.post('/chat', message).then(function (response) {/* console.log(response) */});
+
+                    // empty the message each time it sends
+                    _this3.sendMessage = "";
+
+                    if (response.result.fulfillment.messages) {
+                        var payload = response.result.fulfillment.messages.filter(function (msg) {
+                            return msg.type === 4;
+                        });
+
+                        if (payload.length) {
+
+                            payload[0].payload.msgs.forEach(function (msg) {
+
+                                var data = {
+                                    day: _this3.$store.getters.CURRENT_DAY,
+                                    channel_id: _this3.current_channel_id,
+                                    message: msg.msg,
+                                    character_name: msg.name,
+                                    type: msg.type
+                                };
+
+                                axios.post('/chat', data).then(function (response) {/* console.log(response) */});
+                                _this3.client_messages[_this3.current_channel_id].push(data);
+                            });
+                        }
+                    }
+
+                    // Disable text area to prevent double input
+                    document.getElementById('message-to-send').removeAttribute('disabled');
+                    document.getElementById('message-to-send').focus();
+                });
+            });
+        },
+        scrollChat: function scrollChat() {
+            var chatHist = document.getElementById('chat-history');
+            chatHist.scrollTop = chatHist.scrollHeight;
+        },
+        changeChannel: function changeChannel(channel_index) {
+            this.scrollChat();
+            this.current_client_index = channel_index;
+            this.current_channel_id = this.channels[this.current_client_index].id;
         }
     }
 });
 
 /***/ }),
-/* 99 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(100)
+var __vue_script__ = __webpack_require__(105)
 /* template */
-var __vue_template__ = __webpack_require__(101)
+var __vue_template__ = __webpack_require__(106)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46786,7 +47010,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 100 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46814,7 +47038,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 101 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46845,15 +47069,15 @@ if (false) {
 }
 
 /***/ }),
-/* 102 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(103)
+var __vue_script__ = __webpack_require__(108)
 /* template */
-var __vue_template__ = __webpack_require__(104)
+var __vue_template__ = __webpack_require__(109)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46892,7 +47116,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 103 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46929,7 +47153,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 104 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46965,15 +47189,15 @@ if (false) {
 }
 
 /***/ }),
-/* 105 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(106)
+var __vue_script__ = __webpack_require__(111)
 /* template */
-var __vue_template__ = __webpack_require__(107)
+var __vue_template__ = __webpack_require__(112)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47012,7 +47236,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 106 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47048,7 +47272,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 107 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47083,7 +47307,113 @@ if (false) {
 }
 
 /***/ }),
-/* 108 */
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(114)
+/* template */
+var __vue_template__ = __webpack_require__(115)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Chatbot/SlackChannel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-34d85b4a", Component.options)
+  } else {
+    hotAPI.reload("data-v-34d85b4a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        //            console.log('Component mounted.')
+    },
+
+    props: ['channel']
+
+});
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "clearfix" }, [
+    _c("img", { attrs: { src: _vm.channel.img, alt: "avatar" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "about" }, [
+      _c("div", { staticClass: "name" }, [_vm._v(_vm._s(_vm.channel.name))]),
+      _vm._v(" "),
+      _c("div", { staticClass: "status" }, [
+        _c("i", { staticClass: "fa fa-circle online" }),
+        _vm._v(" " + _vm._s(_vm.channel.status) + "\n        ")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-34d85b4a", module.exports)
+  }
+}
+
+/***/ }),
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47095,13 +47425,13 @@ var render = function() {
       _c(
         "ul",
         { staticClass: "list" },
-        _vm._l(_vm.users, function(user, key) {
-          return _c("slack-user", {
+        _vm._l(_vm.channels, function(channel, key) {
+          return _c("slack-channel", {
             key: key,
-            attrs: { user: user },
-            on: {
+            attrs: { channel: channel },
+            nativeOn: {
               click: function($event) {
-                _vm.changeUser(user)
+                _vm.changeChannel(key)
               }
             }
           })
@@ -47110,12 +47440,31 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "chat" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "chat-header clearfix" }, [
+        _c("img", {
+          attrs: {
+            src:
+              "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg",
+            alt: "avatar"
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "chat-about" }, [
+          _c("div", { staticClass: "chat-with" }, [
+            _vm._v(_vm._s(_vm.channels[_vm.current_client_index].name))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("i", { staticClass: "fa fa-star" })
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "chat-history" }, [
+      _c("div", { attrs: { id: "chat-history" } }, [
         _c(
           "ul",
-          _vm._l(_vm.messages, function(message, key) {
+          _vm._l(_vm.client_messages[_vm.current_client_index + 1], function(
+            message,
+            key
+          ) {
             return _c(
               "span",
               [
@@ -47124,7 +47473,13 @@ var render = function() {
                       key: key,
                       attrs: {
                         message: message,
-                        isLast: key === _vm.messages.length - 1 ? true : false
+                        isLast:
+                          key ===
+                          _vm.client_messages[_vm.current_client_index + 1]
+                            .length -
+                            1
+                            ? true
+                            : false
                       },
                       on: { last_msg: _vm.scrollChat }
                     })
@@ -47135,7 +47490,13 @@ var render = function() {
                       key: key,
                       attrs: {
                         message: message,
-                        isLast: key === _vm.messages.length - 1 ? true : false
+                        isLast:
+                          key ===
+                          _vm.client_messages[_vm.current_client_index + 1]
+                            .length -
+                            1
+                            ? true
+                            : false
                       },
                       on: { last_msg: _vm.scrollChat }
                     })
@@ -47192,34 +47553,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-header clearfix" }, [
-      _c("img", {
-        attrs: {
-          src:
-            "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg",
-          alt: "avatar"
-        }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "chat-about" }, [
-        _c("div", { staticClass: "chat-with" }, [
-          _vm._v("Chat with Vincent Porter")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "chat-num-messages" }, [
-          _vm._v("already 1 902 messages")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fa fa-star" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -47230,13 +47564,13 @@ if (false) {
 }
 
 /***/ }),
-/* 109 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
 
 
 
@@ -47357,205 +47691,10 @@ var actions = {
 }));
 
 /***/ }),
-/* 110 */
+/* 118 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(121)
-}
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(123)
-/* template */
-var __vue_template__ = __webpack_require__(124)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-70c68067"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/LeftMenu/Task.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-70c68067", Component.options)
-  } else {
-    hotAPI.reload("data-v-70c68067", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(122);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("70bfa488", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-70c68067\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-70c68067\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\nli[data-v-70c68067] {\n    margin-top: 10px;\n    margin-bottom: 12px;\n}\nlabel[data-v-70c68067] {\n    display: block;\n    position: relative;\n    padding-left: 28px;\n    margin-top: 11px;\n    margin-bottom: 12px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Hide the browser's default checkbox */\nlabel input[data-v-70c68067] {\n    position: absolute;\n    opacity: 0;\n    cursor: pointer;\n}\n\n/* Create a custom checkbox */\n.checkmark[data-v-70c68067] {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 16px;\n    width: 16px;\n    background-color: #eee;\n    border: 3px solid #4A4A4A;\n}\n\n/* On mouse-over, add a grey background color */\nlabel:hover input ~ .checkmark[data-v-70c68067] {\n    background-color: #ccc;\n}\n\n/* When the checkbox is checked, add a blue background */\nlabel input:checked ~ .checkmark[data-v-70c68067] {\n    background-color: #4A4A4A;\n}\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.checkmark[data-v-70c68067]:after {\n    content: \"\";\n    position: absolute;\n    display: none;\n}\n\n/* Show the checkmark when checked */\nlabel input:checked ~ .checkmark[data-v-70c68067]:after {\n    display: block;\n}\n\n/* Style the checkmark/indicator */\n/*label .checkmark:after {*/\n    /*left: 9px;*/\n    /*top: 5px;*/\n    /*width: 5px;*/\n    /*height: 10px;*/\n    /*border: solid white;*/\n    /*border-width: 0 3px 3px 0;*/\n    /*-webkit-transform: rotate(45deg);*/\n    /*-ms-transform: rotate(45deg);*/\n    /*transform: rotate(45deg);*/\n/*}*/\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 123 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['task', 'complete'],
-    mounted: function mounted() {},
-
-    data: function data() {
-        return {
-            taskComplete: this.complete
-        };
-    },
-    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['toggleTask'])
-    //            {
-    //            check: function (id) {
-    //                this.taskComplete = !this.taskComplete;
-    ////                axios.post('/tasks/complete',{id: id, complete: this.taskComplete})
-    ////                    .then((response)=>{
-    //////                        console.log(response)
-    ////                    }).catch((error)=>{
-    //////                    console.log(error.response.data)
-    ////                })
-    //            }
-    //        }
-});
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("li", [
-    _c("label", [
-      _vm.complete
-        ? _c("input", {
-            attrs: { type: "checkbox", checked: "" },
-            on: {
-              click: function($event) {
-                _vm.toggleTask(_vm.task.id)
-              }
-            }
-          })
-        : _c("input", {
-            attrs: { type: "checkbox" },
-            on: {
-              click: function($event) {
-                _vm.toggleTask(_vm.task.id)
-              }
-            }
-          }),
-      _vm._v(" "),
-      _c("span", { staticClass: "checkmark" }),
-      _vm._v("\n        " + _vm._s(_vm.task.title) + "\n    ")
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-70c68067", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

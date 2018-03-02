@@ -50,9 +50,10 @@ class ChatController extends Controller
             DB::table('chat')->insert([
                 'user_id' => Auth::id(),
                 'day' => $request->day,
-                'message' => $request->msg,
+                'message' => $request->message,
                 'created_at' => Carbon::now(),
-                'type' => $request->type
+                'type' => $request->type,
+                'channel_id' => $request->channel_id
             ]);
 
         } else {
@@ -60,9 +61,10 @@ class ChatController extends Controller
                 'user_id' => Auth::id(),
                 'day' => $request->day,
                 'character_name' => $request->character_name,
-                'message' => $request->msg,
+                'message' => $request->message,
                 'created_at' => Carbon::now(),
-                'type' => $request->type
+                'type' => $request->type,
+                'channel_id' => $request->channel_id
             ]);
         }
 
