@@ -21,6 +21,7 @@ Vue.component('right-menu', require('./components/RightMenu/RightMenu.vue'));
 Vue.component('email', require('./components/Email/Email.vue'));
 Vue.component('gallery', require('./components/Gallery/Gallery.vue'));
 Vue.component('library', require('./components/Library/library.vue'));
+Vue.component('editor', require('./components/Library/articleEditor.vue'));
 
 
 import store from './vuex/store';
