@@ -6,27 +6,38 @@
                     <button type="button" :class="['btn', currentLang == lang ? 'btn-invert' : 'btn-default']" @click="changeLang(lang)">{{ lang.charAt(0).toUpperCase() + lang.slice(1) }}</button>
                 </div>
                 <h1>menu</h1>
+
                 <div v-for="article in wiki" @click="showContent(article.id)" class="menubtn" :id="'title-' + article.id">
                     {{article[currentLang].title}}
+
                 </div>
             </div>
             <div class="col-sm-8 col-md-9" id="content-container">
-                <h1>{{currentTitle}}</h1>
-                    <p id="content">
-                        {{currentContent}}
-                    </p>
+                <vue-markdown :source="currentContent"
+                              :toc="true"
+                              :toc-id="currentArticle"
+                              v-on:toc-rendered="receiveToc">
+                </vue-markdown>
             </div>
         </div>
+
+
     </div>
 </template>
 
 <script>
     import { mapGetter, mapActions } from 'vuex'
+    import VueMarkdown from 'vue-markdown'
+
 
     export default {
 
         mounted() {
             console.log('Component mounted.')
+        },
+        components: {
+            "vue-markdown": VueMarkdown
+
         },
         props: [
             'wiki'
@@ -39,14 +50,18 @@
                 currentContent:"",
                 currentLang:"spanish",
                 currentArticle: 1,
-                languages: ['english', 'spanish']
+                languages: ['english', 'spanish'],
+                test:"# h1 \nthis is some text\n## h2\nmore text\n### h3"
             }
         },
         methods: {
             showContent: function (id) {
                 let content = this.wiki.find( title => title.id == id);
+
                 this.currentTitle = content[this.currentLang].title;
-                this.currentContent = JSON.parse(content[this.currentLang].content).content;
+                this.currentContent = content[this.currentLang].content;
+                // this.currentTitle = content[this.currentLang].title;
+                // this.currentContent = JSON.parse(content[this.currentLang].content).content;
                 this.currentArticle = id;
 
             },
@@ -55,6 +70,15 @@
                 this.showContent(this.currentArticle);
 
             },
+            // receive: function (HtmlStr) {
+            //
+            //     console.log("content is parsed :", HtmlStr);
+            //
+            // },
+            receiveToc: function (tocHtmlStr) {
+                $(".table-of-contents").remove();
+                $("#title-"+this.currentArticle).append(tocHtmlStr);
+            }
 
         },
         computed: {

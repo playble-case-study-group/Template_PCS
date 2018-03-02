@@ -25,6 +25,7 @@
         "ioredis": "^3.2.2",
         "node-sass": "^4.7.2",
         "socket.io": "^2.0.4",
+        "vue-markdown": "^2.2.4",
         "vuex": "^3.0.1",
         "yarn": "^1.4.0"
     }
