@@ -49650,8 +49650,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentTitle = content[this.currentLang].title;
             this.currentContent = content[this.currentLang].content;
-            // this.currentTitle = content[this.currentLang].title;
-            // this.currentContent = JSON.parse(content[this.currentLang].content).content;
             this.currentArticle = id;
         },
         changeLang: function changeLang(lang) {
@@ -49669,12 +49667,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
 
     },
-    computed: {
-        // parsedContent: function (){
-        //     return JSON.parse(this.currentContent);
-        //
-        // }
-    }
+    computed: {}
 });
 
 /***/ }),
@@ -68997,7 +68990,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n.menubtn[data-v-3dab0688] {\n    cursor:pointer;\n}\n#editor[data-v-3dab0688] {\n    background-color: white;\n    margin-left: 40px;\n    padding: 20px;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n#libraryMenu[data-v-3dab0688] {\n    height: 100vh;\n    border-right: solid 1px #4A4A4A;\n}\n#content-container[data-v-3dab0688] {\n    padding-left: 40px;\n    padding-right: 40px;\n}\n#content-container h1[data-v-3dab0688] {\n    margin-top: 0px;\n}\n\n", ""]);
+exports.push([module.i, "\n.menubtn[data-v-3dab0688] {\n    cursor:pointer;\n}\n#editor[data-v-3dab0688] {\n    background-color: white;\n    margin-left: 40px;\n    padding: 20px;\n    -webkit-box-shadow: 2px 1px 2px;\n            box-shadow: 2px 1px 2px;\n}\n#libraryMenu[data-v-3dab0688] {\n    height: 80vh;\n    border-right: solid 1px #4A4A4A;\n}\n#content-container[data-v-3dab0688] {\n    padding-left: 40px;\n    padding-right: 40px;\n    height: 80vh;\n}\n#content-container h1[data-v-3dab0688] {\n    margin-top: 0px;\n}\n\n", ""]);
 
 // exports
 
@@ -69009,6 +69002,7 @@ exports.push([module.i, "\n.menubtn[data-v-3dab0688] {\n    cursor:pointer;\n}\n
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+//
 //
 //
 //
@@ -69050,7 +69044,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentLang: "spanish",
             currentArticle: 1,
             languages: ['english', 'spanish'],
-            test: "# h1 \nthis is some text\n## h2\nmore text\n### h3"
+            test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
+            tempArt: ""
         };
     },
     methods: {
@@ -69066,6 +69061,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         changeLang: function changeLang(lang) {
             this.currentLang = lang;
             this.showContent(this.currentArticle);
+        },
+        updateArticle: function updateArticle() {
+            this.tempArt = this.currentContent;
         }
         //    create function to update database on key up
         //    update both front and back end
@@ -69157,7 +69155,26 @@ var render = function() {
         attrs: { id: "content-container" },
         domProps: { value: _vm.currentContent },
         on: {
-          keyup: function($event) {},
+          keyup: [
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "space", 32, $event.key)
+              ) {
+                return null
+              }
+              _vm.updateArticle()
+            },
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key)
+              ) {
+                return null
+              }
+              _vm.updateArticle()
+            }
+          ],
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -69165,7 +69182,8 @@ var render = function() {
             _vm.currentContent = $event.target.value
           }
         }
-      })
+      }),
+      _vm._v("\n        " + _vm._s(_vm.tempArt) + "\n    ")
     ])
   ])
 }

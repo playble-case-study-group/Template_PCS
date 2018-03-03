@@ -12,9 +12,10 @@
 
                 </div>
             </div>
-            <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" v-on:keyup="">
+            <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup.space="updateArticle()" @keyup.enter="updateArticle()">
 
             </textarea>
+            {{tempArt}}
         </div>
 
 
@@ -43,7 +44,8 @@
                 currentLang:"spanish",
                 currentArticle: 1,
                 languages: ['english', 'spanish'],
-                test:"# h1 \nthis is some text\n## h2\nmore text\n### h3"
+                test:"# h1 \nthis is some text\n## h2\nmore text\n### h3",
+                tempArt:""
             }
         },
         methods: {
@@ -60,6 +62,9 @@
                 this.showContent(this.currentArticle);
 
             },
+            updateArticle: function () {
+                this.tempArt = this.currentContent;
+            }
         //    create function to update database on key up
         //    update both front and back end
 
@@ -77,6 +82,8 @@
 
     }
 
+
+
     #editor {
         background-color: white;
         margin-left: 40px;
@@ -85,17 +92,19 @@
     }
 
     #libraryMenu {
-        height: 100vh;
+        height: 80vh;
         border-right: solid 1px #4A4A4A;
     }
 
     #content-container {
         padding-left: 40px;
         padding-right: 40px;
+        height: 80vh;
     }
 
     #content-container h1 {
         margin-top: 0px;
+
     }
 
 </style>
