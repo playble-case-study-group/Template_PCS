@@ -82,7 +82,8 @@ class ArticleEditorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('article')->where('id',) update();
+        DB::table('article')
+                ->where('id', $article->lang_1_ar)
 //        DB::update('update users set votes = 100 where name = ?', ['John']);
 //        $wiki = DB::table('wiki')->get();
 //
