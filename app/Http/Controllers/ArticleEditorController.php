@@ -27,7 +27,7 @@ class ArticleEditorController extends Controller
         }
 
         //dd($wiki);
-        return view('articleEditor', compact('wiki'));
+        return view('library', compact('wiki'));
     }
 
     /**
@@ -80,10 +80,10 @@ class ArticleEditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        DB::table('article')
-                ->where('id', $article->lang_1_ar)
+    // public function update(Request $request, $id)
+    // {
+        // DB::table('article')
+                // ->where('id', $article->lang_1_ar)
 //        DB::update('update users set votes = 100 where name = ?', ['John']);
 //        $wiki = DB::table('wiki')->get();
 //
@@ -101,7 +101,7 @@ class ArticleEditorController extends Controller
 //        return view('articleEditor', compact('wiki'));
 
 
-    }
+    // }
 
     /**
      * Remove the specified resource from storage.
