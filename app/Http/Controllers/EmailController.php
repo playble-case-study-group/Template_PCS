@@ -15,8 +15,11 @@ class EmailController extends Controller
      */
     public function index()
     {
-        $emails = DB::table('emails')->get();
-        return view('email', compact('emails'));
+        $characterEmails = DB::table('character_email')
+            ->where('day', '<=', Auth::user()->current_day)
+            ->get();
+
+        return view('email', compact('characterEmails'));
     }
 
     /**

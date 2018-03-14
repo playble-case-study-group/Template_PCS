@@ -6,7 +6,14 @@
         </button>
         <h1>Welcome to email</h1>
         <table>
-            <tr v-for="email in emails">
+            <tr>
+                <th>From</th>
+                <th>Subject</th>
+                <th>Body</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            <tr v-for="email in characterEmails">
                 <td>
                    {{email.subject}}
                 </td>
@@ -51,7 +58,7 @@
                 draftemailbody: "",
             }
         },
-        props: ['emails'],
+        props: ['characterEmails'],
         mounted() {
             console.log('Component mounted.');
 
@@ -68,3 +75,7 @@
 
     }
 </script>
+
+<style scoped>
+
+</style>
