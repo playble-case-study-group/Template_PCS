@@ -27,7 +27,7 @@ class ArticleEditorController extends Controller
         }
 
         //dd($wiki);
-        return view('library', compact('wiki'));
+        return view('articleEditor', compact('wiki'));
     }
 
     /**

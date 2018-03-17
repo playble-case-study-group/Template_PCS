@@ -13,7 +13,6 @@
                 </div>
             </div>
             <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup.space="updateArticle()" @keyup.enter="updateArticle()">
-
             </textarea>
             {{tempArt}}
         </div>
