@@ -12,8 +12,11 @@
 
                 </div>
             </div>
-            <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup.space="updateArticle()" @keyup.enter="updateArticle()">
-            </textarea>
+            <from method="post">
+                <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup.space="updateArticle()" @keyup.enter="updateArticle()">
+                </textarea>
+            </form>
+            
             {{tempArt}}
         </div>
 
