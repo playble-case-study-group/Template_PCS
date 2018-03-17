@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSimulationTable extends Migration
+class UpdateArticleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateSimulationTable extends Migration
      */
     public function up()
     {
-        Schema::create('simulation', function (Blueprint $table) {
-            $table->integer('days')->index();
-            $table->timestamp('created_at')->default(DB::raw('NOW()'));
+        Schema::table('article', function ($table) {
+            $table->text('content')->change();
         });
     }
 
@@ -26,6 +25,6 @@ class CreateSimulationTable extends Migration
      */
     public function down()
     {
-        schema::dropIfExists('simulation');
+        //
     }
 }
