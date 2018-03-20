@@ -12,8 +12,8 @@
 
                 </div>
             </div>
-            <from method="post">
-                <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup.space="updateArticle()" @keyup.enter="updateArticle()">
+            <form>
+                <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup="updateArticle()">
                 </textarea>
             </form>
             
@@ -56,7 +56,7 @@
 
                 this.currentTitle = content[this.currentLang].title;
                 this.currentContent = content[this.currentLang].content;
-                this.currentArticle = id;
+                this.currentArticle = content[this.currentLang].id;
 
             },
             changeLang: function (lang) {
@@ -65,7 +65,23 @@
 
             },
             updateArticle: function () {
-                this.tempArt = this.currentContent;
+                // this.tempArt = this.currentContent;
+                setTimeout(myTimer, 1000);
+                    function myTimer() {
+                        let data = {
+                            id: this.currentArticle,
+                            content: this.currentContent
+                        };
+
+                        axios.put("/editor/" + this.currentArticle, data).then(response => {
+                            console.log(response.data)
+                        })
+
+
+                        // var d = new Date();
+                        // document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+                    }
+            
             }
         //    create function to update database on key up
         //    update both front and back end

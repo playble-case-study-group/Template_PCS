@@ -68914,14 +68914,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentTitle = content[this.currentLang].title;
             this.currentContent = content[this.currentLang].content;
-            this.currentArticle = id;
+            this.currentArticle = content[this.currentLang].id;
         },
         changeLang: function changeLang(lang) {
             this.currentLang = lang;
             this.showContent(this.currentArticle);
         },
         updateArticle: function updateArticle() {
-            this.tempArt = this.currentContent;
+            // this.tempArt = this.currentContent;
+            setTimeout(myTimer, 1000);
+            function myTimer() {
+                var data = {
+                    id: this.currentArticle,
+                    content: this.currentContent
+                };
+
+                axios.put("/editor/" + this.currentArticle, data).then(function (response) {
+                    console.log(response.data);
+                });
+
+                // var d = new Date();
+                // document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+            }
         }
         //    create function to update database on key up
         //    update both front and back end
@@ -68935,7 +68949,104 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { id: "editor" } }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm-4 col-md-3", attrs: { id: "libraryMenu" } },
+        [
+          _vm._l(_vm.languages, function(lang) {
+            return _c(
+              "div",
+              {
+                class: ["btn-group", "d-none", "d-sm-block", "d-md-none"],
+                attrs: { role: "group", "aria-label": "..." }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    class: [
+                      "btn",
+                      _vm.currentLang == lang ? "btn-invert" : "btn-default"
+                    ],
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.changeLang(lang)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(lang.charAt(0).toUpperCase() + lang.slice(1)))]
+                )
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c("h1", [_vm._v("menu")]),
+          _vm._v(" "),
+          _vm._l(_vm.wiki, function(article) {
+            return _c(
+              "div",
+              {
+                staticClass: "menubtn",
+                attrs: { id: "title-" + article.id },
+                on: {
+                  click: function($event) {
+                    _vm.showContent(article.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(article[_vm.currentLang].title) +
+                    "\n\n            "
+                )
+              ]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("form", [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.currentContent,
+              expression: "currentContent"
+            }
+          ],
+          staticClass: "col-sm-8 col-md-9",
+          attrs: { id: "content-container" },
+          domProps: { value: _vm.currentContent },
+          on: {
+            keyup: function($event) {
+              _vm.updateArticle()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.currentContent = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v("\n        \n        " + _vm._s(_vm.tempArt) + "\n    ")
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {

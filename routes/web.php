@@ -36,7 +36,7 @@ Route::post('/returnemails', 'EmailController@emailData');
 Route::resource('/gallery', 'GalleryController');
 Route::resource('/library', 'LibraryController');
 Route::resource('/editor', 'ArticleEditorController');
-Route::post('/updateArticle', 'ArticleEditorController@update');
+// Route::post('/updateArticle', 'ArticleEditorController@update');
 
 
 

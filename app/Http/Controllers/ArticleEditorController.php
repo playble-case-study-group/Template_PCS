@@ -81,32 +81,19 @@ class ArticleEditorController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // get the article object 
+        DB::table('article')
+            ->where('id', $request->id)
+            ->update([
+                'content' => $request->content,
+                'updated_at' => DB::raw("NOW()")
+            ]);
+        return "success";
+
     }
-    // public function update(Request $request, $id)
-    // {
-        // DB::table('article')
-                // ->where('id', $article->lang_1_ar)
-//        DB::update('update users set votes = 100 where name = ?', ['John']);
-//        $wiki = DB::table('wiki')->get();
-//
-//        foreach ($wiki as $article) {
-//            $article->english = DB::table('article')
-//                ->where('id', $article->lang_1_ar)
-//                ->first();
-//
-//            $article->spanish = DB::table('article')
-//                ->where('id', $article->lang_2_ar)
-//                ->first();
-//        }
-//
-//        //dd($wiki);
-//        return view('articleEditor', compact('wiki'));
 
-
-    // }
 
     /**
      * Remove the specified resource from storage.
