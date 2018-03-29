@@ -13,11 +13,10 @@
                 </div>
             </div>
             <form>
-                <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup="updateArticle()">
+                <textarea class="col-sm-8 col-md-9" id="content-container" v-model="currentContent" @keyup="setTime">
                 </textarea>
             </form>
-            
-            {{tempArt}}
+
         </div>
 
 
@@ -41,13 +40,14 @@
         data: function () {
             return {
 
-                currentTitle:"",
-                currentContent:"",
-                currentLang:"spanish",
+                currentTitle: "",
+                currentContent: "",
+                currentLang: "spanish",
                 currentArticle: 1,
                 languages: ['english', 'spanish'],
-                test:"# h1 \nthis is some text\n## h2\nmore text\n### h3",
-                tempArt:""
+                test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
+                // tempArt: "",
+                timeout: null
             }
         },
         methods: {
@@ -65,26 +65,31 @@
 
             },
             updateArticle: function () {
+
+                let data = {
+                    id: this.currentArticle,
+                    content: this.currentContent
+                };
+
+                axios.put("/editor/" + this.currentArticle, data).then(response => {
+                    console.log(response.data)
+                })
+                
                 // this.tempArt = this.currentContent;
-                setTimeout(myTimer, 1000);
-                    function myTimer() {
-                        let data = {
-                            id: this.currentArticle,
-                            content: this.currentContent
-                        };
 
-                        axios.put("/editor/" + this.currentArticle, data).then(response => {
-                            console.log(response.data)
-                        })
+                let content = this.wiki.find( title => title.id == this.currentArticle);
+                content[this.currentLang].content = this.currentContent;
+
+            },
+            setTime: function () {
+                
+                // clearTimeout(this.timeout);
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(this.updateArticle, 2000);
 
 
-                        // var d = new Date();
-                        // document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-                    }
-            
             }
-        //    create function to update database on key up
-        //    update both front and back end
+
 
 
         },

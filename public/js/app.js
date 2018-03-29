@@ -68883,7 +68883,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -68903,7 +68902,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentArticle: 1,
             languages: ['english', 'spanish'],
             test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
-            tempArt: ""
+            // tempArt: "",
+            timeout: null
         };
     },
     methods: {
@@ -68921,25 +68921,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showContent(this.currentArticle);
         },
         updateArticle: function updateArticle() {
+            var _this = this;
+
+            var data = {
+                id: this.currentArticle,
+                content: this.currentContent
+            };
+
+            axios.put("/editor/" + this.currentArticle, data).then(function (response) {
+                console.log(response.data);
+            });
+
             // this.tempArt = this.currentContent;
-            setTimeout(myTimer, 1000);
-            function myTimer() {
-                var data = {
-                    id: this.currentArticle,
-                    content: this.currentContent
-                };
 
-                axios.put("/editor/" + this.currentArticle, data).then(function (response) {
-                    console.log(response.data);
-                });
+            var content = this.wiki.find(function (title) {
+                return title.id == _this.currentArticle;
+            });
+            content[this.currentLang].content = this.currentContent;
+        },
+        setTime: function setTime() {
 
-                // var d = new Date();
-                // document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-            }
+            // clearTimeout(this.timeout);
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(this.updateArticle, 2000);
         }
-        //    create function to update database on key up
-        //    update both front and back end
-
 
     },
     computed: {}
@@ -69028,9 +69033,7 @@ var render = function() {
           attrs: { id: "content-container" },
           domProps: { value: _vm.currentContent },
           on: {
-            keyup: function($event) {
-              _vm.updateArticle()
-            },
+            keyup: _vm.setTime,
             input: function($event) {
               if ($event.target.composing) {
                 return
@@ -69039,8 +69042,7 @@ var render = function() {
             }
           }
         })
-      ]),
-      _vm._v("\n        \n        " + _vm._s(_vm.tempArt) + "\n    ")
+      ])
     ])
   ])
 }
