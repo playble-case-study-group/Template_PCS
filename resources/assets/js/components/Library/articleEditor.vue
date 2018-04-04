@@ -40,11 +40,12 @@
         data: function () {
             return {
 
-                currentTitle: "",
-                currentContent: "",
+                currentTitle: ":)",
+                currentContent: "Select an Article",
                 currentLang: "spanish",
                 currentArticle: 1,
                 languages: ['english', 'spanish'],
+                // languages: ['spanish'],
                 test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
                 // tempArt: "",
                 timeout: null
@@ -57,6 +58,7 @@
                 this.currentTitle = content[this.currentLang].title;
                 this.currentContent = content[this.currentLang].content;
                 this.currentArticle = content[this.currentLang].id;
+                // this.currentArticle = 2;
 
             },
             changeLang: function (lang) {
@@ -79,11 +81,12 @@
 
                 let content = this.wiki.find( title => title.id == this.currentArticle);
                 content[this.currentLang].content = this.currentContent;
-
+                console.log(content);
+                console.log(content[this.currentLang].content);
             },
             setTime: function () {
                 
-                // clearTimeout(this.timeout);
+
                 clearTimeout(this.timeout);
                 this.timeout = setTimeout(this.updateArticle, 2000);
 

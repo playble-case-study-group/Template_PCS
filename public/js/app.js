@@ -68896,11 +68896,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
 
-            currentTitle: "",
-            currentContent: "",
+            currentTitle: ":)",
+            currentContent: "Select an Article",
             currentLang: "spanish",
             currentArticle: 1,
             languages: ['english', 'spanish'],
+            // languages: ['spanish'],
             test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
             // tempArt: "",
             timeout: null
@@ -68915,6 +68916,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.currentTitle = content[this.currentLang].title;
             this.currentContent = content[this.currentLang].content;
             this.currentArticle = content[this.currentLang].id;
+            // this.currentArticle = 2;
         },
         changeLang: function changeLang(lang) {
             this.currentLang = lang;
@@ -68938,10 +68940,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return title.id == _this.currentArticle;
             });
             content[this.currentLang].content = this.currentContent;
+            console.log(content);
+            console.log(content[this.currentLang].content);
         },
         setTime: function setTime() {
 
-            // clearTimeout(this.timeout);
             clearTimeout(this.timeout);
             this.timeout = setTimeout(this.updateArticle, 2000);
         }
