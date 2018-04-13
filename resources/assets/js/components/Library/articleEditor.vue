@@ -40,15 +40,15 @@
         data: function () {
             return {
 
+
                 currentTitle: ":)",
                 currentContent: "Select an Article",
                 currentLang: "spanish",
+                //currentArticle is the language specific article. This gets populated from the article table
                 currentArticle: 1,
+                //currentPair is an object containing a pair of articles. These objects come from the wiki table. Notice that the naming can eb confusing.
                 currentPair: 1,
                 languages: ['english', 'spanish'],
-                // languages: ['spanish'],
-                test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
-                // tempArt: "",
                 timeout: null
             }
         },
@@ -60,7 +60,6 @@
                 this.currentContent = content[this.currentLang].content;
                 this.currentArticle = content[this.currentLang].id;
                 this.currentPair = id;
-                // this.currentArticle = 2;
 
             },
             changeLang: function (lang) {
@@ -69,8 +68,6 @@
 
             },
             updateArticle: function () {
-                // let content = this.wiki.find( title => title.id == this.currentArticle);
-
                 let content = this.wiki.find( title => title.id == this.currentPair);
                 content[this.currentLang].content = this.currentContent;
 
@@ -78,28 +75,18 @@
                     id: this.currentArticle,
                     content: this.currentContent
                 };
+                //notice that this axios response will post to the current article, not the current wiki.
 
                 axios.put("/editor/" + this.currentArticle, data).then(response => {
                     console.log(response.data)
                 })
-                
-                // this.tempArt = this.currentContent;
-
-
-                // content[this.currentLang].content = this.currentContent;
-                // console.log(content);
-                // console.log(content[this.currentLang].content);
-
-
-                console.log(content);
-                console.log(content[this.currentLang].content);
 
             },
             setTime: function () {
-                
 
+                //use this to adjust how long it takes to make an update in the database. The program will wait for a pause in typing.
                 clearTimeout(this.timeout);
-                this.timeout = setTimeout(this.updateArticle, 2000);
+                this.timeout = setTimeout(this.updateArticle, 500);
 
 
             }
