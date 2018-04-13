@@ -44,6 +44,7 @@
                 currentContent: "Select an Article",
                 currentLang: "spanish",
                 currentArticle: 1,
+                currentPair: 1,
                 languages: ['english', 'spanish'],
                 // languages: ['spanish'],
                 test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
@@ -58,15 +59,20 @@
                 this.currentTitle = content[this.currentLang].title;
                 this.currentContent = content[this.currentLang].content;
                 this.currentArticle = content[this.currentLang].id;
+                this.currentPair = id;
                 // this.currentArticle = 2;
 
             },
             changeLang: function (lang) {
                 this.currentLang = lang;
-                this.showContent(this.currentArticle);
+                this.showContent(this.currentPair);
 
             },
             updateArticle: function () {
+                // let content = this.wiki.find( title => title.id == this.currentArticle);
+
+                let content = this.wiki.find( title => title.id == this.currentPair);
+                content[this.currentLang].content = this.currentContent;
 
                 let data = {
                     id: this.currentArticle,
@@ -79,10 +85,15 @@
                 
                 // this.tempArt = this.currentContent;
 
-                let content = this.wiki.find( title => title.id == this.currentArticle);
-                content[this.currentLang].content = this.currentContent;
+
+                // content[this.currentLang].content = this.currentContent;
+                // console.log(content);
+                // console.log(content[this.currentLang].content);
+
+
                 console.log(content);
                 console.log(content[this.currentLang].content);
+
             },
             setTime: function () {
                 

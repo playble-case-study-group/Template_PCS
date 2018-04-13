@@ -68900,6 +68900,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentContent: "Select an Article",
             currentLang: "spanish",
             currentArticle: 1,
+            currentPair: 1,
             languages: ['english', 'spanish'],
             // languages: ['spanish'],
             test: "# h1 \nthis is some text\n## h2\nmore text\n### h3",
@@ -68916,14 +68917,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.currentTitle = content[this.currentLang].title;
             this.currentContent = content[this.currentLang].content;
             this.currentArticle = content[this.currentLang].id;
+            this.currentPair = id;
             // this.currentArticle = 2;
         },
         changeLang: function changeLang(lang) {
             this.currentLang = lang;
-            this.showContent(this.currentArticle);
+            this.showContent(this.currentPair);
         },
         updateArticle: function updateArticle() {
             var _this = this;
+
+            // let content = this.wiki.find( title => title.id == this.currentArticle);
+
+            var content = this.wiki.find(function (title) {
+                return title.id == _this.currentPair;
+            });
+            content[this.currentLang].content = this.currentContent;
 
             var data = {
                 id: this.currentArticle,
@@ -68936,10 +68945,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // this.tempArt = this.currentContent;
 
-            var content = this.wiki.find(function (title) {
-                return title.id == _this.currentArticle;
-            });
-            content[this.currentLang].content = this.currentContent;
+
+            // content[this.currentLang].content = this.currentContent;
+            // console.log(content);
+            // console.log(content[this.currentLang].content);
+
+
             console.log(content);
             console.log(content[this.currentLang].content);
         },
