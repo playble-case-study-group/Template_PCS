@@ -58168,7 +58168,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.d-flex[data-v-06f5821c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n      -ms-flex-flow: column-reverse;\n          flex-flow: column-reverse;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.dash-card[data-v-06f5821c] {\n  background-color: white;\n  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n  margin: auto;\n  margin-top: 2rem;\n}\n.dash-small[data-v-06f5821c] {\n  height: 200px;\n}\n.dash-big[data-v-06f5821c] {\n  height: 500px;\n}\n.dash-heading[data-v-06f5821c] {\n  color: #4A4A4A;\n  text-align: center;\n  margin: 1.5rem 0 0;\n}\n.dash-video[data-v-06f5821c] {\n  height: 425px;\n  display: block;\n  margin: auto;\n}\n.dash-content[data-v-06f5821c] {\n  margin: 1rem 0;\n}\n.dash-notify[data-v-06f5821c] {\n  color: #ce0d0d;\n  font-size: 20px;\n}\n.dash-stocks[data-v-06f5821c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 0 1rem;\n  font-size: 27px;\n}\n.dash-stockStatus[data-v-06f5821c] {\n  font-size: 24px;\n}\n.dash-count[data-v-06f5821c] {\n  margin-top: 2.5rem;\n}\n.dash-update[data-v-06f5821c] {\n  position: absolute;\n  margin-top: 4px;\n}\nhr[data-v-06f5821c] {\n  width: 1px;\n  height: 100px;\n  background-color: #4A4A4A;\n}\ntextarea[data-v-06f5821c] {\n  height: 400px;\n  border: none;\n  resize: none;\n}\n@media (min-width: 992px) {\n.d-flex[data-v-06f5821c] {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: initial;\n            flex-flow: initial;\n    -webkit-box-pack: space-evenly;\n        -ms-flex-pack: space-evenly;\n            justify-content: space-evenly;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n.dash-card[data-v-06f5821c] {\n    margin: 2rem 0;\n}\n.dash-small[data-v-06f5821c] {\n    height: 200px;\n    margin-top: 80px;\n}\n.col-md-3[data-v-06f5821c] {\n    width: 30%;\n}\n.col-md-7[data-v-06f5821c] {\n    width: 63%;\n}\n}\n", ""]);
+exports.push([module.i, "\n.d-flex[data-v-06f5821c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n      -ms-flex-flow: column-reverse;\n          flex-flow: column-reverse;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.dash-card[data-v-06f5821c] {\n  background-color: white;\n  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n  margin: auto;\n  margin-top: 2rem;\n}\n.dash-small[data-v-06f5821c] {\n  height: 200px;\n}\n.dash-big[data-v-06f5821c] {\n  height: 500px;\n}\n.dash-heading[data-v-06f5821c] {\n  color: #942921;\n  text-align: center;\n  margin: 1.5rem 0 0;\n}\n.dash-video[data-v-06f5821c] {\n  height: 425px;\n  display: block;\n  margin: auto;\n}\n.dash-content[data-v-06f5821c] {\n  margin: 1rem 0;\n}\n.dash-notify[data-v-06f5821c] {\n  color: #ce0d0d;\n  font-size: 20px;\n}\n.dash-stocks[data-v-06f5821c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 0 1rem;\n  font-size: 27px;\n}\n.dash-stockStatus[data-v-06f5821c] {\n  font-size: 24px;\n}\n.dash-count[data-v-06f5821c] {\n  margin-top: 2.5rem;\n}\n.dash-update[data-v-06f5821c] {\n  position: absolute;\n  margin-top: 4px;\n}\nhr[data-v-06f5821c] {\n  width: 1px;\n  height: 100px;\n  background-color: #4A4A4A;\n}\ntextarea[data-v-06f5821c] {\n  height: 400px;\n  border: none;\n  resize: none;\n}\n@media (min-width: 992px) {\n.d-flex[data-v-06f5821c] {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: initial;\n            flex-flow: initial;\n    -webkit-box-pack: space-evenly;\n        -ms-flex-pack: space-evenly;\n            justify-content: space-evenly;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n.dash-card[data-v-06f5821c] {\n    margin: 2rem 0;\n}\n.dash-small[data-v-06f5821c] {\n    height: 200px;\n    margin-top: 80px;\n}\n.col-md-3[data-v-06f5821c] {\n    width: 30%;\n}\n.col-md-7[data-v-06f5821c] {\n    width: 63%;\n}\n}\n", ""]);
 
 // exports
 
@@ -90302,6 +90302,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     props: {
+        image: Boolean,
         title: String,
         link: String,
         notifications: Number
@@ -90335,16 +90336,18 @@ var render = function() {
         attrs: { href: _vm.link }
       },
       [
-        _c("img", {
-          staticClass: "nav-icon",
-          attrs: {
-            src:
-              _vm.isActive == _vm.link
-                ? "/img/TOP" + _vm.link + "-icon-selected.svg"
-                : "/img/TOP" + _vm.link + "-icon.svg",
-            alt: _vm.link
-          }
-        }),
+        _vm.image
+          ? _c("img", {
+              staticClass: "nav-icon",
+              attrs: {
+                src:
+                  _vm.isActive == _vm.link
+                    ? "/img/TOP" + _vm.link + "-icon-selected.svg"
+                    : "/img/TOP" + _vm.link + "-icon.svg",
+                alt: _vm.link
+              }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c("span", { staticClass: "nav-icon" }, [_vm._t("nav-icon")], 2),
         _vm._v("\n        " + _vm._s(_vm.title) + "\n        "),
@@ -90455,7 +90458,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.logo[data-v-005cb6b8] {\n  width: 100%;\n  height: 100%;\n}\n.row[data-v-005cb6b8] {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.sans-serif[data-v-005cb6b8] {\n  font-family: Raleway, sans-serif;\n}\n.orange-heading[data-v-005cb6b8] {\n  color: #d35e31;\n}\n.display[data-v-005cb6b8] {\n  max-width: 1024px;\n  margin: auto;\n}\n.text-container[data-v-005cb6b8] {\n  margin: 80px;\n}\n.nanobot[data-v-005cb6b8] {\n  float: right;\n}\n.quote[data-v-005cb6b8] {\n  float: left;\n}\n", ""]);
+exports.push([module.i, "\n.logo[data-v-005cb6b8] {\n  width: 100%;\n  height: 100%;\n}\n.row[data-v-005cb6b8] {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.sans-serif[data-v-005cb6b8] {\n  font-family: Raleway, sans-serif;\n}\n.red-heading[data-v-005cb6b8] {\n  color: #942921;\n}\n.display[data-v-005cb6b8] {\n  max-width: 1024px;\n  margin: auto;\n}\n.text-container[data-v-005cb6b8] {\n  margin: 80px;\n}\n.nanobot[data-v-005cb6b8] {\n  float: right;\n}\n.quote[data-v-005cb6b8] {\n  float: left;\n}\n", ""]);
 
 // exports
 
@@ -90467,10 +90470,6 @@ exports.push([module.i, "\n.logo[data-v-005cb6b8] {\n  width: 100%;\n  height: 1
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-//
-//
-//
-//
 //
 //
 //
@@ -90559,53 +90558,36 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "text-container" }, [
-            _c("h2", { staticClass: "orange-heading" }, [
-              _vm._v("Our History")
-            ]),
+            _c("h2", { staticClass: "red-heading" }, [_vm._v("Our History")]),
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "\n                Microcore was founded in 2002 by CEO Eric Johnson as a way to make the benefits of nanotechnology accessible to the medical industry. Driven by a commitment to excellence and creativity, Microcore strives to adapt the world's most advanced and innovative technologies to the medical industry for optimal patient care.\n"
+                "\n                When the Museo Nacional Centro de Arte Reina Sofía opened its doors in 1990, it stood as a modern, contemporary Spanish museum on an international scale. Nevertheless, its building has gone through many challenges in order to achieve this goal. patient care.\n\n"
               ),
               _c("br"),
               _c("br"),
               _vm._v(
-                "\n                The nanotechnology around which Microcore was built is both versatile and robust. Nanobots are used in many different industries, from aerospace to construction, but it was not until Microcore's founding that this impressive technology was tailored and applied to the medical field.\n\n"
-              ),
-              _c("br"),
-              _c("br"),
-              _vm._v(
-                "\n                Since Microcore's beginning, we’ve continued to innovate, expand, and improve. Today, Mircocore researches and manufactures different types of nanobots that target specific ailments, helping to accelerate patient recovery and enhance care.\n            "
+                "\n                The Museo Reina Sofia, an autonomous organization depending on the Spanish Ministry of Culture, was created by Royal Decree 535/88 of May 1988. With its headquarters in San Carlos Hospital, the Collection was made up of works conserved at the time by the Spanish Museum of Contemporary Art. On 10 September 1992, their Majesties King Juan Carlos and Queen Sofia inaugurated the Permanent Collection of the Museo Nacional Centro de Arte Reina Sofía, which until then had only held temporary exhibitions. Now a bona fide museum, its goals – as set forth in the aforementioned decree – were to conserve, expand and exhibit its collections; to promote the general public’s knowledge of and access to contemporary art in its various manifestations; to hold exhibitions at the international level, and to offer training, educational and assessment activities related to its holdings.\n\n\n            "
               )
             ]),
             _vm._v(" "),
-            _c("h2", { staticClass: "orange-heading" }, [
-              _vm._v("Our Products")
+            _c("h2", { staticClass: "red-heading" }, [
+              _vm._v("Our Mission Statement")
             ]),
             _vm._v(" "),
             _c("img", {
               staticClass: "col-sm-5 nanobot",
-              attrs: { src: "img/Virus3.png" }
+              attrs: { src: "images/gallery/Artifact_11.jpg" }
             }),
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "\n                The TNG-3.01®Nanobot was originally patented by Microcore in 2005 to help reduce recovery time for patients by 1/3 through mimicking the regeneration and growth of human tissue. The TNG-3.01® continues to be one of our most revolutionary products along with YT-1301® and YT-2600®, which are used for treating various forms of cancer.\n"
+                "\n                Although museums as public institutions remain important in the general scheme of creative industries, they have lost some of their influence, or at least their privileged position, in defining what is understood to be culture.\n"
               ),
               _c("br"),
               _c("br"),
               _vm._v(
-                "\n                Today, Microcore is working on the finishing stages of a 10 year research project for a nanobot, the MCT-8472®, designed to substantially increase the rate of healing for broken bones through replicating and bonding to human bone.\n\n            "
-              )
-            ]),
-            _vm._v(" "),
-            _c("h2", { staticClass: "orange-heading" }, [
-              _vm._v("Our Commitment")
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "\n                With a robust research and development arm, Microcore is committed to continue looking for innovative ways to bring nanotechnology to bear on the world's toughest illnesses. At Microcore, our highest value is the well-being of patients around the world, and it is our commitment to them that drives us to strive for the best medical solutions in the world.\n            "
+                "\n                Today's world of culture is shaped, on the one hand, by the prominent figures in the culture and communications industry and, on the other, by the diffuse magma of culture producers whose actions are governed by the subordination of their creative singularity. This subordination is manifested in artists having to sell their creative capacity or in their being expropriated of it.  In addition, we are in the midst of a systemic crisis to which the museum is not immune. If the economic paradigm based on speculation and easy money has proven unsustainable, it should also be clear that the primacy of the building and of art as spectacle over the museum's artistic program has ceased to be valid. There is therefore a pressing need to invent other models.\n\n            "
               )
             ])
           ])
@@ -90709,7 +90691,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\nimg[data-v-54e8c208] {\n  border-radius: 50%;\n}\n.pre-formatted[data-v-54e8c208] {\n  white-space: pre-line;\n}\n.greeting[data-v-54e8c208] {\n  text-align: center;\n  margin-bottom: 60px;\n  font-size: 32px;\n}\n.row[data-v-54e8c208] {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.sans-serif[data-v-54e8c208] {\n  font-family: Raleway, sans-serif;\n}\n.listed-characters[data-v-54e8c208] {\n  grid-column-start: 1;\n  grid-row-start: 1;\n  margin: auto;\n  margin-top: 0;\n}\n.selected-character[data-v-54e8c208] {\n  grid-column-start: 2;\n  grid-row-start: 1;\n  padding: 40px;\n}\n#characters[data-v-54e8c208] {\n  margin: 0 40px;\n  padding-top: 40px;\n}\n.display[data-v-54e8c208] {\n  display: grid;\n  grid-template-columns: 50%;\n  justify-items: center;\n}\n.character[data-v-54e8c208] {\n  cursor: pointer;\n  margin: 1rem 1rem;\n  text-align: center;\n  height: 15rem;\n  font-family: Raleway, sans-serif;\n  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.19);\n          box-shadow: 0 0 10px rgba(0, 0, 0, 0.19);\n}\n.character[data-v-54e8c208]:hover, .active[data-v-54e8c208] {\n  -webkit-transform: scale(1.1);\n          transform: scale(1.1);\n  -webkit-transition: -webkit-transform .25s;\n  transition: -webkit-transform .25s;\n  transition: transform .25s;\n  transition: transform .25s, -webkit-transform .25s;\n  background-color: rgba(148, 41, 33, 0.99);\n  color: white;\n}\n.character-inner[data-v-54e8c208] {\n  padding-top: 2.5rem;\n}\n.character-name[data-v-54e8c208] {\n  margin: 5px 0px;\n  padding-top: 10px;\n}\n.role[data-v-54e8c208] {\n  border-bottom: 2px solid #942921;\n}\n.img-small[data-v-54e8c208] {\n  width: 50%;\n  display: block;\n  margin: auto;\n}\n.img-large[data-v-54e8c208] {\n  -ms-flex-item-align: center;\n      align-self: center;\n}\n.container[data-v-54e8c208] {\n  margin: 40px;\n}\n", ""]);
+exports.push([module.i, "\nimg[data-v-54e8c208] {\n  border-radius: 50%;\n}\n.pre-formatted[data-v-54e8c208] {\n  white-space: pre-line;\n}\n.greeting[data-v-54e8c208] {\n  text-align: center;\n  margin-bottom: 60px;\n  font-size: 32px;\n}\n.row[data-v-54e8c208] {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.sans-serif[data-v-54e8c208] {\n  font-family: Raleway, sans-serif;\n}\n.listed-characters[data-v-54e8c208] {\n  grid-column-start: 1;\n  grid-row-start: 1;\n  margin: auto;\n  margin-top: 0;\n}\n.selected-character[data-v-54e8c208] {\n  grid-column-start: 2;\n  grid-row-start: 1;\n  padding: 40px;\n}\n#characters[data-v-54e8c208] {\n  margin: 0 40px;\n  padding-top: 40px;\n}\n.display[data-v-54e8c208] {\n  display: grid;\n  grid-template-columns: 50%;\n  justify-items: center;\n}\n.character[data-v-54e8c208] {\n  cursor: pointer;\n  margin: 1rem 1rem;\n  text-align: center;\n  height: 15rem;\n  font-family: Raleway, sans-serif;\n  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.19);\n          box-shadow: 0 0 10px rgba(0, 0, 0, 0.19);\n}\n.character[data-v-54e8c208]:hover, .active[data-v-54e8c208] {\n  -webkit-transform: scale(1.1);\n          transform: scale(1.1);\n  -webkit-transition: -webkit-transform .25s;\n  transition: -webkit-transform .25s;\n  transition: transform .25s;\n  transition: transform .25s, -webkit-transform .25s;\n  background-color: rgba(148, 41, 33, 0.99);\n  color: white;\n}\n.character-inner[data-v-54e8c208] {\n  padding-top: 2.5rem;\n}\n.character-name[data-v-54e8c208] {\n  margin: 5px 0px;\n  padding-top: 10px;\n}\n.role[data-v-54e8c208] {\n  border-bottom: 2px solid #942921;\n}\n.img-small[data-v-54e8c208] {\n  width: 50%;\n  display: block;\n  margin: auto;\n}\n.img-large[data-v-54e8c208] {\n  -ms-flex-item-align: center;\n      align-self: center;\n  margin-bottom: 1rem;\n}\n.container[data-v-54e8c208] {\n  margin: 40px;\n}\n", ""]);
 
 // exports
 
@@ -90800,7 +90782,7 @@ var render = function() {
     { staticClass: "container main", attrs: { id: "characters" } },
     [
       _c("h1", { staticClass: "greeting" }, [
-        _vm._v("\n        Meet the Team behind Microcore\n    ")
+        _vm._v("\n        Meet the Curating Team\n    ")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "display" }, [

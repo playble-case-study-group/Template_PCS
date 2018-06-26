@@ -5,26 +5,22 @@
                 <img class="logo" src="img/about4.jpg">
             </h1>
             <div class="text-container">
-            <h2 class="orange-heading">Our History</h2>
+            <h2 class="red-heading">Our History</h2>
             <p>
-                Microcore was founded in 2002 by CEO Eric Johnson as a way to make the benefits of nanotechnology accessible to the medical industry. Driven by a commitment to excellence and creativity, Microcore strives to adapt the world's most advanced and innovative technologies to the medical industry for optimal patient care.
-<br><br>
-                The nanotechnology around which Microcore was built is both versatile and robust. Nanobots are used in many different industries, from aerospace to construction, but it was not until Microcore's founding that this impressive technology was tailored and applied to the medical field.
+                When the Museo Nacional Centro de Arte Reina Sofía opened its doors in 1990, it stood as a modern, contemporary Spanish museum on an international scale. Nevertheless, its building has gone through many challenges in order to achieve this goal. patient care.
 
 <br><br>
-                Since Microcore's beginning, we’ve continued to innovate, expand, and improve. Today, Mircocore researches and manufactures different types of nanobots that target specific ailments, helping to accelerate patient recovery and enhance care.
-            </p>
-            <h2 class="orange-heading">Our Products</h2>
-                <img class="col-sm-5 nanobot" src="img/Virus3.png">
-            <p>
-                The TNG-3.01®Nanobot was originally patented by Microcore in 2005 to help reduce recovery time for patients by 1/3 through mimicking the regeneration and growth of human tissue. The TNG-3.01® continues to be one of our most revolutionary products along with YT-1301® and YT-2600®, which are used for treating various forms of cancer.
-<br><br>
-                Today, Microcore is working on the finishing stages of a 10 year research project for a nanobot, the MCT-8472®, designed to substantially increase the rate of healing for broken bones through replicating and bonding to human bone.
+                The Museo Reina Sofia, an autonomous organization depending on the Spanish Ministry of Culture, was created by Royal Decree 535/88 of May 1988. With its headquarters in San Carlos Hospital, the Collection was made up of works conserved at the time by the Spanish Museum of Contemporary Art. On 10 September 1992, their Majesties King Juan Carlos and Queen Sofia inaugurated the Permanent Collection of the Museo Nacional Centro de Arte Reina Sofía, which until then had only held temporary exhibitions. Now a bona fide museum, its goals – as set forth in the aforementioned decree – were to conserve, expand and exhibit its collections; to promote the general public’s knowledge of and access to contemporary art in its various manifestations; to hold exhibitions at the international level, and to offer training, educational and assessment activities related to its holdings.
+
 
             </p>
-            <h2 class="orange-heading">Our Commitment</h2>
+            <h2 class="red-heading">Our Mission Statement</h2>
+                <img class="col-sm-5 nanobot" src="images/gallery/Artifact_11.jpg">
             <p>
-                With a robust research and development arm, Microcore is committed to continue looking for innovative ways to bring nanotechnology to bear on the world's toughest illnesses. At Microcore, our highest value is the well-being of patients around the world, and it is our commitment to them that drives us to strive for the best medical solutions in the world.
+                Although museums as public institutions remain important in the general scheme of creative industries, they have lost some of their influence, or at least their privileged position, in defining what is understood to be culture.
+<br><br>
+                Today's world of culture is shaped, on the one hand, by the prominent figures in the culture and communications industry and, on the other, by the diffuse magma of culture producers whose actions are governed by the subordination of their creative singularity. This subordination is manifested in artists having to sell their creative capacity or in their being expropriated of it.  In addition, we are in the midst of a systemic crisis to which the museum is not immune. If the economic paradigm based on speculation and easy money has proven unsustainable, it should also be clear that the primacy of the building and of art as spectacle over the museum's artistic program has ceased to be valid. There is therefore a pressing need to invent other models.
+
             </p>
             </div>
         </div>
@@ -77,8 +73,8 @@
     .sans-serif {
         font-family: Raleway, sans-serif;
     }
-    .orange-heading {
-        color: #d35e31;
+    .red-heading {
+        color: #942921;
     }
     .display {
         max-width: 1024px;

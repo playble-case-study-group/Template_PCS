@@ -14,50 +14,59 @@
 
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
         <!-- Left Side Of Navbar -->
-        <ul class="nav navbar-nav">
-            &nbsp;
+        <ul class="nav navbar-nav ml-decrease">
+            &nbsp;<navigation
+                    :title="'About'"
+                    :link="'/about'">
+            </navigation>
+            <navigation
+                    :title="'The Team'"
+                    :link="'/team'">
+            </navigation>
         </ul>
 
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             @guest
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
             @else
-
                 <navigation
                         :title="'Library'"
-                        :link="'/library'">
+                        :link="'/library'"
+                        :image="true">
                 </navigation>
                 <navigation
                         :title="'Gallery'"
                         :link="'/gallery'"
-                        :notifications="$store.state.notifications.newArtifacts">
+                        :notifications="$store.state.notifications.newArtifacts"
+                        :image="true">
                 </navigation>
                 <navigation
-                        :title="'Video Call'"
-                        :link="'/videocall'">
+                        :title="'Phone'"
+                        :link="'/videocall'"
+                        :notifications="$store.state.notifications.newVideoMessages"
+                        :image="true">
                 </navigation>
                 <navigation
                         :title="'Email'"
                         :link="'/email'"
-                        :notifications="$store.state.notifications.newEmails">
+                        :notifications="$store.state.notifications.newEmails"
+                        :image="true">
                 </navigation>
+
                 <li class="nav-item dropdown" style="text-transform: uppercase !important; font-family: 'Raleway', sans-serif;">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/about">About</a>
-                        <a class="dropdown-item" href="/team">The Team</a>
-
                         @if(Auth::user()->role == 2)
                             <a class="dropdown-item" href="/classes">Classes</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
+                           onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
                             Logout
                         </a>
@@ -66,7 +75,7 @@
                         </form>
                     </div>
                 </li>
-            @endguest
+                @endguest
         </ul>
     </div>
 </nav>

@@ -1,7 +1,7 @@
 <template>
     <div id="characters" class="container main">
         <h1 class="greeting">
-            Meet the Team behind Microcore
+            Meet the Curating Team
         </h1>
         <div class="display">
             <div class="selected-character">
@@ -136,6 +136,7 @@
     }
     .img-large {
         align-self: center;
+        margin-bottom: 1rem;
     }
     .container {
         margin: 40px;

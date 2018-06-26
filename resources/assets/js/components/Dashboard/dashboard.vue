@@ -101,7 +101,7 @@
         height: 500px;
     }
     .dash-heading{
-        color: $sim-heading;
+        color: #942921;
         text-align: center;
         margin: 1.5rem 0 0;
     }
