@@ -44,7 +44,7 @@
     .nav-icon {
         position: relative;
         top: -2px;
-        padding-right: 5px;
+        padding-right: 2px;
     }
     .badge-danger {
         background-color: #942921;

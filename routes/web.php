@@ -89,5 +89,9 @@ Route::group(['middleware'=>['auth', 'student']], function() {
 // Dash
     Route::get('/dashboard', 'DashController@loadDash');
 });
+//About
+    Route::get('/about', 'AboutController@index');
 
+//Characters
+    Route::get('/team', 'CharactersController@index');
 
