@@ -50,6 +50,9 @@
                     </a>
 
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/about">About</a>
+                        <a class="dropdown-item" href="/team">The Team</a>
+
                         @if(Auth::user()->role == 2)
                             <a class="dropdown-item" href="/classes">Classes</a>
                         @endif

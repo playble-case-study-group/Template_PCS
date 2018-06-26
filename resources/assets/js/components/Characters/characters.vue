@@ -115,7 +115,7 @@
     .character:hover, .active {
         transform: scale(1.1);
         transition: transform .25s;
-        background-color: rgba(40, 167, 69, .75);
+        background-color: rgba(148, 41, 33, .99);
         color: white;
     }
     .character-inner {
@@ -127,7 +127,7 @@
         padding-top: 10px;
     }
     .role {
-        border-bottom: 2px solid #ee6031;
+        border-bottom: 2px solid #942921;
     }
     .img-small {
         width: 50%;
