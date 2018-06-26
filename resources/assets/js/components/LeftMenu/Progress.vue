@@ -7,12 +7,12 @@
                 <span v-for="task in day"
                       v-if="task.complete"
                       class="task">
-                    <img src="/img/complete-blue.png" alt="complete">
+                    <img src="/img/left-menu/complete.svg" alt="complete">
                 </span>
                 <span v-for="task in day"
                       v-if="!task.complete"
                       class="task">
-                    <img src="/img/incomplete-blue.png" alt="incomplete">
+                    <img src="/img/left-menu/incomplete.svg" alt="incomplete">
                 </span>
             </li>
         </ul>

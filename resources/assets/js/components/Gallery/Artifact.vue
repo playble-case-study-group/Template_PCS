@@ -268,6 +268,8 @@
     .tag-btn {
         margin-right: 10px;
         margin-bottom: 10px;
+        background-color: #942921;
+        border-color: #942921;
     }
 
     .modal-body img {

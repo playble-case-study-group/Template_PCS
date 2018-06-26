@@ -56358,7 +56358,10 @@ var render = function() {
               return task.complete
                 ? _c("span", { staticClass: "task" }, [
                     _c("img", {
-                      attrs: { src: "/img/complete-blue.png", alt: "complete" }
+                      attrs: {
+                        src: "/img/left-menu/complete.svg",
+                        alt: "complete"
+                      }
                     })
                   ])
                 : _vm._e()
@@ -56369,7 +56372,7 @@ var render = function() {
                 ? _c("span", { staticClass: "task" }, [
                     _c("img", {
                       attrs: {
-                        src: "/img/incomplete-blue.png",
+                        src: "/img/left-menu/incomplete.svg",
                         alt: "incomplete"
                       }
                     })
@@ -56612,7 +56615,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\nli[data-v-70c68067] {\n  margin-top: 10px;\n  margin-bottom: 12px;\n}\nlabel[data-v-70c68067] {\n  display: block;\n  position: relative;\n  padding-left: 28px;\n  margin-top: 11px;\n  margin-bottom: 12px;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n/* Hide the browser's default checkbox */\nlabel input[data-v-70c68067] {\n  display: none;\n}\n\n/* Create a custom checkbox */\n.checkmark[data-v-70c68067] {\n  position: absolute;\n  cursor: pointer;\n  top: 4px;\n  left: 0;\n  height: 16px;\n  width: 16px;\n  background-color: #eee;\n  border: 1px solid #4A4A4A;\n}\n.navigation[data-v-70c68067] {\n  cursor: pointer;\n  font-family: \"Raleway\", sans-serif;\n}\n.task-description[data-v-70c68067] {\n  font-size: 14px;\n  color: grey;\n}\n\n/* On mouse-over, add a grey background color */\n.checkmark[data-v-70c68067]:hover {\n  background-color: #ccc;\n}\n\n/* When the checkbox is checked, add a blue background */\n.checked[data-v-70c68067] {\n  background-color: #A7BBC2;\n  background: url(\"/img/icon-check.svg\") no-repeat center center;\n}\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.checkmark[data-v-70c68067]:after {\n  content: \"\";\n  position: absolute;\n  display: none;\n}\n\n/* Show the checkmark when checked */\n.checked ~ .checkmark[data-v-70c68067]:after {\n  display: block;\n}\n\n/* Style the checkmark/indicator */\n/*label .checkmark:after {*/\n/*left: 9px;*/\n/*top: 5px;*/\n/*width: 5px;*/\n/*height: 10px;*/\n/*border: solid white;*/\n/*border-width: 0 3px 3px 0;*/\n/*-webkit-transform: rotate(45deg);*/\n/*-ms-transform: rotate(45deg);*/\n/*transform: rotate(45deg);*/\n/*}*/\n", ""]);
+exports.push([module.i, "\nli[data-v-70c68067] {\n  margin-top: 10px;\n  margin-bottom: 12px;\n}\nlabel[data-v-70c68067] {\n  display: block;\n  position: relative;\n  padding-left: 28px;\n  margin-top: 11px;\n  margin-bottom: 12px;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n/* Hide the browser's default checkbox */\nlabel input[data-v-70c68067] {\n  display: none;\n}\n\n/* Create a custom checkbox */\n.checkmark[data-v-70c68067] {\n  position: absolute;\n  cursor: pointer;\n  top: 4px;\n  left: 0;\n  height: 16px;\n  width: 16px;\n  background-color: #eee;\n  border: 1px solid #4A4A4A;\n}\n.navigation[data-v-70c68067] {\n  cursor: pointer;\n  font-family: \"Raleway\", sans-serif;\n}\n.task-description[data-v-70c68067] {\n  font-size: 14px;\n  color: grey;\n}\n\n/* On mouse-over, add a grey background color */\n.checkmark[data-v-70c68067]:hover {\n  background-color: #ccc;\n}\n\n/* When the checkbox is checked, add a blue background */\n.checked[data-v-70c68067] {\n  background-color: #A7BBC2;\n  background: url(\"/img/left-menu/icon-check.svg\") no-repeat center center;\n}\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.checkmark[data-v-70c68067]:after {\n  content: \"\";\n  position: absolute;\n  display: none;\n}\n\n/* Show the checkmark when checked */\n.checked ~ .checkmark[data-v-70c68067]:after {\n  display: block;\n}\n\n/* Style the checkmark/indicator */\n/*label .checkmark:after {*/\n/*left: 9px;*/\n/*top: 5px;*/\n/*width: 5px;*/\n/*height: 10px;*/\n/*border: solid white;*/\n/*border-width: 0 3px 3px 0;*/\n/*-webkit-transform: rotate(45deg);*/\n/*-ms-transform: rotate(45deg);*/\n/*transform: rotate(45deg);*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -57330,7 +57333,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.description-actions[data-v-0d9f3ac6], .title-actions[data-v-0d9f3ac6] {\n  position: relative;\n  left: 15px;\n}\n.title-row input[data-v-0d9f3ac6], .description-row textarea[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6] {\n  display: none;\n}\n.description-cancel[data-v-0d9f3ac6], .description-save[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6] {\n  display: none;\n  cursor: pointer;\n  font-size: 18px;\n}\n.title-edit[data-v-0d9f3ac6], .description-edit[data-v-0d9f3ac6] {\n  cursor: pointer;\n  font-sice: 18px;\n}\n.description-cancel[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6] {\n  color: #942921;\n}\n.description-save[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6] {\n  color: green;\n}\n.title-row:hover .title-edit[data-v-0d9f3ac6] {\n  display: block;\n}\n.description-row:hover .description-edit[data-v-0d9f3ac6] {\n  display: block;\n}\n#previousBtn[data-v-0d9f3ac6], #nextBtn[data-v-0d9f3ac6] {\n  position: relative;\n  top: 15vh;\n  /*bottom: 50vh;*/\n}\n#previousBtn[data-v-0d9f3ac6] {\n  right: 100px;\n}\n#nextBtn[data-v-0d9f3ac6] {\n  left: 100px;\n}\n.row[data-v-0d9f3ac6] {\n  /*-moz-column-width: 18em;*/\n  /*-webkit-column-width: 18em;*/\n  /*-moz-column-gap: 1em;*/\n  /*-webkit-column-gap:1em;*/\n}\n#display-art[data-v-0d9f3ac6], #edit-art[data-v-0d9f3ac6] {\n  margin-top: 20px;\n}\n#artifact-tags[data-v-0d9f3ac6] {\n  margin-bottom: 1rem;\n}\n.tag-btn[data-v-0d9f3ac6] {\n  margin-right: 10px;\n  margin-bottom: 10px;\n}\n.modal-body img[data-v-0d9f3ac6] {\n  width: 100%;\n  height: 100%;\n}\n.artifact[data-v-0d9f3ac6] {\n  background-color: white;\n}\n.item[data-v-0d9f3ac6] {\n  /*display: inline-flex;*/\n  /*padding:  .25rem;*/\n}\n.well[data-v-0d9f3ac6] {\n  position: relative;\n  display: block;\n}\n.grid[data-v-0d9f3ac6] {\n  /*max-width: 1200px;*/\n}\n.grid[data-v-0d9f3ac6]:after {\n  content: '';\n  display: block;\n  clear: both;\n}\n.grid-item[data-v-0d9f3ac6] {\n  float: left;\n  width: 240px;\n  height: auto;\n}\n", ""]);
+exports.push([module.i, "\n.description-actions[data-v-0d9f3ac6], .title-actions[data-v-0d9f3ac6] {\n  position: relative;\n  left: 15px;\n}\n.title-row input[data-v-0d9f3ac6], .description-row textarea[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6] {\n  display: none;\n}\n.description-cancel[data-v-0d9f3ac6], .description-save[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6] {\n  display: none;\n  cursor: pointer;\n  font-size: 18px;\n}\n.title-edit[data-v-0d9f3ac6], .description-edit[data-v-0d9f3ac6] {\n  cursor: pointer;\n  font-sice: 18px;\n}\n.description-cancel[data-v-0d9f3ac6], .title-cancel[data-v-0d9f3ac6] {\n  color: #942921;\n}\n.description-save[data-v-0d9f3ac6], .title-save[data-v-0d9f3ac6] {\n  color: green;\n}\n.title-row:hover .title-edit[data-v-0d9f3ac6] {\n  display: block;\n}\n.description-row:hover .description-edit[data-v-0d9f3ac6] {\n  display: block;\n}\n#previousBtn[data-v-0d9f3ac6], #nextBtn[data-v-0d9f3ac6] {\n  position: relative;\n  top: 15vh;\n  /*bottom: 50vh;*/\n}\n#previousBtn[data-v-0d9f3ac6] {\n  right: 100px;\n}\n#nextBtn[data-v-0d9f3ac6] {\n  left: 100px;\n}\n.row[data-v-0d9f3ac6] {\n  /*-moz-column-width: 18em;*/\n  /*-webkit-column-width: 18em;*/\n  /*-moz-column-gap: 1em;*/\n  /*-webkit-column-gap:1em;*/\n}\n#display-art[data-v-0d9f3ac6], #edit-art[data-v-0d9f3ac6] {\n  margin-top: 20px;\n}\n#artifact-tags[data-v-0d9f3ac6] {\n  margin-bottom: 1rem;\n}\n.tag-btn[data-v-0d9f3ac6] {\n  margin-right: 10px;\n  margin-bottom: 10px;\n  background-color: #942921;\n  border-color: #942921;\n}\n.modal-body img[data-v-0d9f3ac6] {\n  width: 100%;\n  height: 100%;\n}\n.artifact[data-v-0d9f3ac6] {\n  background-color: white;\n}\n.item[data-v-0d9f3ac6] {\n  /*display: inline-flex;*/\n  /*padding:  .25rem;*/\n}\n.well[data-v-0d9f3ac6] {\n  position: relative;\n  display: block;\n}\n.grid[data-v-0d9f3ac6] {\n  /*max-width: 1200px;*/\n}\n.grid[data-v-0d9f3ac6]:after {\n  content: '';\n  display: block;\n  clear: both;\n}\n.grid-item[data-v-0d9f3ac6] {\n  float: left;\n  width: 240px;\n  height: auto;\n}\n", ""]);
 
 // exports
 
@@ -60478,7 +60481,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\nh3[data-v-167963c0] {\n    padding: 10px;\n}\nimg[data-v-167963c0] {\n    -ms-flex-item-align: center;\n        align-self: center;\n    position: relative;\n}\n.videocam[data-v-167963c0] {\n    color: grey;\n}\n.contact-list[data-v-167963c0] {\n    background-color: white;\n}\n.characterActive[data-v-167963c0]{\n    color: #57AB58;\n    position: relative;\n    margin-left: -16px;\n    bottom: -24px;\n}\n.contact-inner[data-v-167963c0]{\n    padding: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row;\n            flex-flow: row;\n    cursor: pointer;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n}\n.contact-inner[data-v-167963c0]:nth-child(even) {\n    border-top: solid 1px;\n    border-bottom: solid 1px;\n    border-color: #d9dcde;\n}\n#call[data-v-167963c0] {\n    -ms-flex-item-align: center;\n        align-self: center;\n    font-size: 24px;\n}\n\n\n", ""]);
+exports.push([module.i, "\nh3[data-v-167963c0] {\n    padding: 10px;\n}\nimg[data-v-167963c0] {\n    -ms-flex-item-align: center;\n        align-self: center;\n    position: relative;\n}\n.notify[data-v-167963c0] {\n    position: relative;\n    margin-left: 30px;\n    bottom: 17px\n}\n.videocam[data-v-167963c0] {\n    color: grey;\n}\n.contact-list[data-v-167963c0] {\n    background-color: white;\n}\n.characterActive[data-v-167963c0]{\n    color: #57AB58;\n    position: relative;\n\n    margin-left: 30px;\n    bottom: 14px;\n}\n.characterInactive[data-v-167963c0]{\n    color:#942921;\n    position: relative;\n\n    margin-left: 30px;\n    bottom: 14px;\n}\n.contact-inner[data-v-167963c0]{\n    padding: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row;\n            flex-flow: row;\n    cursor: pointer;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n}\n.contact-inner[data-v-167963c0]:nth-child(even) {\n    border-top: solid 1px;\n    border-bottom: solid 1px;\n    border-color: #d9dcde;\n}\n#call[data-v-167963c0] {\n    -ms-flex-item-align: center;\n        align-self: center;\n    font-size: 24px;\n}\n@media(min-width: 1092px){\n.notify[data-v-167963c0] {\n        margin-left: -16px;\n        bottom: -17px\n}\n.characterActive[data-v-167963c0]{\n        margin-left: -16px;\n        bottom: -24px;\n}\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -60494,6 +60497,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__notes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__notes_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__videos_vue__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__videos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__videos_vue__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -60563,10 +60573,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         activeContacts: function activeContacts() {
-            var _this = this;
-
             return this.calls.filter(function (character) {
-                if (character.day === _this.$store.state.user.current_day) {
+                if (!character.video_message) {
+                    return character.character_id;
+                }
+            }).map(function (character) {
+                return character.character_id;
+            });
+        },
+        contactMessages: function contactMessages() {
+            return this.calls.filter(function (character) {
+                if (character.video_message) {
                     return character.character_id;
                 }
             }).map(function (character) {
@@ -60790,7 +60807,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.startSelfVideo();
         this.startAudio();
-        this.loadCallVideo(this.clickedCharacter);
+        this.playIntroVideo();
     },
     updated: function updated() {
         if (this.videoMessageInterface == false) {
@@ -60801,17 +60818,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     watch: {
         currentVideo: function currentVideo() {
             if (!this.videoMessageInterface) {
+                document.getElementById('call_video').src = this.currentVideo.video_url;
                 document.getElementById('call_video').load();
-                this.callIconToggleStatus = "call";
             }
         },
         currentQuestion: function currentQuestion() {
             //if statement needed to avoid a change when currentQuestion changes to null
-            if (!this.videoMessageInterface) {
+
+            if (!this.videoMessageInterface && !this.currentVideo.video_message && this.currentQuestion) {
                 document.getElementById('call_video').currentTime = parseInt(this.currentQuestion.start_time) + 0.51;
                 document.getElementById('call_video').play();
-                this.callIconToggleStatus = "call_end";
-
                 var appScope = this;
                 var paused = false;
                 document.getElementById('call_video').addEventListener("timeupdate", function () {
@@ -60824,6 +60840,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     }
                 });
+            } else if (this.currentVideo.video_message) {
+                var _appScope = this;
+                document.getElementById('call_video').play();
+                document.getElementById('call_video').onended = function (e) {
+                    _appScope.revertToContactsPage();
+                };
+            } else {
+                document.getElementById('call_video').play();
             }
         },
         videoMessageInterface: function videoMessageInterface() {
@@ -60866,8 +60890,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.startSelfVideo();
         },
+        playIntroVideo: function playIntroVideo() {
+            var video = document.getElementById('call_video');
+            video.src = '/video/Ringing.mp4';
+            video.play();
+
+            var appScope = this;
+            video.onended = function (e) {
+                appScope.loadCallVideo(appScope.clickedCharacter);
+            };
+        },
         loadCallVideo: function loadCallVideo(person_id) {
-            this.clickedCharacter = person_id;
+            //this.clickedCharacter = person_id;
             //check if the contact clicked on is active
             var activeCall = this.calls.find(function (call) {
                 if (call.character_id === person_id) {
@@ -60883,6 +60917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         return question;
                     }
                 });
+
                 this.currentVideo = activeCall;
                 this.currentQuestion = this.currentQuestions.find(function (question) {
                     if (question.first_question) {
@@ -61116,7 +61151,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 analyser.getByteFrequencyData(dataArrayAlt);
 
                 //set canvas background color and add animation
-                canvasCtx.fillStyle = '#4a4a4a';
+                canvasCtx.fillStyle = '#4A4A4A';
+
                 canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
                 //define the width of audio bar display
@@ -61856,11 +61892,7 @@ var render = function() {
                     autoplay: ""
                   }
                 },
-                [
-                  _c("source", {
-                    attrs: { src: "/video/record.mp4", type: "video/mp4" }
-                  })
-                ]
+                [_c("source", { attrs: { src: "", type: "video/mp4" } })]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -62006,10 +62038,16 @@ var render = function() {
                               [_vm._v("fiber_manual_record")]
                             )
                           ])
-                        : _vm._e()
+                        : _c("span", { staticClass: "characterInactive" }, [
+                            _c(
+                              "i",
+                              { staticClass: "material-icons activeIcon" },
+                              [_vm._v("fiber_manual_record")]
+                            )
+                          ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "characterInfo col-sm-5" }, [
+                    _c("div", { staticClass: "characterInfo col-sm-6" }, [
                       _c("span", { staticClass: "characterName" }, [
                         _vm._v(_vm._s(person.name))
                       ]),
@@ -62058,7 +62096,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "col-sm-5", attrs: { id: "call" } }, [
+    return _c("span", { staticClass: "col-sm-3", attrs: { id: "call" } }, [
       _c("i", { staticClass: "videocam material-icons" }, [_vm._v("videocam")])
     ])
   }
