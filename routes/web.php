@@ -100,4 +100,7 @@ Route::group(['middleware'=>['auth', 'student']], function() {
 //Characters
     Route::get('/team', 'CharactersController@index');
 
+//Showcase
+    Route::get('/showcase', 'ShowcaseController@index');
+
 

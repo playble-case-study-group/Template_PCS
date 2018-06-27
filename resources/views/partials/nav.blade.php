@@ -62,6 +62,7 @@
                     </a>
 
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/exhibit">Group Exhibit</a>
                         @if(Auth::user()->role == 2)
                             <a class="dropdown-item" href="/classes">Classes</a>
                         @endif
