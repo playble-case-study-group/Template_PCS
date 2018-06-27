@@ -32,11 +32,15 @@ Vue.component('classes', require('./components/Classes/Classes.vue'));
 Vue.component('editor', require('./components/Library/articleEditor.vue'));
 Vue.component('navigation', require('./components/NavigationLink/navigation.vue'));
 Vue.component('about', require('./components/About/about.vue'));
+Vue.component('display', require('./components/Exhibit/exhibit.vue'));
 Vue.component('characters', require('./components/Characters/characters.vue'));
 Vue.component('v-select', require('vue-select'));
 
 import store from './vuex/store';
 import { mapActions, mapGetters } from 'vuex';
+import VueMce from 'vue-mce';
+
+Vue.use(VueMce);
 
 const app = new Vue({
     el: '#app',

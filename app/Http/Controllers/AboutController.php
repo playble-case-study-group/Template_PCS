@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class AboutController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Exhibit a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,7 +42,7 @@ class AboutController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exhibit the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

@@ -19,12 +19,12 @@ Route::get('/', function () {
 Auth::routes();
 
 // Home
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/user', 'HomeController@user');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/user', 'HomeController@user');
 
 
 Route::group(['middleware'=>['auth', 'admin']], function() {
-    //Library
+//Library
     Route::resource('/editor', 'ArticleEditorController');
     Route::post('/deleteArticle', 'ArticleEditorController@deleteArticle');
     Route::post('/addArticle', 'ArticleEditorController@addArticle');
@@ -32,7 +32,7 @@ Route::group(['middleware'=>['auth', 'admin']], function() {
 
 
 Route::group(['middleware'=>['auth', 'instructor']], function() {
-    // Class
+// Class
     Route::resource('/classes', 'ClassController');
     Route::resource('/assignments', 'AssignmentController');
     Route::post('/retrieveassignments', 'AssignmentController@retrieveAssignments');
@@ -41,7 +41,7 @@ Route::group(['middleware'=>['auth', 'instructor']], function() {
 
 
 Route::group(['middleware'=>['auth', 'student']], function() {
-    // Simulation
+// Simulation
     Route::post('/updateday', 'SimulationController@updateDay');
     Route::get('/sim', function () {
         return DB::table('simulation')->get();
@@ -88,10 +88,16 @@ Route::group(['middleware'=>['auth', 'student']], function() {
 
 // Dash
     Route::get('/dashboard', 'DashController@loadDash');
+
+//Exhibitions
+    Route::get('/exhibit', 'ExhibitController@index');
+    Route::post('/saveExhibit', 'ExhibitController@store');
+
 });
 //About
     Route::get('/about', 'AboutController@index');
 
 //Characters
     Route::get('/team', 'CharactersController@index');
+
 

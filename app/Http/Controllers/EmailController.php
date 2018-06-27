@@ -16,7 +16,7 @@ class EmailController extends Controller
     private $document_ext = ['doc', 'docx', 'pdf', 'odt'];
 
     /**
-     * Display a listing of the resource.
+     * Exhibit a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +143,7 @@ class EmailController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exhibit the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

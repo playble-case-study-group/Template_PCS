@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 class AssignmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Exhibit a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
