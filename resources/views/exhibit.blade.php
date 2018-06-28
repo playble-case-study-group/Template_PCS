@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <display :groups="{{ $groups }}" :gallery="{{ $gallery }}" :exhibition="{{ $exhibition }}"></display>
+    <exhibit :groups="{{ $groups }}" :gallery="{{ $gallery }}" :exhibition="{{ $exhibition }}"></exhibit>
 @endsection

@@ -1,5 +1,5 @@
 <template>
-    <div id="display" class="container">
+    <div id="exhibit" class="container">
         <div v-if="!edit">
             <button  @click="toggleEdit" class="btn btn-primary toggle">Edit Exhibition</button>
             <div v-html="this.display">
