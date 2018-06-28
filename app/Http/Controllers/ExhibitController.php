@@ -127,10 +127,10 @@ class ExhibitController extends Controller
             ->first();
 
 
-        if($exists != 0) {
+        if($exists && $exists->group_id != 0) {
             DB::table('group_exhibitions')
                 ->where('group_id', $group)
-                ->update(['exhibition', $data]);
+                ->update(['exhibition' => $data]);
         } else {
             $user_exists = DB::table('group_exhibitions')
                 ->where('user_id', Auth::id())
@@ -139,7 +139,7 @@ class ExhibitController extends Controller
             if($user_exists) {
                 DB::table('group_exhibitions')
                     ->where('user_id', $user_id)
-                    ->update(['exhibition', $data]);
+                    ->update(['exhibition' => $data]);
             }
 
             DB::table('group_exhibitions')
