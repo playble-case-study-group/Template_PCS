@@ -140,10 +140,10 @@ class ExhibitController extends Controller
                 DB::table('group_exhibitions')
                     ->where('user_id', $user_id)
                     ->update(['exhibition' => $data]);
+            } else {
+                DB::table('group_exhibitions')
+                    ->insert(['exhibition' => $data, 'group_id' => $group, 'user_id' => $user_id]);
             }
-
-            DB::table('group_exhibitions')
-                ->insert(['exhibition' => $data, 'group_id' => $group, 'user_id' => $user_id]);
         }
 
     }

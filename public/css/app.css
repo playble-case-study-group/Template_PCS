@@ -11464,3 +11464,18 @@ fieldset[disabled] .btn-invert.focus {
   margin-left: -90px;
 }
 
+.btn-red {
+  background-color: #942921;
+  border-color: #942921;
+}
+
+.btn-red:hover {
+  background-color: #7A221B;
+  border-color: #7A221B;
+}
+
+.box-shadow {
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+

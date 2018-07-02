@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
         <title>Museum of Spain</title>
-        <a href="/home"><button class="btn btn-success button">Enter the Simulation</button></a>
-        <a href="/display"><button class="btn btn-success button">View Student Exhibitions</button></a>
+        <a href="/home"><button class="btn btn-success btn-red button">Enter the Simulation</button></a>
+        <a href="/showcase"><button class="btn btn-success btn-red button">View Student Exhibitions</button></a>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -47,6 +47,14 @@
 
             .content {
                 text-align: center;
+            }
+            .btn-red {
+                background-color: #942921;
+                border-color: #942921;
+            }
+            .btn-red:hover {
+                background-color: #7A221B;
+                border-color: #7A221B;
             }
 
             .title {

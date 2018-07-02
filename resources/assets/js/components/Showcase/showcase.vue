@@ -1,26 +1,38 @@
 <template>
     <div class="container main" id="showcase">
-        <h1>Student Exhibitions</h1>
-        <a :href="'/showcase/'+ exhibit.group_exhibition_id"
-           @click="showGroupSelection(exhibit.group_exhibition_id)"
-           v-for="exhibit in exhibits">
+        <div v-if="activeExhibit == null">
+            <h1>Student Exhibitions</h1>
+            <a @click="showGroupSelection(exhibit.group_exhibition_id)"
+               v-for="exhibit in exhibits">
 
-            <div class="exhibit" id="exhibit.group_exhibition_id">
-                <img class="contrain-img" :src="getRandomGalleryImage()">
-                <h2 class="group-exhibit">
-                    Exhibit {{ exhibit.group_exhibition_id }}
-                </h2>
-            </div>
+                <div class="exhibit" id="exhibit.group_exhibition_id">
+                    <img class="contrain-img" :src="getRandomGalleryImage()">
+                    <h2 class="group-exhibit">
+                        Exhibit {{ exhibit.group_exhibition_id }}
+                    </h2>
+                </div>
 
-        </a>
+            </a>
+        </div>
+        <show-exhibit v-else
+                      @returnToShowcase="clearExhibit"
+                      :exhibit="activeExhibit" >
+
+        </show-exhibit>
     </div>
 </template>
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import showExhibit from './showExhibit.vue'
+    import ShowExhibit from "./showExhibit";
+
     export default {
         mounted() {
-            this.getActivePath();
+        },
+        components: {
+            ShowExhibit,
+            'show-exhibit': showExhibit
         },
         props: {
             exhibits: Array,
@@ -28,7 +40,7 @@
         },
         data: function() {
             return {
-                isActive: ''
+                activeExhibit: null,
             }
         },
         computed: {
@@ -42,7 +54,14 @@
                 return this.gallery[Math.floor(Math.random()*this.gallery.length)].image;
             },
             showGroupSelection: function(group_id) {
-
+                this.activeExhibit = this.exhibits.filter( function(exhibit){
+                    if(exhibit.group_exhibition_id == group_id){
+                        return exhibit;
+                    }
+                })[0];
+            },
+            clearExhibit: function(){
+                this.activeExhibit = null;
             }
         }
 
