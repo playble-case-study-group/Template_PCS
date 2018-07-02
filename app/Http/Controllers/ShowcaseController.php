@@ -15,12 +15,12 @@ class ShowcaseController extends Controller
     public function index()
     {
         //
-        $exhibits = DB::table('group_exhibitions')
+        $showcase = DB::table('group_exhibitions')
             ->get();
         $gallery = DB::table('artifacts')
             ->get();
 
-        return view('showcase', compact('exhibits', 'gallery'));
+        return view('showcase', compact('showcase', 'gallery'));
     }
 
     /**
@@ -53,6 +53,11 @@ class ShowcaseController extends Controller
     public function show($id)
     {
         //
+        $exhibit = DB::table('group_exhibitions')
+            ->where('group_exhibition_id', $id)
+            ->first();
+
+        return view('display', compact('exhibit'));
     }
 
     /**

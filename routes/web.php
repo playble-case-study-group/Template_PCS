@@ -102,5 +102,6 @@ Route::group(['middleware'=>['auth', 'student']], function() {
 
 //Showcase
     Route::get('/showcase', 'ShowcaseController@index');
+    Route::get('/showcase/{id}', 'ShowcaseController@show');
 
 

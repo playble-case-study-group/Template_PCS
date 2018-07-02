@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-default navbar-static-top">
     <!-- Branding Image -->
     <a class="navbar-brand" href="{{ url('/home') }}">
-        <img src="img/logo/red.png" alt="logo">
+        <img src="/img/logo/red.png" alt="logo">
         <span>{{ config('app.name', 'Museum of Spain') }}</span>
         <small>With a sub title</small>
 

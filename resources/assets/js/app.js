@@ -33,6 +33,7 @@ Vue.component('editor', require('./components/Library/articleEditor.vue'));
 Vue.component('navigation', require('./components/NavigationLink/navigation.vue'));
 Vue.component('about', require('./components/About/about.vue'));
 Vue.component('exhibit', require('./components/Exhibit/exhibit.vue'));
+Vue.component('display', require('./components/Display/display.vue'));
 Vue.component('characters', require('./components/Characters/characters.vue'));
 Vue.component('showcase', require('./components/Showcase/showcase.vue'));
 Vue.component('v-select', require('vue-select'));
