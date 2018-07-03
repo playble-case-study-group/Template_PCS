@@ -99,6 +99,7 @@ class EmailController extends Controller
             if (Storage::putFileAs('/public/' . $type . '/', $file, $file->getClientOriginalName())) {
                 DB::table('student_emails')->insert([
                     'user_id' => Auth::id(),
+                    'class_id' => Auth::user()->class_id,
                     'character_id' => $request->to,
                     'day' => Auth::user()->current_day,
                     'subject' => $request->has('character_email_id') ? "RE: " . $request->subject : $request->subject,
@@ -111,6 +112,7 @@ class EmailController extends Controller
         } else {
             DB::table('student_emails')->insert([
                 'user_id' => Auth::id(),
+                'class_id' => Auth::user()->class_id,
                 'character_id' => $request->to,
                 'day' => Auth::user()->current_day,
                 'subject' => $request->has('character_email_id') ? "RE: " . $request->subject : $request->subject,
