@@ -63,7 +63,7 @@
 
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/exhibit">Group Exhibit</a>
-                        @if(Auth::user()->role == 2)
+                        @if(Auth::user()->role == 1)
                             <a class="dropdown-item" href="/classes">Classes</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"

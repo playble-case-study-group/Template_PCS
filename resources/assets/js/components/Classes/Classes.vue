@@ -52,6 +52,7 @@
                          role="tabpanel">
                         <groups :groups="curClass.groups"
                                 :classId="curClass.class_id"
+                                :students="curClass.students"
                                 :unassigned="curClass.unAssigned"></groups>
                     </div>
                     <div id="assignments"

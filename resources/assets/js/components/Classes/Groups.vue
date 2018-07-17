@@ -17,7 +17,7 @@
                             {{ student.name }} <button class="btn btn-sm btn-danger" @click="removeStudent(student.user_id, group.group_id)">x</button>
                         </li>
                         <li>
-                            <v-select v-model="newGroupUser" label="name" :options="unassigned"></v-select>
+                            <v-select v-model="newGroupUser" label="name" :options="students"></v-select>
                             <button class="btn btn-success" @click="addStudent(group.group_id)">
                                 Add Student
                             </button>
@@ -99,7 +99,7 @@
     import  vSelect  from 'vue-select'
 
     export default {
-        props: ['groups', 'unassigned', 'classId'],
+        props: ['groups', 'unassigned', 'classId', 'students'],
         components: {
             'v-select': vSelect
         },
@@ -163,7 +163,8 @@
                     let group = _.find(this.groups, {'group_id': groupId});
 
                     // If user is already in a group
-                    if (!this.unassigned.includes(this.newGroupUser)) {
+                    console.log(this.studentHasGroup(this.newGroupUser));
+                    if (this.studentHasGroup(this.newGroupUser)) {
                         alert('Student is already in a group.');
                     } else {
                         let data = {
@@ -180,6 +181,28 @@
                     }
                 }
             },
+            studentHasGroup: function (student) {
+                console.log('student: ', student);
+                let assigned = false;
+                this.groups.forEach(group => {
+                    group.students.forEach( assignedStudent => {
+                        console.log('comp_student: ', assignedStudent);
+                        if (assignedStudent.user_id === student.user_id) {
+
+                            assigned = true;
+                        }
+                    })
+                });
+                if (assigned) {
+                    console.log('student has group');
+                    return true;
+                } else {
+                    console.log('Student does not have group');
+                    return false;
+                }
+
+
+            },
             removeStudent: function (studentId, groupId) {
                 console.log(studentId, groupId);
                 let data = {
@@ -191,6 +214,7 @@
                     let group = _.find(this.groups, {'group_id': groupId});
                     _.remove(group.students, {'user_id': studentId});
                     this.unassigned.push(response.data[0]);
+                    this.$forceUpdate();
                 });
 
             }
