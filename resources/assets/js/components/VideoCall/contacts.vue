@@ -135,7 +135,7 @@
         bottom: 14px;
     }
     .characterInactive{
-        color:#942921;
+        color: #dc3545;
         position: relative;
 
         margin-left: 30px;

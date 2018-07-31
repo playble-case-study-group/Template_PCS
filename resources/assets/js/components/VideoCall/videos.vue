@@ -454,7 +454,7 @@
                     analyser.getByteFrequencyData(dataArrayAlt);
 
                     //set canvas background color and add animation
-                    canvasCtx.fillStyle = '#4A4A4A';
+                    canvasCtx.fillStyle = '#4a4a4a';
 
                     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -559,4 +559,4 @@
         width: 150px;
     }
 
-</style>ß
+</style>
