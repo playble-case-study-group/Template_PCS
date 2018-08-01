@@ -178,6 +178,7 @@
             },
             playIntroVideo: function() {
                 let video = document.getElementById('call_video');
+                this.videoEl = document.getElementById('call_video');
                 video.src = '/video/Ringing.mp4';
                 video.play();
 

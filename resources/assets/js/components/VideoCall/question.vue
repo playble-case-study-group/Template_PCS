@@ -119,6 +119,10 @@
         width: -webkit-fill-available;/* Mozilla-based browsers will ignore this. */
         width: fill-available;
     }
+    .btn-success:hover {
+        background-color: #175F27 !important;
+        border-color: #175F27 !important;
+    }
     .visited {
         opacity: 0.65;
     }

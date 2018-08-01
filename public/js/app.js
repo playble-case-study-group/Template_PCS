@@ -60896,6 +60896,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         playIntroVideo: function playIntroVideo() {
             var video = document.getElementById('call_video');
+            this.videoEl = document.getElementById('call_video');
             video.src = '/video/Ringing.mp4';
             video.play();
 
@@ -61266,7 +61267,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.button[data-v-c56baf9a] {\n    margin: 1rem 0;\n    height: auto;\n    width: 100%;\n    width: -moz-available;/* WebKit-based browsers will ignore this. */\n    width: -webkit-fill-available;/* Mozilla-based browsers will ignore this. */\n    width: fill-available;\n}\n.visited[data-v-c56baf9a] {\n    opacity: 0.65;\n}\n.active[data-v-c56baf9a] {\n}\n.recording[data-v-c56baf9a]{\n    color: #ff4d4d;\n    float: right;\n    font-size: 12px;\n    margin-top: 3px;\n}\n.counterDisplay[data-v-c56baf9a] {\n    font-size: 16px;\n    top: -30px;\n    text-align: center;\n}\n.counter[data-v-c56baf9a] {\n    padding-left: 40px;\n    color: #dc3545;\n}\n.questionList[data-v-c56baf9a] {\n    width: 50%;\n    padding: 15px 25px 0;\n}\n@media(min-width: 992px){\n.button[data-v-c56baf9a] {\n        margin: 1rem 0;\n        white-space: normal;\n}\n}\n@media(min-width: 1400px){\n.button[data-v-c56baf9a] {\n        margin: 1rem 0rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n.button[data-v-c56baf9a] {\n    margin: 1rem 0;\n    height: auto;\n    width: 100%;\n    width: -moz-available;/* WebKit-based browsers will ignore this. */\n    width: -webkit-fill-available;/* Mozilla-based browsers will ignore this. */\n    width: fill-available;\n}\n.btn-success[data-v-c56baf9a]:hover {\n    background-color: #175F27 !important;\n    border-color: #175F27 !important;\n}\n.visited[data-v-c56baf9a] {\n    opacity: 0.65;\n}\n.active[data-v-c56baf9a] {\n}\n.recording[data-v-c56baf9a]{\n    color: #ff4d4d;\n    float: right;\n    font-size: 12px;\n    margin-top: 3px;\n}\n.counterDisplay[data-v-c56baf9a] {\n    font-size: 16px;\n    top: -30px;\n    text-align: center;\n}\n.counter[data-v-c56baf9a] {\n    padding-left: 40px;\n    color: #dc3545;\n}\n.questionList[data-v-c56baf9a] {\n    width: 50%;\n    padding: 15px 25px 0;\n}\n@media(min-width: 992px){\n.button[data-v-c56baf9a] {\n        margin: 1rem 0;\n        white-space: normal;\n}\n}\n@media(min-width: 1400px){\n.button[data-v-c56baf9a] {\n        margin: 1rem 0rem;\n}\n}\n", ""]);
 
 // exports
 
